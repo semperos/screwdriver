@@ -23,8 +23,6 @@ public class CoffeeScriptCompiler {
     /**
      * Compile CoffeeScript to JavaScript
      *
-     * @todo Provide facility to pass custom options to CoffeeScript compiler (e.g., --bare)
-     *
      * @param coffeeScriptSource The CoffeeScript source code to be compiled
      * @return The resultant JavaScript
      * @throws CoffeeScriptCompileException
