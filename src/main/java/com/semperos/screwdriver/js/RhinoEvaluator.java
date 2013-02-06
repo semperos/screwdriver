@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.js;
 
 import org.mozilla.javascript.Context;
-import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.Scriptable;
 
 import java.io.*;
@@ -9,33 +8,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @todo Full-fledged embedding of JavaScript
- *
- * Expose methods to add keys to a globally-scoped JavaScript
- * object, which JavaScripts would have to know about and use.
- */
-
-/**
  * Adapt Rhino to the subset of use-cases we have for it.
  *
- * Currently, this class focuses on the use-case of running a JavaScript
- * compiler on {@code String}'s of source code written in an alternative
- * JavaScript language (e.g., CoffeeScript).
+ * This class is intended as a parent class that captures the basic
+ * needs of all of our use-cases for Rhino. Most importantly, it sets
+ * up the concept of a global Rhino scope, and an instance-level scope.
  *
- * Methods related specifically to compilation may be moved out if
- * other distinct use-cases arise.
+ * If/when this is multithreaded, the global scope should be able to
+ * be safely shared, while the instance-level scope should be considered thread-local
+ * and contain the details for a specific evaluation with Rhino.
+ *
  */
 public class RhinoEvaluator {
     public static final String GLOBAL_SD_JS = "__ScrewdriverGlobal";
     public static final String INST_SD_JS = "__Screwdriver";
     public static final String SCRIPT_SOURCE_JS = "scriptSource";
     public static final String COMPILER_OPTIONS_JS = "compilerOptions";
-    private InputStream program;
-    private String programName;
-    private Scriptable globalScope;
-    private Scriptable instanceScope;
-    private Scriptable globalScrewdriver;
-    private Scriptable instanceScrewdriver;
+    protected Scriptable globalScope;
+    protected Scriptable instanceScope;
+    protected Scriptable globalScrewdriver;
+    protected Scriptable instanceScrewdriver;
 
     public Scriptable getGlobalScope() {
         return this.globalScope;
@@ -112,85 +104,5 @@ public class RhinoEvaluator {
             x.put(val.getKey(), x, val.getValue());
         }
         addInstanceField(varName, x);
-    }
-
-    /**
-     * Convenience method for calling {@link RhinoEvaluator#addInstanceField}
-     * to set the {@code scriptSource} field in the instance-local store.
-     *
-     * @param source
-     */
-    public void addScriptSource(String source) {
-       addInstanceField(SCRIPT_SOURCE_JS, source);
-    }
-
-    public void addCompilerOptions(HashMap<String,String> compilerOptions) {
-        addInstanceField(COMPILER_OPTIONS_JS, compilerOptions);
-    }
-
-    public void registerCompiler(String compilerName, String compilerProgramFile) {
-        programName = compilerName;
-        ClassLoader classLoader = getClass().getClassLoader();
-        program = classLoader.getResourceAsStream(compilerProgramFile);
-    }
-
-    /**
-     * The most essential argument to a compiler is the source on which it will work.
-     * This passes that in with no extra options to the underlying compiler.
-     *
-     * @param scriptSource
-     */
-    public void compilerArgs(String scriptSource) {
-        compilerArgs(scriptSource, new HashMap<String, String>());
-    }
-
-    /**
-     * Pass in both the source code to be compiled, as well as any custom compiler options
-     * needed for the underlying JavaScript compiler.
-     *
-     * @param scriptSource
-     * @param compilerOptions
-     */
-    public void compilerArgs(String scriptSource, HashMap<String,String> compilerOptions) {
-        addScriptSource(scriptSource);
-        addCompilerOptions(compilerOptions);
-    }
-
-    /**
-     * Rhino expects us to pass in line number and security domain for all code
-     * evaluation, so this is arity simply passes in default, lax values for those.
-     *
-     * @return
-     * @throws IOException
-     * @throws RhinoEvaluatorException
-     */
-    public String compile () throws IOException, RhinoEvaluatorException {
-        return compile(0, null);
-    }
-
-    /**
-     * After having setup a compiler by (1) registering it and (2) passing in its arguments
-     * @param lineno The starting line number of the source code to be compiled (used for debugging)
-     * @param securityDomain
-     * @return
-     * @throws IOException
-     * @throws RhinoEvaluatorException
-     */
-    public String compile (int lineno, Object securityDomain) throws IOException, RhinoEvaluatorException {
-        Context context = Context.enter();
-        try {
-            Reader reader = new InputStreamReader(program);
-            try {
-                return (String)context.evaluateReader(instanceScope,
-                        reader,
-                        programName,
-                        lineno,
-                        securityDomain);
-            } catch (JavaScriptException e) {
-                throw new RhinoEvaluatorException(e);
-            }
-        } finally {
-            Context.exit();
-        }
     }
 }
