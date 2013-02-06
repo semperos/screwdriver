@@ -13,19 +13,32 @@ import java.util.HashMap;
  * as part of a build.
  */
 public class PipelineEnvironment {
-    private final HashMap<AssetType, ArrayList<String>> assetExtensions;
-    private final HashMap<AssetType, ArrayList<File>> assetPaths;
+    private File basePath;
+    private HashMap<AssetType, ArrayList<String>> assetExtensions;
+    private HashMap<AssetType, ArrayList<File>> assetPaths;
 
+    public File getBasePath() {
+        return this.basePath;
+    }
+
+    public void setBasePath(File basePath) {
+        this.basePath = basePath;
+    }
+
+    public PipelineEnvironment() {
+        this(new File(System.getProperty("user.dir")));
+    }
     /**
      * @todo Unhardcode as needed
      */
-    public PipelineEnvironment() {
+    public PipelineEnvironment(File basePath) {
+        this.basePath = basePath;
         ArrayList<File> jsPaths = new ArrayList<File>();
-        jsPaths.add(new File("assets/javascripts"));
+        jsPaths.add(new File(basePath, "assets/javascripts"));
         ArrayList<File> cssPaths = new ArrayList<File>();
-        cssPaths.add(new File("assets/stylesheets"));
+        cssPaths.add(new File(basePath, "assets/stylesheets"));
         ArrayList<File> imagePaths = new ArrayList<File>();
-        imagePaths.add(new File("assets/images"));
+        imagePaths.add(new File(basePath, "assets/images"));
         assetPaths = new HashMap<AssetType, ArrayList<File>>();
         assetPaths.put(AssetType.JAVASCRIPT, jsPaths);
         assetPaths.put(AssetType.CSS, cssPaths);
@@ -52,8 +65,17 @@ public class PipelineEnvironment {
         assetExtensions.put(AssetType.IMAGE, imageExtensions);
     }
 
+    public HashMap<AssetType, ArrayList<File>> getAssetPaths() {
+        return assetPaths;
+    }
+
+
     public ArrayList<File> getAssetPaths(AssetType type) {
         return assetPaths.get(type);
+    }
+
+    public HashMap<AssetType, ArrayList<String>> getAssetExtensions() {
+        return assetExtensions;
     }
 
     public ArrayList<String> getAssetExtensions(AssetType type) {
