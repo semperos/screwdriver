@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.js.coffeescript;
 
 import com.semperos.screwdriver.js.RhinoCompiler;
-import com.semperos.screwdriver.js.RhinoEvaluator;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 
 import java.io.IOException;
@@ -11,13 +10,13 @@ import java.util.HashMap;
  * Compile CoffeeScript via Rhino
  */
 public class CoffeeScriptCompiler {
-    private RhinoCompiler eva;
+    private RhinoCompiler rhinoCompiler;
 
     public CoffeeScriptCompiler() {
-        eva = new RhinoCompiler();
+        rhinoCompiler = new RhinoCompiler();
         HashMap<String,String> deps = new HashMap<String,String>();
         deps.put("coffee-script.js", "com/semperos/screwdriver/js/vendor/coffee-script-1.4.0.js");
-        eva.addDependencies(deps);
+        rhinoCompiler.addDependencies(deps);
     }
 
     /**
@@ -28,8 +27,8 @@ public class CoffeeScriptCompiler {
      * @throws CoffeeScriptCompileException
      */
     public String compile(String coffeeScriptSource) throws IOException, RhinoEvaluatorException {
-        eva.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
-        eva.compilerArgs(coffeeScriptSource);
-        return eva.compile();
+        rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
+        rhinoCompiler.compilerArgs(coffeeScriptSource);
+        return rhinoCompiler.compile();
     }
 }
