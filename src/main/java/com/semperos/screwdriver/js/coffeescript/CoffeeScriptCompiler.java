@@ -9,58 +9,27 @@
 
 package com.semperos.screwdriver.js.coffeescript;
 
+import com.semperos.screwdriver.js.RhinoEvaluator;
 import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.Context;
 
 import java.io.*;
+import java.util.HashMap;
 
 /**
  * Compile CoffeeScript via Rhino
  */
-public class CoffeeScriptCompiler {
-    private Scriptable globalScope;
+public class CoffeeScriptCompiler extends RhinoEvaluator {
+    public CoffeeScriptCompiler() {}
 
-    public CoffeeScriptCompiler() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("com/semperos/screwdriver/js/vendor/coffee-script-1.4.0.js");
-        try {
-            try {
-                Reader reader = new InputStreamReader(inputStream, "UTF-8");
-                try {
-                    Context context = Context.enter();
-                    context.setOptimizationLevel(-1); // needed to prevent 64k bytecode limit in Rhino
-                    try {
-                        globalScope = context.initStandardObjects();
-                        context.evaluateReader(globalScope, reader, "coffee-script.js", 0, null);
-                    } finally {
-                        Context.exit();
-                    }
-                } finally {
-                    reader.close();
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Compile CoffeeScript to JavaScript
-     *
-     * @todo Provide facility to pass custom options to CoffeeScript compiler (e.g., --bare)
-     *
-     * @param coffeeScriptSource The CoffeeScript source code to be compiled
-     * @return The resultant JavaScript
-     * @throws CoffeeScriptCompileException
-     */
-    public String compile(String coffeeScriptSource) throws CoffeeScriptCompileException {
+    @Override
+    public String execute(String coffeeScriptSource) throws CoffeeScriptCompileException {
         Context context = Context.enter();
         try {
-            Scriptable compileScope = context.newObject(globalScope);
-            compileScope.setParentScope(globalScope);
+            Scriptable scope = this.getGlobalScope();
+            Scriptable compileScope = context.newObject(scope);
+            compileScope.setParentScope(scope);
             compileScope.put("coffeeScriptSource", compileScope, coffeeScriptSource);
             try {
                 return (String)context.evaluateString(compileScope,
@@ -74,5 +43,21 @@ public class CoffeeScriptCompiler {
         } finally {
             Context.exit();
         }
+    }
+
+    /**
+     * Compile CoffeeScript to JavaScript
+     *
+     * @todo Provide facility to pass custom options to CoffeeScript compiler (e.g., --bare)
+     *
+     * @param coffeeScriptSource The CoffeeScript source code to be compiled
+     * @return The resultant JavaScript
+     * @throws CoffeeScriptCompileException
+     */
+    public String compile(String coffeeScriptSource) throws CoffeeScriptCompileException {
+        HashMap<String,String> deps = new HashMap<String,String>();
+        deps.put("coffee-script.js", "com/semperos/screwdriver/js/vendor/coffee-script-1.4.0.js");
+        this.loadDependencies(deps);
+        return this.execute(coffeeScriptSource);
     }
 }
