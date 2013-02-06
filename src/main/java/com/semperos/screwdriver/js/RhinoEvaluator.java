@@ -9,22 +9,51 @@
 package com.semperos.screwdriver.js;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.Scriptable;
 
 import java.io.*;
 import java.util.Map;
 
 /**
+ * @todo Full-fledged embedding of JavaScript
+ *
+ * Expose methods to add keys to a globally-scoped JavaScript
+ * object, which JavaScripts would have to know about and use.
+ */
+
+/**
  * Compile CoffeeScript via Rhino
  */
-public abstract class RhinoEvaluator {
+public class RhinoEvaluator {
     private Scriptable globalScope;
+    private Scriptable scriptScope;
+    private Scriptable screwdriver;
 
     public Scriptable getGlobalScope() {
         return this.globalScope;
     }
 
-    public RhinoEvaluator() {}
+    public Scriptable getScriptScope() {
+        return this.scriptScope;
+    }
+
+    public RhinoEvaluator() {
+        Context context = Context.enter();
+        try {
+            globalScope = context.initStandardObjects();
+            screwdriver = context.newObject(globalScope);
+            screwdriver.put("description",
+                    screwdriver,
+                    "This is an internal object used by the Screwdriver build tool " +
+                            "to facilitate fully embedded JavaScript execution more easily.");
+            globalScope.put("__Screwdriver", globalScope, screwdriver);
+            scriptScope = context.newObject(globalScope);
+            scriptScope.setParentScope(globalScope);
+        } finally {
+            Context.exit();
+        }
+    }
 
     public void loadDependencies(Map<String,String> jsDeps) {
         ClassLoader classLoader = getClass().getClassLoader();
@@ -37,7 +66,6 @@ public abstract class RhinoEvaluator {
                         Context context = Context.enter();
                         context.setOptimizationLevel(-1); // needed to prevent 64k bytecode limit in Rhino
                         try {
-                            globalScope = context.initStandardObjects();
                             context.evaluateReader(globalScope, reader, dep.getKey(), 0, null);
                         } finally {
                             Context.exit();
@@ -54,6 +82,28 @@ public abstract class RhinoEvaluator {
         }
     }
 
-    protected abstract String execute(String scriptSource) throws RhinoEvaluatorException;
+    public void addField(String varName, Object varValue) {
+        Context context = Context.enter();
+        try {
+            screwdriver.put(varName, screwdriver, varValue);
+        } finally {
+            Context.exit();
+        }
+    }
+
+    public String execute(String scriptSource, String scriptName, int lineno, Object securityDomain) throws RhinoEvaluatorException {
+        Context context = Context.enter();
+        try {
+            return (String)context.evaluateString(scriptScope,
+                    scriptSource,
+                    scriptName,
+                    lineno,
+                    securityDomain);
+        } catch (JavaScriptException e) {
+            throw new RhinoEvaluatorException(e);
+        } finally {
+            Context.exit();
+        }
+    }
 
 }
