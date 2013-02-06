@@ -1,0 +1,1 @@
+CoffeeScript.compile(__Screwdriver.scriptSource, __Screwdriver.compilerOptions);
