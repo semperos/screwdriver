@@ -3,12 +3,10 @@ package com.semperos.screwdriver.cli;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import java.io.File;
+
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/6/13
- * Time: 4:12 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 @Parameters(commandDescription = "Run the Screwdriver build tool")
 public class CommandMain {
@@ -18,7 +16,10 @@ public class CommandMain {
     @Parameter(names = { "-h", "--help" }, help = true)
     public boolean help;
 
-    @Parameter(names = { "-b", "--base-path" }, description = "The base path from which to calculate asset paths")
-    public String basePath = System.getProperty("user.dir");
+    @Parameter(names = { "-a", "--asset-directory" }, description = "The base path from which to calculate asset paths")
+    public String assetDirectory = System.getProperty("user.dir");
+
+    @Parameter(names = { "-o", "--output-directory" }, description = "The base path from which to calculate where to write processed assets")
+    public String outputDirectory = System.getProperty("use.dir") + File.separator + "target" + File.separator + "client";
 
 }

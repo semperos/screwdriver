@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.pipeline;
 
+import com.semperos.screwdriver.cli.CommandMain;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
@@ -13,95 +14,74 @@ import java.util.HashMap;
  * as part of a build.
  */
 public class PipelineEnvironment {
-    private File basePath;
-    private HashMap<AssetType, ArrayList<String>> assetExtensions;
-    private HashMap<AssetType, ArrayList<File>> assetPaths;
+    private AssetSpec jsAssetSpec;
+    private AssetSpec cssAssetSpec;
+    private AssetSpec imageAssetSpec;
 
-    public File getBasePath() {
-        return this.basePath;
+    public AssetSpec getJsAssetSpec() {
+        return jsAssetSpec;
     }
 
-    public void setBasePath(File basePath) {
-        this.basePath = basePath;
+    public void setJsAssetSpec(AssetSpec jsAssetSpec) {
+        this.jsAssetSpec = jsAssetSpec;
+    }
+
+    public AssetSpec getCssAssetSpec() {
+        return cssAssetSpec;
+    }
+
+    public void setCssAssetSpec(AssetSpec cssAssetSpec) {
+        this.cssAssetSpec = cssAssetSpec;
+    }
+
+    public AssetSpec getImageAssetSpec() {
+        return imageAssetSpec;
+    }
+
+    public void setImageAssetSpec(AssetSpec imageAssetSpec) {
+        this.imageAssetSpec = imageAssetSpec;
     }
 
     public PipelineEnvironment() {
-        this(new File(System.getProperty("user.dir")));
+        this(new File(new CommandMain().assetDirectory));
+    }
+
+    public PipelineEnvironment(File assetDirectory) {
+        this(assetDirectory, new File(new CommandMain().outputDirectory));
     }
     /**
      * @todo Unhardcode as needed
      */
-    public PipelineEnvironment(File basePath) {
-        this.basePath = basePath;
-        ArrayList<File> jsPaths = new ArrayList<File>();
-        jsPaths.add(new File(basePath, "assets/javascripts"));
-        ArrayList<File> cssPaths = new ArrayList<File>();
-        cssPaths.add(new File(basePath, "assets/stylesheets"));
-        ArrayList<File> imagePaths = new ArrayList<File>();
-        imagePaths.add(new File(basePath, "assets/images"));
-        assetPaths = new HashMap<AssetType, ArrayList<File>>();
-        assetPaths.put(AssetType.JAVASCRIPT, jsPaths);
-        assetPaths.put(AssetType.CSS, cssPaths);
-        assetPaths.put(AssetType.IMAGE, imagePaths);
+    public PipelineEnvironment(File assetDirectory, File outputDirectory) {
+        ArrayList<File> jsAssetPaths = new ArrayList<File>();
+        jsAssetPaths.add(new File(assetDirectory, "javascripts"));
+        File jsOutputPath = new File(outputDirectory, "javascripts");
+        ArrayList<String> jsAssetExtensions = new ArrayList<String>();
+        jsAssetExtensions.add("js");
+        jsAssetExtensions.add("coffee");
+        jsAssetSpec = new AssetSpec(jsAssetPaths, jsAssetExtensions, jsOutputPath);
 
-        ArrayList<String> jsExtensions = new ArrayList<String>();
-        jsExtensions.add("js");
-        jsExtensions.add("coffee");
-        ArrayList<String> cssExtensions = new ArrayList<String>();
-        cssExtensions.add("css");
-        cssExtensions.add("less");
-        cssExtensions.add("sass");
-        cssExtensions.add("styl");
-        ArrayList<String> imageExtensions = new ArrayList<String>();
-        imageExtensions.add("bmp");
-        imageExtensions.add("gif");
-        imageExtensions.add("jpg");
-        imageExtensions.add("jpeg");
-        imageExtensions.add("png");
-        imageExtensions.add("svg");
-        assetExtensions = new HashMap<AssetType, ArrayList<String>>();
-        assetExtensions.put(AssetType.JAVASCRIPT, jsExtensions);
-        assetExtensions.put(AssetType.CSS, cssExtensions);
-        assetExtensions.put(AssetType.IMAGE, imageExtensions);
+        ArrayList<File> cssAssetPaths = new ArrayList<File>();
+        cssAssetPaths.add(new File(assetDirectory, "stylesheets"));
+        File cssOutputPath = new File(outputDirectory, "stylesheets");
+        ArrayList<String> cssAssetExtensions = new ArrayList<String>();
+        cssAssetExtensions.add("css");
+        cssAssetExtensions.add("less");
+        cssAssetExtensions.add("sass");
+        cssAssetExtensions.add("styl");
+        cssAssetSpec = new AssetSpec(cssAssetPaths, cssAssetExtensions, cssOutputPath);
+
+        ArrayList<File> imageAssetPaths = new ArrayList<File>();
+        imageAssetPaths.add(new File(assetDirectory, "images"));
+        File imageOutputPath = new File(outputDirectory, "images");
+        ArrayList<String> imageAssetExtensions = new ArrayList<String>();
+        imageAssetExtensions.add("bmp");
+        imageAssetExtensions.add("gif");
+        imageAssetExtensions.add("jpg");
+        imageAssetExtensions.add("jpeg");
+        imageAssetExtensions.add("png");
+        imageAssetExtensions.add("svg");
+        imageAssetSpec = new AssetSpec(imageAssetPaths, imageAssetExtensions, imageOutputPath);
     }
 
-    public HashMap<AssetType, ArrayList<File>> getAssetPaths() {
-        return assetPaths;
-    }
-
-
-    public ArrayList<File> getAssetPaths(AssetType type) {
-        return assetPaths.get(type);
-    }
-
-    public HashMap<AssetType, ArrayList<String>> getAssetExtensions() {
-        return assetExtensions;
-    }
-
-    public ArrayList<String> getAssetExtensions(AssetType type) {
-        return assetExtensions.get(type);
-    }
-
-    /**
-     * Retrieve {@code File} objects for every file of a particular {@link AssetType}.
-     *
-     * @param type The type of assets to retrieve
-     * @return List of all assets of this type currently in filesystem
-     */
-    public ArrayList<File> getAllAssets(AssetType type) {
-        ArrayList<File> assets = new ArrayList<File>();
-        ArrayList<String> extensions = getAssetExtensions(type);
-        for (String ext : extensions) {
-            RegexFileFilter fileFilter = new RegexFileFilter(".*?\\." + ext);
-            ArrayList<File> paths = getAssetPaths(type);
-            for (File path : paths) {
-                assets.addAll(FileUtils.listFiles(
-                        path,
-                        fileFilter,
-                        DirectoryFileFilter.DIRECTORY
-                ));
-            }
-        }
-        return assets;
-    }
 }
