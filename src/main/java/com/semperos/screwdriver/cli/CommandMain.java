@@ -20,6 +20,6 @@ public class CommandMain {
     public String assetDirectory = System.getProperty("user.dir");
 
     @Parameter(names = { "-o", "--output-directory" }, description = "The base path from which to calculate where to write processed assets")
-    public String outputDirectory = System.getProperty("use.dir") + File.separator + "target" + File.separator + "client";
+    public String outputDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "client";
 
 }

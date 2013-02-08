@@ -94,7 +94,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @throws RhinoEvaluatorException
      */
     public String compile () throws IOException, RhinoEvaluatorException {
-        return compile(0, null);
+        return compile(1, null);
     }
 
     /**
@@ -105,21 +105,13 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @throws IOException
      * @throws RhinoEvaluatorException
      */
-    public String compile (int lineno, Object securityDomain) throws IOException, RhinoEvaluatorException {
+    public String compile (int lineno, Object securityDomain) throws IOException, JavaScriptException {
         Context context = Context.enter();
-        try {
-            Reader reader = new InputStreamReader(program);
-            try {
-                return (String)context.evaluateReader(instanceScope,
-                        reader,
-                        programName,
-                        lineno,
-                        securityDomain);
-            } catch (JavaScriptException e) {
-                throw new RhinoEvaluatorException(e);
-            }
-        } finally {
-            Context.exit();
-        }
+        Reader reader = new InputStreamReader(program);
+        return (String)context.evaluateReader(instanceScope,
+                reader,
+                programName,
+                lineno,
+                securityDomain);
     }
 }

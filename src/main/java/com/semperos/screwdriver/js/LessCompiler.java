@@ -1,5 +1,7 @@
 package com.semperos.screwdriver.js;
 
+import org.mozilla.javascript.JavaScriptException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,6 +36,11 @@ public class LessCompiler {
         rhinoCompiler.registerCompiler("LessCompiler", "com/semperos/screwdriver/js/extension/compile-less.js");
         rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.compilerArgs(new LessSource(sourceFile).getNormalizedContent());
-        return rhinoCompiler.compile();
+        String ret;
+        try {
+            return rhinoCompiler.compile();
+        } catch (JavaScriptException e) {
+            throw new RhinoEvaluatorException(e, sourceFile.toString());
+        }
     }
 }

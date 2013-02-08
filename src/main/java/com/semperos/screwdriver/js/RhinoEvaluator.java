@@ -67,7 +67,7 @@ public class RhinoEvaluator {
                         Context context = Context.enter();
                         context.setOptimizationLevel(-1); // needed to prevent 64k bytecode limit in Rhino
                         try {
-                            context.evaluateReader(globalScope, reader, dep.getKey(), 0, null);
+                            context.evaluateReader(globalScope, reader, dep.getKey(), 1, null);
                         } finally {
                             Context.exit();
                         }
