@@ -34,7 +34,7 @@ public class LessSource {
     /**
      * The <code>Pattern</code> used to match imported files.
      */
-    private static final Pattern IMPORT_PATTERN = Pattern.compile("^(?!\\s*//\\s*)@import\\s+(url\\()?\\s*\"(.+)\\s*\"(\\))?\\s*;.*$", MULTILINE);
+    private static final Pattern IMPORT_PATTERN = Pattern.compile("^(?!\\s*//\\s*)@import\\s+(url\\()?\\s*(\"|')(.+)\\s*(\"|')(\\))?\\s*;.*$", MULTILINE);
 
     private File file;
     private String content;
@@ -138,7 +138,7 @@ public class LessSource {
     private void resolveImports() throws FileNotFoundException, IOException {
         Matcher importMatcher = IMPORT_PATTERN.matcher(normalizedContent);
         while (importMatcher.find()) {
-            String importedFile = importMatcher.group(2);
+            String importedFile = importMatcher.group(3);
             importedFile = importedFile.matches(".*\\.(le?|c)ss$") ? importedFile : importedFile + ".less";
             boolean css = importedFile.matches(".*css$");
             if (!css) {
