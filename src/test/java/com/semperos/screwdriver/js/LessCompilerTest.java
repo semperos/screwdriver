@@ -27,8 +27,6 @@ public class LessCompilerTest {
                 "  width: 2;\n" +
                 "}".trim();
         String result = this.compiler.compile(source).trim();
-        System.out.println("RESULT LESS :");
-        System.out.println(result);
         assertEquals(result,expected);
     }
 }
