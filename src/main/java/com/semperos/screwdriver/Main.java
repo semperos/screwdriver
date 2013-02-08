@@ -25,10 +25,14 @@ public class Main {
         jc.addCommand("build", build);
         jc.parse(args);
         PipelineEnvironment pe = new PipelineEnvironment(new File(cm.assetDirectory), new File(cm.outputDirectory));
-        if (jc.getParsedCommand().equals("build")) {
+        if (jc.getParsedCommand() != null) {
+            if (jc.getParsedCommand().equals("build")) {
+                BuildAll.build(pe);
+            }
+        } else {
             BuildAll.build(pe);
         }
 
-        System.out.println(cm.assetDirectory);
+        System.out.println(cm.assetDirectory + " " + cm.outputDirectory);
     }
 }

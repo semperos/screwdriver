@@ -1,6 +1,7 @@
 package com.semperos.screwdriver.pipeline;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
@@ -62,11 +63,16 @@ public class AssetSpec {
             RegexFileFilter fileFilter = new RegexFileFilter(".*?\\." + ext);
             ArrayList<File> paths = getAssetPaths();
             for (File path : paths) {
-                assets.addAll(FileUtils.listFiles(
-                        path,
-                        fileFilter,
-                        DirectoryFileFilter.DIRECTORY
-                ));
+                if (!path.exists()) {
+                    throw new RuntimeException("One of the directories that Screwdriver expects to work with " +
+                            "does not exist: " + path.getAbsolutePath());
+                } else {
+                    assets.addAll(FileUtils.listFiles(
+                            path,
+                            fileFilter,
+                            DirectoryFileFilter.DIRECTORY
+                    ));
+                }
             }
         }
         return assets;

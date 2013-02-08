@@ -1,5 +1,7 @@
 package com.semperos.screwdriver;
 
+import com.semperos.screwdriver.pipeline.PipelineEnvironment;
+
 import java.io.File;
 
 /**
@@ -24,5 +26,9 @@ public class TestUtil {
                  * @todo Set base path up correctly
                  */
                 "src/test/resources/com/semperos/screwdriver/sample/output");
+    }
+
+    public static PipelineEnvironment testPipelineEnvironment() {
+        return new PipelineEnvironment(TestUtil.testAssetDirectory(), TestUtil.testOutputDirectory());
     }
 }

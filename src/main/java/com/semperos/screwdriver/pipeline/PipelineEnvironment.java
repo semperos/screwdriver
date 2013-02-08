@@ -1,28 +1,24 @@
 package com.semperos.screwdriver.pipeline;
 
 import com.semperos.screwdriver.cli.CommandMain;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Environment for managing paths to various assets to be processed
  * as part of a build.
  */
 public class PipelineEnvironment {
-    private AssetSpec jsAssetSpec;
+    private JsAssetSpec jsAssetSpec;
     private AssetSpec cssAssetSpec;
     private AssetSpec imageAssetSpec;
 
-    public AssetSpec getJsAssetSpec() {
+    public JsAssetSpec getJsAssetSpec() {
         return jsAssetSpec;
     }
 
-    public void setJsAssetSpec(AssetSpec jsAssetSpec) {
+    public void setJsAssetSpec(JsAssetSpec jsAssetSpec) {
         this.jsAssetSpec = jsAssetSpec;
     }
 
@@ -59,7 +55,7 @@ public class PipelineEnvironment {
         ArrayList<String> jsAssetExtensions = new ArrayList<String>();
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
-        jsAssetSpec = new AssetSpec(jsAssetPaths, jsAssetExtensions, jsOutputPath);
+        jsAssetSpec = new JsAssetSpec(jsAssetPaths, jsAssetExtensions, jsOutputPath);
 
         ArrayList<File> cssAssetPaths = new ArrayList<File>();
         cssAssetPaths.add(new File(assetDirectory, "stylesheets"));

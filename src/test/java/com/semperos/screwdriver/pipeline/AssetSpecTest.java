@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -22,7 +20,7 @@ public class AssetSpecTest {
     AssetSpec jsSpec;
     @Before
     public void setUp() throws Exception {
-        PipelineEnvironment pe = new PipelineEnvironment(TestUtil.testAssetDirectory(), TestUtil.testOutputDirectory());
+        PipelineEnvironment pe = TestUtil.testPipelineEnvironment();
         jsSpec = pe.getJsAssetSpec();
     }
 
