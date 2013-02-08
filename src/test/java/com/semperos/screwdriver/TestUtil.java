@@ -3,6 +3,7 @@ package com.semperos.screwdriver;
 import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,6 +30,17 @@ public class TestUtil {
     }
 
     public static PipelineEnvironment testPipelineEnvironment() {
-        return new PipelineEnvironment(TestUtil.testAssetDirectory(), TestUtil.testOutputDirectory());
+        return new PipelineEnvironment(TestUtil.testConfig());
+    }
+
+    private static Config testConfig() {
+        Config cfg = new Config();
+        cfg.setAssetDirectory(TestUtil.testAssetDirectory());
+        cfg.setOutputDirectory(testOutputDirectory());
+        ArrayList<String> cssIncludes = new ArrayList<String>();
+        cssIncludes.add("main.less");
+        cssIncludes.add("modals.less");
+        cfg.setCssIncludes(cssIncludes);
+        return cfg;
     }
 }

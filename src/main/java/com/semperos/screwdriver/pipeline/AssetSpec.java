@@ -19,6 +19,7 @@ import java.util.List;
 public class AssetSpec {
     private ArrayList<File> assetPaths;
     private ArrayList<String> assetExtensions;
+    private ArrayList<String> assetIncludes;
     private File outputPath;
 
     public ArrayList<File> getAssetPaths() {
@@ -46,8 +47,13 @@ public class AssetSpec {
     }
 
     public AssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, File outputPath) {
+        this(assetPaths, assetExtensions, null, outputPath);
+    }
+
+    public AssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
         this.assetPaths = assetPaths;
         this.assetExtensions = assetExtensions;
+        this.assetIncludes = assetIncludes;
         this.outputPath = outputPath;
     }
 
@@ -60,7 +66,24 @@ public class AssetSpec {
         ArrayList<File> assets = new ArrayList<File>();
         ArrayList<String> extensions = getAssetExtensions();
         for (String ext : extensions) {
-            RegexFileFilter fileFilter = new RegexFileFilter(".*?\\." + ext);
+            RegexFileFilter fileFilter;
+            if (assetIncludes != null && assetIncludes.size() > 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < assetIncludes.size(); i++) {
+                    sb.append("(")
+                            .append(assetIncludes.get(i).trim())
+                            .append(")");
+                    if (i != assetIncludes.size() - 1) {
+                        sb.append("|");
+                    }
+                }
+                System.out.println("STRING BUFFER");
+                System.out.println(sb.toString());
+                fileFilter = new RegexFileFilter(sb.toString());
+            } else {
+                fileFilter = new RegexFileFilter(".*?\\." + ext);
+            }
+
             ArrayList<File> paths = getAssetPaths();
             for (File path : paths) {
                 if (!path.exists()) {

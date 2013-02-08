@@ -28,7 +28,13 @@ public class Main {
             jc.usage();
             System.exit(0);
         } else {
-            PipelineEnvironment pe = new PipelineEnvironment(new File(cm.assetDirectory), new File(cm.outputDirectory));
+            Config cfg = new Config();
+            cfg.setAssetDirectory(new File(cm.assetDirectory));
+            cfg.setOutputDirectory(new File(cm.outputDirectory));
+            cfg.setJsIncludes(cm.jsIncludes);
+            cfg.setCssIncludes(cm.cssIncludes);
+            cfg.setImageIncludes(cm.imageIncludes);
+            PipelineEnvironment pe = new PipelineEnvironment(cfg);
             if (jc.getParsedCommand() != null) {
                 if (jc.getParsedCommand().equals("build")) {
                     BuildAll.build(pe);

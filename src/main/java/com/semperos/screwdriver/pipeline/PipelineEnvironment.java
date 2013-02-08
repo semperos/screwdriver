@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.pipeline;
 
+import com.semperos.screwdriver.Config;
 import com.semperos.screwdriver.cli.CommandMain;
 
 import java.io.File;
@@ -38,38 +39,31 @@ public class PipelineEnvironment {
         this.imageAssetSpec = imageAssetSpec;
     }
 
-    public PipelineEnvironment() {
-        this(new File(new CommandMain().assetDirectory));
-    }
-
-    public PipelineEnvironment(File assetDirectory) {
-        this(assetDirectory, new File(new CommandMain().outputDirectory));
-    }
     /**
      * @todo Unhardcode as needed
      */
-    public PipelineEnvironment(File assetDirectory, File outputDirectory) {
+    public PipelineEnvironment(Config cfg) { //File assetDirectory, File outputDirectory) {
         ArrayList<File> jsAssetPaths = new ArrayList<File>();
-        jsAssetPaths.add(new File(assetDirectory, "javascripts"));
-        File jsOutputPath = new File(outputDirectory, "javascripts");
+        jsAssetPaths.add(new File(cfg.getAssetDirectory(), "javascripts"));
+        File jsOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
         ArrayList<String> jsAssetExtensions = new ArrayList<String>();
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
         jsAssetSpec = new JsAssetSpec(jsAssetPaths, jsAssetExtensions, jsOutputPath);
 
         ArrayList<File> cssAssetPaths = new ArrayList<File>();
-        cssAssetPaths.add(new File(assetDirectory, "stylesheets"));
-        File cssOutputPath = new File(outputDirectory, "stylesheets");
+        cssAssetPaths.add(new File(cfg.getAssetDirectory(), "stylesheets"));
+        File cssOutputPath = new File(cfg.getOutputDirectory(), "stylesheets");
         ArrayList<String> cssAssetExtensions = new ArrayList<String>();
         cssAssetExtensions.add("css");
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
-        cssAssetSpec = new CssAssetSpec(cssAssetPaths, cssAssetExtensions, cssOutputPath);
+        cssAssetSpec = new CssAssetSpec(cssAssetPaths, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
 
         ArrayList<File> imageAssetPaths = new ArrayList<File>();
-        imageAssetPaths.add(new File(assetDirectory, "images"));
-        File imageOutputPath = new File(outputDirectory, "images");
+        imageAssetPaths.add(new File(cfg.getAssetDirectory(), "images"));
+        File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
         ArrayList<String> imageAssetExtensions = new ArrayList<String>();
         imageAssetExtensions.add("bmp");
         imageAssetExtensions.add("gif");

@@ -17,6 +17,10 @@ public class CssAssetSpec extends AssetSpec {
         super(assetPaths, assetExtensions, outputPath);
     }
 
+    public CssAssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
+        super(assetPaths, assetExtensions, assetIncludes, outputPath);
+    }
+
     @Override
     public String outputFileName(String sourceFileName) {
         return FilenameUtils.getBaseName(sourceFileName) + ".css";
