@@ -33,6 +33,6 @@ public class Main {
             BuildAll.build(pe);
         }
 
-        System.out.println(cm.assetDirectory + " " + cm.outputDirectory);
+        System.out.println("See " + cm.outputDirectory);
     }
 }
