@@ -1,4 +1,4 @@
-package com.semperos.screwdriver.js.coffeescript;
+package com.semperos.screwdriver.js;
 
 import com.semperos.screwdriver.js.RhinoCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
@@ -24,7 +24,8 @@ public class CoffeeScriptCompiler {
      *
      * @param coffeeScriptSource The CoffeeScript source code to be compiled
      * @return The resultant JavaScript
-     * @throws CoffeeScriptCompileException
+     * @throws IOException
+     * @throws RhinoEvaluatorException
      */
     public String compile(String coffeeScriptSource) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");

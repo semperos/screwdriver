@@ -1,7 +1,7 @@
 package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
-import com.semperos.screwdriver.js.coffeescript.CoffeeScriptCompiler;
+import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
 
 import java.io.File;

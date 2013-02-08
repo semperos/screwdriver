@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.js.coffeescript;
 
+import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
