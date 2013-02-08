@@ -52,7 +52,7 @@ public class AssetSpec {
     }
 
     /**
-     * Retrieve {@code File} objects for every file of a particular {@link AssetType}.
+     * Retrieve all actual {@code File} objects for this asset type
      *
      * @return List of all assets of this type currently in filesystem
      */
