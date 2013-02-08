@@ -12,7 +12,7 @@ import org.mozilla.javascript.JavaScriptException;
 public class RhinoEvaluatorException extends Exception {
     public RhinoEvaluatorException(JavaScriptException e) {
         super(e.getValue().toString(), e);
-        System.err.println("JavaScript Source Stacktrace:");
+        System.err.println("JavaScript Source Stacktrace");
         System.err.println(e.getScriptStackTrace());
         e.printStackTrace();
     }

@@ -19,6 +19,7 @@ public class LessCompiler {
     public LessCompiler() {
         rhinoCompiler = new RhinoCompiler();
         HashMap<String,String> deps = new HashMap<String,String>();
+        deps.put("util.js", "com/semperos/screwdriver/js/extension/util.js");
         deps.put("env.js", "com/semperos/screwdriver/js/vendor/env.rhino.1.2.js");
         deps.put("less.js", "com/semperos/screwdriver/js/vendor/less-1.3.3.js");
         rhinoCompiler.addDependencies(deps);

@@ -1,5 +1,10 @@
 __Screwdriver.result = 'COMPILATION FAILED';
 
+// function LessCompilerException(message) {
+//     this.message = message;
+//     this.name = "LessCompilerException";
+// }
+
 var parser = new less.Parser();
 parser.parse(__Screwdriver.scriptSource, function(e, tree) {
     if (e instanceof Object) {
@@ -26,7 +31,17 @@ parser.parse(__Screwdriver.scriptSource, function(e, tree) {
 //            }
 //        }
 //    }
-    __Screwdriver.result = tree.toCSS(__Screwdriver.compilerOptions);
+    try {
+        __Screwdriver.result = tree.toCSS(__Screwdriver.compilerOptions);
+    } catch (e) {
+        print("ERROR: LESS compilation error.");
+        __ScrewdriverGlobal.printObject(e);
+        throw e;
+        // var msg = 'Error: LESS code could not be compiled.\n';
+        // msg += formatObject(e);
+        // throw new LessCompilerException(msg);
+    }
+
 });
 
 __Screwdriver.result;
