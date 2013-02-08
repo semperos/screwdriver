@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
-    private AssetSpec cssAssetSpec;
+    private CssAssetSpec cssAssetSpec;
     private AssetSpec imageAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
@@ -22,11 +22,11 @@ public class PipelineEnvironment {
         this.jsAssetSpec = jsAssetSpec;
     }
 
-    public AssetSpec getCssAssetSpec() {
+    public CssAssetSpec getCssAssetSpec() {
         return cssAssetSpec;
     }
 
-    public void setCssAssetSpec(AssetSpec cssAssetSpec) {
+    public void setCssAssetSpec(CssAssetSpec cssAssetSpec) {
         this.cssAssetSpec = cssAssetSpec;
     }
 
@@ -65,7 +65,7 @@ public class PipelineEnvironment {
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
-        cssAssetSpec = new AssetSpec(cssAssetPaths, cssAssetExtensions, cssOutputPath);
+        cssAssetSpec = new CssAssetSpec(cssAssetPaths, cssAssetExtensions, cssOutputPath);
 
         ArrayList<File> imageAssetPaths = new ArrayList<File>();
         imageAssetPaths.add(new File(assetDirectory, "images"));

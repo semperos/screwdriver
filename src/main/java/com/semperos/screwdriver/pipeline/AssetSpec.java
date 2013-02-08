@@ -77,4 +77,23 @@ public class AssetSpec {
         }
         return assets;
     }
+
+    public File outputFile(File sourceFile) {
+        String file = sourceFile.getAbsolutePath();
+        String targetName = outputFileName(file);
+        String path = getOutputPath().getAbsolutePath();
+        return FileUtils.getFile(path, targetName);
+    }
+
+    /**
+     * NOTE: This method is intended to be overridden by subclasses
+     * that need specific file name mangling for compiled output,
+     * e.g., {@literal foo.coffee} to {@literal foo.js}.
+     *
+     * @param sourceFileName
+     * @return
+     */
+    protected String outputFileName(String sourceFileName) {
+        return sourceFileName;
+    }
 }
