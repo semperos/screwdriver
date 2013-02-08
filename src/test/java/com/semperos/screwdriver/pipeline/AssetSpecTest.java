@@ -1,6 +1,7 @@
 package com.semperos.screwdriver.pipeline;
 
 import com.semperos.screwdriver.TestUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.Before;
 import org.junit.Test;
 

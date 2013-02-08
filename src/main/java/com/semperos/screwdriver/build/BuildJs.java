@@ -1,8 +1,10 @@
 package com.semperos.screwdriver.build;
 
+import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,19 +20,20 @@ public class BuildJs {
         this.jsAssetSpec = jsAssetSpec;
     }
 
-    public String compile(String sourceCode) throws IOException, RhinoEvaluatorException {
-        CoffeeScriptCompiler csc = new CoffeeScriptCompiler();
-        return csc.compile(sourceCode);
+    public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
+        String sourceCode = BuildUtil.readFile(sourceFile);
+        if (FilenameUtils.isExtension(sourceFile.toString(), "coffee")) {
+            CoffeeScriptCompiler csc = new CoffeeScriptCompiler();
+            return csc.compile(sourceCode);
+        } else {
+            IdentityCompiler idc = new IdentityCompiler();
+            return idc.compile(sourceCode);
+        }
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        BuildUtil.writeFile(compile(BuildUtil.readFile(sourceFile)),
+        BuildUtil.writeFile(compile(sourceFile),
                 jsAssetSpec.outputFile(sourceFile));
-    }
-
-    public void build(File sourceFile, Charset charset) throws IOException, RhinoEvaluatorException {
-        BuildUtil.writeFile(compile(BuildUtil.readFile(sourceFile, charset)),
-                jsAssetSpec.outputFile(sourceFile), charset);
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {

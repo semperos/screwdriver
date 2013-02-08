@@ -1,9 +1,10 @@
 package com.semperos.screwdriver.build;
 
+import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.LessCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
-import com.semperos.screwdriver.pipeline.JsAssetSpec;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,19 +25,20 @@ public class BuildCss {
         this.cssAssetSpec = cssAssetSpec;
     }
 
-    public String compile(String sourceCode) throws IOException, RhinoEvaluatorException {
-        LessCompiler csc = new LessCompiler();
-        return csc.compile(sourceCode);
+    public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
+        String sourceCode = BuildUtil.readFile(sourceFile);
+        if (FilenameUtils.isExtension(sourceFile.toString(), "less")) {
+            LessCompiler csc = new LessCompiler();
+            return csc.compile(sourceCode);
+        } else {
+            IdentityCompiler idc = new IdentityCompiler();
+            return idc.compile(sourceCode);
+        }
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        BuildUtil.writeFile(compile(BuildUtil.readFile(sourceFile)),
+        BuildUtil.writeFile(compile(sourceFile),
                 cssAssetSpec.outputFile(sourceFile));
-    }
-
-    public void build(File sourceFile, Charset charset) throws IOException, RhinoEvaluatorException {
-        BuildUtil.writeFile(compile(BuildUtil.readFile(sourceFile, charset)),
-                cssAssetSpec.outputFile(sourceFile), charset);
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
