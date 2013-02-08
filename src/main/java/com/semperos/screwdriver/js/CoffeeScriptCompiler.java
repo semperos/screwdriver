@@ -3,6 +3,7 @@ package com.semperos.screwdriver.js;
 import com.semperos.screwdriver.js.RhinoCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -27,8 +28,9 @@ public class CoffeeScriptCompiler {
      * @throws IOException
      * @throws RhinoEvaluatorException
      */
-    public String compile(String coffeeScriptSource) throws IOException, RhinoEvaluatorException {
+    public String compile(String coffeeScriptSource, File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
+        rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.compilerArgs(coffeeScriptSource);
         return rhinoCompiler.compile();
     }

@@ -1,3 +1,8 @@
+/**
+ * Begin: SCREWDRIVER ADDITIONS
+ * @todo Move into separate file and load before this.
+ */
+
 /*
  * This is required by env.js
  * This can also be hooked up to our logger of choice
@@ -5,6 +10,17 @@
 print = function(message) {
     java.lang.System.out.println(message);
 };
+
+printKeys = function(obj) {
+    var keys = Object.keys(obj);
+    for (var i = 0; i < keys.length; i++) {
+        print("OBJECT KEY: " + keys[i]);
+    }
+}
+
+/**
+ * End: SCREWDRIVER ADDITIONS
+ */
 
 /*
  * Envjs core-env.1.2.13

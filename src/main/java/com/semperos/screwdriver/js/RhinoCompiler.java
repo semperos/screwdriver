@@ -17,6 +17,9 @@ import java.util.HashMap;
 public class RhinoCompiler extends RhinoEvaluator {
     private InputStream program;
     private String programName;
+    public static final String SCRIPT_SOURCE_JS = "scriptSource";
+    public static final String COMPILER_OPTIONS_JS = "compilerOptions";
+    public static final String SCRIPT_FILE_PATH_JS = "scriptFilePath";
 
     /**
      * Convenience method for calling {@link RhinoEvaluator#addInstanceField(String, Object)}
@@ -30,12 +33,21 @@ public class RhinoCompiler extends RhinoEvaluator {
 
     /**
      * Convenience method for calling {@link RhinoEvaluator#addInstanceField(String, Object)}
-     * to se the {@code compilerOptions} field in the instance-local store.
+     * to set the {@code compilerOptions} field in the instance-local store.
      *
      * @param compilerOptions A map of options to pass to the underlying JavaScript compiler
      */
     public void addCompilerOptions(HashMap<String,String> compilerOptions) {
         addInstanceField(COMPILER_OPTIONS_JS, compilerOptions);
+    }
+
+    /**
+     * Convenience method for calling {@link RhinoEvaluator#addInstanceField(String, Object)}
+     * to set the {@literal scriptFilePath} field in the instance-local store.
+     * @param absolutePathToScript
+     */
+    public void addScriptFilePath(String absolutePathToScript) {
+        addInstanceField(SCRIPT_FILE_PATH_JS, absolutePathToScript);
     }
 
     /**

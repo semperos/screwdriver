@@ -3,6 +3,9 @@ package com.semperos.screwdriver.js;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+
 import static org.junit.Assert.assertEquals;
 
 public class CoffeeScriptCompilerTest {
@@ -22,7 +25,7 @@ public class CoffeeScriptCompilerTest {
                 "  asdf = 2 + 2;\n" +
                 "\n" +
                 "}).call(this);".trim();
-        String result = this.compiler.compile(source).trim();
+        String result = this.compiler.compile(source, new File("/tmp")).trim();
         assertEquals(result,expected);
     }
 }

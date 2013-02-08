@@ -22,8 +22,6 @@ import java.util.Map;
 public class RhinoEvaluator {
     public static final String GLOBAL_SD_JS = "__ScrewdriverGlobal";
     public static final String INST_SD_JS = "__Screwdriver";
-    public static final String SCRIPT_SOURCE_JS = "scriptSource";
-    public static final String COMPILER_OPTIONS_JS = "compilerOptions";
     protected Scriptable globalScope;
     protected Scriptable instanceScope;
     protected Scriptable globalScrewdriver;

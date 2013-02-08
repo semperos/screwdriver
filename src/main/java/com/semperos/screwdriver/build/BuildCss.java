@@ -29,10 +29,10 @@ public class BuildCss {
         String sourceCode = BuildUtil.readFile(sourceFile);
         if (FilenameUtils.isExtension(sourceFile.toString(), "less")) {
             LessCompiler csc = new LessCompiler();
-            return csc.compile(sourceCode);
+            return csc.compile(sourceCode, sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
-            return idc.compile(sourceCode);
+            return idc.compile(sourceCode, sourceFile);
         }
     }
 

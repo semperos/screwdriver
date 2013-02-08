@@ -1,5 +1,7 @@
 package com.semperos.screwdriver;
 
+import java.io.File;
+
 /**
  * This "compiler" returns the identity of what it receives.
  *
@@ -10,7 +12,7 @@ package com.semperos.screwdriver;
  *
  */
 public class IdentityCompiler {
-    public String compile(String sourceCode) {
+    public String compile(String sourceCode, File sourceFile) {
         return sourceCode;
     }
 }

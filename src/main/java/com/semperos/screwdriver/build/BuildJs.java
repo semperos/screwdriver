@@ -24,10 +24,10 @@ public class BuildJs {
         String sourceCode = BuildUtil.readFile(sourceFile);
         if (FilenameUtils.isExtension(sourceFile.toString(), "coffee")) {
             CoffeeScriptCompiler csc = new CoffeeScriptCompiler();
-            return csc.compile(sourceCode);
+            return csc.compile(sourceCode, sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
-            return idc.compile(sourceCode);
+            return idc.compile(sourceCode, sourceFile);
         }
     }
 
