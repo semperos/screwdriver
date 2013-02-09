@@ -1,13 +1,11 @@
 package com.semperos.screwdriver.pipeline;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,17 +15,17 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class AssetSpec {
-    private ArrayList<File> assetPaths;
+    private File assetPath;
     private ArrayList<String> assetExtensions;
     private ArrayList<String> assetIncludes;
     private File outputPath;
 
-    public ArrayList<File> getAssetPaths() {
-        return assetPaths;
+    public File getAssetPath() {
+        return assetPath;
     }
 
-    public void setAssetPaths(ArrayList<File> assetPaths) {
-        this.assetPaths = assetPaths;
+    public void setAssetPath(File assetPath) {
+        this.assetPath = assetPath;
     }
 
     public ArrayList<String> getAssetExtensions() {
@@ -46,12 +44,12 @@ public class AssetSpec {
         this.outputPath = outputPath;
     }
 
-    public AssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, File outputPath) {
-        this(assetPaths, assetExtensions, null, outputPath);
+    public AssetSpec(File assetPath, ArrayList<String> assetExtensions, File outputPath) {
+        this(assetPath, assetExtensions, null, outputPath);
     }
 
-    public AssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
-        this.assetPaths = assetPaths;
+    public AssetSpec(File assetPath, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
+        this.assetPath = assetPath;
         this.assetExtensions = assetExtensions;
         this.assetIncludes = assetIncludes;
         this.outputPath = outputPath;
@@ -84,18 +82,16 @@ public class AssetSpec {
                 fileFilter = new RegexFileFilter(".*?\\." + ext);
             }
 
-            ArrayList<File> paths = getAssetPaths();
-            for (File path : paths) {
-                if (!path.exists()) {
-                    throw new RuntimeException("One of the directories that Screwdriver expects to work with " +
-                            "does not exist: " + path.getAbsolutePath());
-                } else {
-                    assets.addAll(FileUtils.listFiles(
-                            path,
-                            fileFilter,
-                            DirectoryFileFilter.DIRECTORY
-                    ));
-                }
+            File path = getAssetPath();
+            if (!path.exists()) {
+                throw new RuntimeException("One of the directories that Screwdriver expects to work with " +
+                        "does not exist: " + path.getAbsolutePath());
+            } else {
+                assets.addAll(FileUtils.listFiles(
+                        path,
+                        fileFilter,
+                        DirectoryFileFilter.DIRECTORY
+                ));
             }
         }
         return assets;

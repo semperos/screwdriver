@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class JsAssetSpec extends AssetSpec {
-    public JsAssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, File outputPath) {
-        super(assetPaths, assetExtensions, outputPath);
+    public JsAssetSpec(File assetPath, ArrayList<String> assetExtensions, File outputPath) {
+        super(assetPath, assetExtensions, outputPath);
     }
 
     @Override

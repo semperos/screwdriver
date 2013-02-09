@@ -43,26 +43,23 @@ public class PipelineEnvironment {
      * @todo Unhardcode as needed
      */
     public PipelineEnvironment(Config cfg) { //File assetDirectory, File outputDirectory) {
-        ArrayList<File> jsAssetPaths = new ArrayList<File>();
-        jsAssetPaths.add(new File(cfg.getAssetDirectory(), "javascripts"));
+        File jsAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
         File jsOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
         ArrayList<String> jsAssetExtensions = new ArrayList<String>();
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
-        jsAssetSpec = new JsAssetSpec(jsAssetPaths, jsAssetExtensions, jsOutputPath);
+        jsAssetSpec = new JsAssetSpec(jsAssetPath, jsAssetExtensions, jsOutputPath);
 
-        ArrayList<File> cssAssetPaths = new ArrayList<File>();
-        cssAssetPaths.add(new File(cfg.getAssetDirectory(), "stylesheets"));
+        File cssAssetPath = new File(cfg.getAssetDirectory(), "stylesheets");
         File cssOutputPath = new File(cfg.getOutputDirectory(), "stylesheets");
         ArrayList<String> cssAssetExtensions = new ArrayList<String>();
         cssAssetExtensions.add("css");
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
-        cssAssetSpec = new CssAssetSpec(cssAssetPaths, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
+        cssAssetSpec = new CssAssetSpec(cssAssetPath, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
 
-        ArrayList<File> imageAssetPaths = new ArrayList<File>();
-        imageAssetPaths.add(new File(cfg.getAssetDirectory(), "images"));
+        File imageAssetPath = new File(cfg.getAssetDirectory(), "images");
         File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
         ArrayList<String> imageAssetExtensions = new ArrayList<String>();
         imageAssetExtensions.add("bmp");
@@ -71,7 +68,7 @@ public class PipelineEnvironment {
         imageAssetExtensions.add("jpeg");
         imageAssetExtensions.add("png");
         imageAssetExtensions.add("svg");
-        imageAssetSpec = new AssetSpec(imageAssetPaths, imageAssetExtensions, imageOutputPath);
+        imageAssetSpec = new AssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
     }
 
 }

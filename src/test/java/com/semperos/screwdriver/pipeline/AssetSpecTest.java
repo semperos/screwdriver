@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.pipeline;
 
 import com.semperos.screwdriver.TestUtil;
-import org.apache.commons.io.FilenameUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,10 +26,8 @@ public class AssetSpecTest {
 
     @Test
     public void testGetAssetPaths() throws Exception {
-        ArrayList<File> paths = jsSpec.getAssetPaths();
-        for (File path : paths) {
-            assertTrue(path.exists());
-        }
+        File path = jsSpec.getAssetPath();
+        assertTrue(path.exists());
     }
 
     @Test

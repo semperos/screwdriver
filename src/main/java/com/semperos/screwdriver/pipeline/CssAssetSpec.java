@@ -13,12 +13,12 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class CssAssetSpec extends AssetSpec {
-    public CssAssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, File outputPath) {
-        super(assetPaths, assetExtensions, outputPath);
+    public CssAssetSpec(File assetPath, ArrayList<String> assetExtensions, File outputPath) {
+        super(assetPath, assetExtensions, outputPath);
     }
 
-    public CssAssetSpec(ArrayList<File> assetPaths, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
-        super(assetPaths, assetExtensions, assetIncludes, outputPath);
+    public CssAssetSpec(File assetPath, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
+        super(assetPath, assetExtensions, assetIncludes, outputPath);
     }
 
     @Override
