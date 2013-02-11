@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.pipeline;
 
 import com.semperos.screwdriver.Config;
-import com.semperos.screwdriver.cli.CommandMain;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
     private CssAssetSpec cssAssetSpec;
-    private AssetSpec imageAssetSpec;
+    private ImageAssetSpec imageAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
         return jsAssetSpec;
@@ -31,11 +30,11 @@ public class PipelineEnvironment {
         this.cssAssetSpec = cssAssetSpec;
     }
 
-    public AssetSpec getImageAssetSpec() {
+    public ImageAssetSpec getImageAssetSpec() {
         return imageAssetSpec;
     }
 
-    public void setImageAssetSpec(AssetSpec imageAssetSpec) {
+    public void setImageAssetSpec(ImageAssetSpec imageAssetSpec) {
         this.imageAssetSpec = imageAssetSpec;
     }
 
@@ -57,7 +56,7 @@ public class PipelineEnvironment {
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
-        cssAssetSpec = new CssAssetSpec(cssAssetPath, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
+        cssAssetSpec = new  CssAssetSpec(cssAssetPath, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
 
         File imageAssetPath = new File(cfg.getAssetDirectory(), "images");
         File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
@@ -68,7 +67,7 @@ public class PipelineEnvironment {
         imageAssetExtensions.add("jpeg");
         imageAssetExtensions.add("png");
         imageAssetExtensions.add("svg");
-        imageAssetSpec = new AssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
+        imageAssetSpec = new ImageAssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
     }
 
 }

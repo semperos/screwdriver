@@ -1,45 +1,57 @@
 package com.semperos.screwdriver;
 
-import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/8/13
- * Time: 11:27 AM
- * To change this template use File | Settings | File Templates.
+ * Integration test for application entry-point
  */
 public class MainIntegrationTest {
-    @After
+//    @After
     public void cleanupTestOutput() throws Exception {
-        FileUtils.deleteDirectory(new File(TestUtil.testOutputDirectory(), "javascripts"));
-        FileUtils.deleteDirectory(new File(TestUtil.testOutputDirectory(), "stylesheets"));
-        FileUtils.deleteDirectory(new File(TestUtil.testOutputDirectory(), "images"));
+        TestUtil.deleteAssetDirectories();
+    }
+
+//    @Test
+    public void testMain() throws Exception {
+        String outputPath = "src/test/resources/com/semperos/screwdriver/sample/output";
+        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets",
+                "-o", outputPath };
+        Main.main(args);
+        LinkedList<File> jsFiles = (LinkedList<File>) FileUtils.listFiles(
+                new File(outputPath),
+                new RegexFileFilter(".*\\.js"),
+                DirectoryFileFilter.DIRECTORY);
+        LinkedList<File> cssFiles = (LinkedList<File>) FileUtils.listFiles(
+                new File(outputPath),
+                new RegexFileFilter(".*\\.css"),
+                DirectoryFileFilter.DIRECTORY);
+        LinkedList<File> imageFiles = (LinkedList<File>) FileUtils.listFiles(
+                new File(outputPath),
+                new RegexFileFilter(".*\\.png"),
+                DirectoryFileFilter.DIRECTORY);
+        assertEquals(2, jsFiles.size());
+        assertEquals(5, cssFiles.size());
+        assertEquals(1, imageFiles.size());
     }
 
     @Test
-    public void testMain() throws Exception {
-        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets", "-o", "src/test/resources/com/semperos/screwdriver/sample/output" };
+    public void testMainWithCssIncludes() throws Exception {
+        String outputPath = "src/test/resources/com/semperos/screwdriver/sample/output";
+        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets",
+                "-o", outputPath,
+                "-icss", ".*?main\\.less"};
         Main.main(args);
-        PipelineEnvironment pe = TestUtil.testPipelineEnvironment();
-        ArrayList<File> jsFiles = pe.getJsAssetSpec().getFiles();
-        ArrayList<File> cssFiles = pe.getCssAssetSpec().getFiles();
-        assertTrue(jsFiles.size() >= 2);
-        assertTrue(cssFiles.size() >= 2);
-        for (File f : jsFiles) {
-            assertTrue(f.exists());
-        }
-        for (File f : cssFiles) {
-            assertTrue(f.exists());
-        }
+        LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(new File(outputPath), new RegexFileFilter(".*\\.css"), DirectoryFileFilter.DIRECTORY);
+        assertEquals(1, files.size());
+        assertEquals("main.css", files.get(0).getName());
     }
 
 }

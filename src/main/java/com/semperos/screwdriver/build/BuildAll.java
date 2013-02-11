@@ -2,6 +2,7 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
+import com.semperos.screwdriver.pipeline.ImageAssetSpec;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
 import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 
@@ -16,11 +17,15 @@ public class BuildAll {
         // Build it
         JsAssetSpec jsAssetSpec = pe.getJsAssetSpec();
         CssAssetSpec cssAssetSpec = pe.getCssAssetSpec();
+        ImageAssetSpec imageAssetSpec = pe.getImageAssetSpec();
 
         BuildJs js = new BuildJs(jsAssetSpec);
         js.buildAll();
 
         BuildCss css = new BuildCss(cssAssetSpec);
         css.buildAll();
+
+        BuildImage image = new BuildImage(imageAssetSpec);
+        image.buildAll();
     }
 }

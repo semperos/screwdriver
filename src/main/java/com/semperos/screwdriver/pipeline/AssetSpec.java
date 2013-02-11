@@ -8,11 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/7/13
- * Time: 4:19 PM
- * To change this template use File | Settings | File Templates.
+ * Base representation of a type of asset in the pipeline.
  */
 public class AssetSpec {
     private File assetPath;
@@ -60,7 +56,7 @@ public class AssetSpec {
      *
      * @return List of all assets of this type currently in filesystem
      */
-    public ArrayList<File> getFiles() {
+    public ArrayList<File> findFiles() {
         ArrayList<File> assets = new ArrayList<File>();
         ArrayList<String> extensions = getAssetExtensions();
         for (String ext : extensions) {
@@ -75,8 +71,6 @@ public class AssetSpec {
                         sb.append("|");
                     }
                 }
-                System.out.println("STRING BUFFER");
-                System.out.println(sb.toString());
                 fileFilter = new RegexFileFilter(sb.toString());
             } else {
                 fileFilter = new RegexFileFilter(".*?\\." + ext);
@@ -97,10 +91,26 @@ public class AssetSpec {
         return assets;
     }
 
+    public static String getRelevantPath(File baseThatDoesNotMatter, File baseForOutput, File sourceFile) {
+        String fromBase = baseThatDoesNotMatter.getAbsolutePath();
+        if (!fromBase.endsWith("/")) {
+            fromBase += "/";
+        }
+        String toBase = baseForOutput.getAbsolutePath();
+        if (!toBase.endsWith("/")) {
+            toBase += "/";
+        }
+        String namePattern = sourceFile.getName() + "$";
+        String relevantPath = sourceFile.getAbsolutePath().replace(fromBase, "");
+        relevantPath = relevantPath.replaceAll(namePattern, "");
+        System.out.println("Relevant: " + relevantPath);
+        System.out.println("All together: " + toBase + relevantPath);
+        return toBase + relevantPath;
+    }
+
     public File outputFile(File sourceFile) {
-        String file = sourceFile.getAbsolutePath();
-        String targetName = outputFileName(file);
-        String path = getOutputPath().getAbsolutePath();
+        String targetName = outputFileName(sourceFile.getName());
+        String path = getRelevantPath(assetPath, outputPath, sourceFile);
         return FileUtils.getFile(path, targetName);
     }
 

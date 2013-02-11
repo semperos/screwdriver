@@ -8,7 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,7 +41,7 @@ public class BuildCss {
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : cssAssetSpec.getFiles()) {
+        for (File f : cssAssetSpec.findFiles()) {
             build(f);
         }
     }

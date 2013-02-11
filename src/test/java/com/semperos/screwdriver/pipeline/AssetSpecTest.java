@@ -20,7 +20,7 @@ public class AssetSpecTest {
     AssetSpec jsSpec;
     @Before
     public void setUp() throws Exception {
-        PipelineEnvironment pe = TestUtil.testPipelineEnvironment();
+        PipelineEnvironment pe = TestUtil.newPipelineEnvironment();
         jsSpec = pe.getJsAssetSpec();
     }
 
@@ -38,7 +38,7 @@ public class AssetSpecTest {
 
     @Test
     public void testGetFiles() throws Exception {
-        ArrayList<File> files = jsSpec.getFiles();
+        ArrayList<File> files = jsSpec.findFiles();
         for (File f : files) {
             assertTrue(f.exists());
         }

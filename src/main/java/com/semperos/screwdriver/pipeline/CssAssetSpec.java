@@ -6,19 +6,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/8/13
- * Time: 10:27 AM
- * To change this template use File | Settings | File Templates.
+ * Representation of CSS assets in the pipeline
  */
 public class CssAssetSpec extends AssetSpec {
     public CssAssetSpec(File assetPath, ArrayList<String> assetExtensions, File outputPath) {
         super(assetPath, assetExtensions, outputPath);
     }
 
-    public CssAssetSpec(File assetPath, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
-        super(assetPath, assetExtensions, assetIncludes, outputPath);
+    public CssAssetSpec(File assetPath, ArrayList<String> assetExtensions, ArrayList<String> fileFilters, File outputPath) {
+        super(assetPath, assetExtensions, fileFilters, outputPath);
     }
 
     @Override

@@ -8,7 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * Build assets that compile to JavaScript
@@ -37,7 +36,7 @@ public class BuildJs {
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : jsAssetSpec.getFiles()) {
+        for (File f : jsAssetSpec.findFiles()) {
             build(f);
         }
     }

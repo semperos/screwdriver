@@ -1,9 +1,10 @@
 package com.semperos.screwdriver;
 
 import com.semperos.screwdriver.pipeline.PipelineEnvironment;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +30,7 @@ public class TestUtil {
                 "src/test/resources/com/semperos/screwdriver/sample/output");
     }
 
-    public static PipelineEnvironment testPipelineEnvironment() {
+    public static PipelineEnvironment newPipelineEnvironment() {
         return new PipelineEnvironment(TestUtil.testConfig());
     }
 
@@ -37,10 +38,12 @@ public class TestUtil {
         Config cfg = new Config();
         cfg.setAssetDirectory(TestUtil.testAssetDirectory());
         cfg.setOutputDirectory(testOutputDirectory());
-        ArrayList<String> cssIncludes = new ArrayList<String>();
-        cssIncludes.add("main.less");
-        cssIncludes.add("modals.less");
-        cfg.setCssIncludes(cssIncludes);
         return cfg;
+    }
+
+    public static void deleteAssetDirectories() throws IOException {
+        FileUtils.deleteDirectory(new File(testOutputDirectory(), "javascripts"));
+        FileUtils.deleteDirectory(new File(testOutputDirectory(), "stylesheets"));
+        FileUtils.deleteDirectory(new File(testOutputDirectory(), "images"));
     }
 }

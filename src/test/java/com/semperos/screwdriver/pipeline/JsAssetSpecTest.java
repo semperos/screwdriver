@@ -18,7 +18,7 @@ public class JsAssetSpecTest {
 
     @Before
     public void setUp() throws Exception {
-        PipelineEnvironment pe = TestUtil.testPipelineEnvironment();
+        PipelineEnvironment pe = TestUtil.newPipelineEnvironment();
         jsAssetSpec = pe.getJsAssetSpec();
     }
 

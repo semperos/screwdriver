@@ -1,6 +1,5 @@
 package com.semperos.screwdriver.build;
 
-import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -27,5 +26,8 @@ public class BuildUtil {
         FileUtils.writeStringToFile(targetFile, sourceCode, charset);
     }
 
+    public static void copyFile(File sourceFile, File outputFile) throws IOException {
+        FileUtils.copyFile(sourceFile, outputFile);
+    }
 }
 

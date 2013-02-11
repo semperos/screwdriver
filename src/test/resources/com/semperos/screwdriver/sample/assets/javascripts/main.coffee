@@ -1,3 +1,3 @@
 require ['./tool'], (Tool)->
 
-  class Screwdriver extends Tool
+  Tool.main()
