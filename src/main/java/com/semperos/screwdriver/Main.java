@@ -37,7 +37,6 @@ public class Main {
             PipelineEnvironment pe = new PipelineEnvironment(cfg);
             if (jc.getParsedCommand() != null) {
                 if (jc.getParsedCommand().equals("build")) {
-                    System.out.println(cfg.getCssIncludes().toString());
                     BuildAll.build(pe);
                 }
             } else {

@@ -103,8 +103,6 @@ public class AssetSpec {
         String namePattern = sourceFile.getName() + "$";
         String relevantPath = sourceFile.getAbsolutePath().replace(fromBase, "");
         relevantPath = relevantPath.replaceAll(namePattern, "");
-        System.out.println("Relevant: " + relevantPath);
-        System.out.println("All together: " + toBase + relevantPath);
         return toBase + relevantPath;
     }
 
