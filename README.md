@@ -1,6 +1,6 @@
 # Screwdriver #
 
-Web assetSpec management for CI builds and local development using a light-weight Java stack.
+Web assetSpec management for CI builds and local development using a lightweight Java stack.
 
 ## Related Projects ##
 
