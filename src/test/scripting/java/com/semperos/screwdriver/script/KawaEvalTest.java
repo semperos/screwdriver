@@ -23,7 +23,7 @@ public class KawaEvalTest {
 
     @Test
     public void testKawaEvalFile() throws Exception {
-        File kawaScript = new File("src/test/resources/com/semperos/screwdriver/sample/config.scm");
+        File kawaScript = new File("src/test/resources/com/semperos/screwdriver/sample/screwdriver-config.scm");
         assertEquals("42", KawaEval.evalFile(kawaScript).toString());
     }
 }
