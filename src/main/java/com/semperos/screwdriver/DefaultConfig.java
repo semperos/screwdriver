@@ -4,11 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/11/13
- * Time: 10:43 PM
- * To change this template use File | Settings | File Templates.
+ * Default values for configurable aspects of Screwdriver.
  */
 public class DefaultConfig {
     public static boolean getDebug() {
