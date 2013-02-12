@@ -1,8 +1,5 @@
 package com.semperos.screwdriver.js;
 
-import com.semperos.screwdriver.js.RhinoCompiler;
-import com.semperos.screwdriver.js.RhinoEvaluatorException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,6 +19,8 @@ public class CoffeeScriptCompiler {
 
     /**
      * Compile CoffeeScript to JavaScript
+     *
+     * @todo Research why the registerCompiler method has to go here.
      *
      * @param coffeeScriptSource The CoffeeScript source code to be compiled
      * @return The resultant JavaScript

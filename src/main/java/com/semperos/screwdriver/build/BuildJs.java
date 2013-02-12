@@ -14,16 +14,17 @@ import java.io.IOException;
  */
 public class BuildJs {
     private JsAssetSpec jsAssetSpec;
+    private CoffeeScriptCompiler coffeeScriptCompiler;
 
     public BuildJs(JsAssetSpec jsAssetSpec) {
         this.jsAssetSpec = jsAssetSpec;
+        this.coffeeScriptCompiler = new CoffeeScriptCompiler();
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
         String sourceCode = BuildUtil.readFile(sourceFile);
         if (FilenameUtils.isExtension(sourceFile.toString(), "coffee")) {
-            CoffeeScriptCompiler csc = new CoffeeScriptCompiler();
-            return csc.compile(sourceCode, sourceFile);
+            return this.coffeeScriptCompiler.compile(sourceCode, sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
             return idc.compile(sourceCode, sourceFile);

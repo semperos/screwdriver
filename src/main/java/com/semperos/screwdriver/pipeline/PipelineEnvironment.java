@@ -41,13 +41,18 @@ public class PipelineEnvironment {
     /**
      * @todo Unhardcode as needed
      */
-    public PipelineEnvironment(Config cfg) { //File assetDirectory, File outputDirectory) {
+    public PipelineEnvironment(Config cfg) {
         File jsAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
         File jsOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
         ArrayList<String> jsAssetExtensions = new ArrayList<String>();
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
         jsAssetSpec = new JsAssetSpec(jsAssetPath, jsAssetExtensions, jsOutputPath);
+        if (cfg.getJsIncludes() != null && cfg.getJsIncludes().size() > 0) {
+            jsAssetSpec.setAssetIncludes(cfg.getJsIncludes());
+        } else {
+            jsAssetSpec.setAssetExcludes(cfg.getJsExcludes());
+        }
 
         File cssAssetPath = new File(cfg.getAssetDirectory(), "stylesheets");
         File cssOutputPath = new File(cfg.getOutputDirectory(), "stylesheets");
@@ -56,7 +61,13 @@ public class PipelineEnvironment {
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
-        cssAssetSpec = new  CssAssetSpec(cssAssetPath, cssAssetExtensions, cfg.getCssIncludes(), cssOutputPath);
+        cssAssetSpec = new  CssAssetSpec(cssAssetPath, cssAssetExtensions, cssOutputPath);
+        if (cfg.getCssIncludes() != null && cfg.getCssIncludes().size() > 0) {
+            cssAssetSpec.setAssetIncludes(cfg.getCssIncludes());
+        } else {
+            cssAssetSpec.setAssetExcludes(cfg.getCssExcludes());
+        }
+
 
         File imageAssetPath = new File(cfg.getAssetDirectory(), "images");
         File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
@@ -68,6 +79,11 @@ public class PipelineEnvironment {
         imageAssetExtensions.add("png");
         imageAssetExtensions.add("svg");
         imageAssetSpec = new ImageAssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
+        if (cfg.getImageIncludes() != null && cfg.getImageIncludes().size() > 0) {
+            imageAssetSpec.setAssetIncludes(cfg.getImageIncludes());
+        } else {
+            imageAssetSpec.setAssetExcludes(cfg.getImageExcludes());
+        }
     }
 
 }

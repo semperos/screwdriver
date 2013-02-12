@@ -2,6 +2,8 @@ package com.semperos.screwdriver.pipeline;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
@@ -14,7 +16,24 @@ public class AssetSpec {
     private File assetPath;
     private ArrayList<String> assetExtensions;
     private ArrayList<String> assetIncludes;
+    private ArrayList<String> assetExcludes;
     private File outputPath;
+
+    public ArrayList<String> getAssetIncludes() {
+        return assetIncludes;
+    }
+
+    public void setAssetIncludes(ArrayList<String> assetIncludes) {
+        this.assetIncludes = assetIncludes;
+    }
+
+    public ArrayList<String> getAssetExcludes() {
+        return assetExcludes;
+    }
+
+    public void setAssetExcludes(ArrayList<String> assetExcludes) {
+        this.assetExcludes = assetExcludes;
+    }
 
     public File getAssetPath() {
         return assetPath;
@@ -60,7 +79,7 @@ public class AssetSpec {
         ArrayList<File> assets = new ArrayList<File>();
         ArrayList<String> extensions = getAssetExtensions();
         for (String ext : extensions) {
-            RegexFileFilter fileFilter;
+            IOFileFilter fileFilter;
             if (assetIncludes != null && assetIncludes.size() > 0) {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < assetIncludes.size(); i++) {
@@ -72,6 +91,17 @@ public class AssetSpec {
                     }
                 }
                 fileFilter = new RegexFileFilter(sb.toString());
+            } else if (assetExcludes != null && assetExcludes.size() > 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < assetExcludes.size(); i++) {
+                    sb.append("(")
+                            .append(assetExcludes.get(i).trim())
+                            .append(")");
+                    if (i != assetExcludes.size() - 1) {
+                        sb.append("|");
+                    }
+                }
+                fileFilter = new NotFileFilter(new RegexFileFilter(sb.toString()));
             } else {
                 fileFilter = new RegexFileFilter(".*?\\." + ext);
             }

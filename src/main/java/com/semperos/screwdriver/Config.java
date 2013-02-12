@@ -1,22 +1,39 @@
 package com.semperos.screwdriver;
 
+import com.semperos.screwdriver.cli.CommandMain;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/8/13
- * Time: 5:40 PM
- * To change this template use File | Settings | File Templates.
+ * This is basically a bag of config, currently used solely by the {@link com.semperos.screwdriver.pipeline.PipelineEnvironment}
+ * class.
  */
 public class Config {
+    private Boolean debugMode;
     private File assetDirectory;
     private File outputDirectory;
     private ArrayList<String> jsIncludes;
     private ArrayList<String> cssIncludes;
     private ArrayList<String> imageIncludes;
+    private ArrayList<String> jsExcludes;
+    private ArrayList<String> cssExcludes;
+    private ArrayList<String> imageExcludes;
+
+    public Config() {
+    }
+
+    public Config(CommandMain cm) {
+        this.debugMode = cm.debug;
+        this.assetDirectory = (new File(cm.assetDirectory));
+        this.outputDirectory = (new File(cm.outputDirectory));
+        this.jsIncludes = cm.jsIncludes;
+        this.cssIncludes = cm.cssIncludes;
+        this.imageIncludes = cm.imageIncludes;
+        this.jsExcludes = cm.jsExcludes;
+        this.cssExcludes = cm.cssExcludes;
+        this.imageExcludes = cm.imageExcludes;
+    }
 
     public File getAssetDirectory() {
         return assetDirectory;
@@ -34,7 +51,7 @@ public class Config {
         this.outputDirectory = outputDirectory;
     }
 
-    public List<String> getJsIncludes() {
+    public ArrayList<String> getJsIncludes() {
         return jsIncludes;
     }
 
@@ -56,6 +73,30 @@ public class Config {
 
     public void setImageIncludes(ArrayList<String> imageIncludes) {
         this.imageIncludes = imageIncludes;
+    }
+
+    public ArrayList<String> getJsExcludes() {
+        return jsExcludes;
+    }
+
+    public void setJsExcludes(ArrayList<String> jsExcludes) {
+        this.jsExcludes = jsExcludes;
+    }
+
+    public ArrayList<String> getCssExcludes() {
+        return cssExcludes;
+    }
+
+    public void setCssExcludes(ArrayList<String> cssExcludes) {
+        this.cssExcludes = cssExcludes;
+    }
+
+    public ArrayList<String> getImageExcludes() {
+        return imageExcludes;
+    }
+
+    public void setImageExcludes(ArrayList<String> imageExcludes) {
+        this.imageExcludes = imageExcludes;
     }
 
 }
