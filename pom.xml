@@ -45,6 +45,55 @@
       <artifactId>yuicompressor</artifactId>
       <version>2.4.7</version>
     </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty</groupId>
+    	<artifactId>jetty-server</artifactId>
+    	<version>9.0.0.RC0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty</groupId>
+    	<artifactId>jetty-servlet</artifactId>
+    	<version>9.0.0.RC0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty</groupId>
+    	<artifactId>jetty-webapp</artifactId>
+    	<version>9.0.0.RC0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty</groupId>
+    	<artifactId>jetty-jsp</artifactId>
+    	<version>9.0.0.RC0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.jetty</groupId>
+    	<artifactId>jetty-proxy</artifactId>
+    	<version>9.0.0.RC0</version>
+    </dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.15</version>
+		<scope>provided</scope>
+		<exclusions>
+			<exclusion>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jdmk</groupId>
+				<artifactId>jmxtools</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jmx</groupId>
+				<artifactId>jmxri</artifactId>
+			</exclusion>
+		</exclusions>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
