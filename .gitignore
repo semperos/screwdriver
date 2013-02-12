@@ -1,6 +1,2 @@
 # Maven
 target/
-
-# IDE's
-.idea/
-*.iml
