@@ -1,0 +1,14 @@
+{
+    mainConfigFile: 'output/javascripts/common.js',
+    optimize: 'none',
+    baseUrl: 'output/javascripts', // was full canonical path
+    findNestedDependencies: true,
+    include: [ 'common' ],
+    insertRequire: [ 'common' ],
+    // This is relative to baseUrl
+    name: '../../../../../../../../main/resources/com/semperos/screwdriver/js/vendor/almond-0.2.4',
+    wrap: true,
+    out: 'output/built/javascripts/common-built.js',
+    logLevel: 1,
+    originalBaseUrl: 'output/javascripts'
+}
