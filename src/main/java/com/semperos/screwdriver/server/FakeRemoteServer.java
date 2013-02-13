@@ -23,11 +23,9 @@ public class FakeRemoteServer
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(8100);
         server.setConnectors(new Connector[] {connector});
-
         
         WebAppContext webAppContext = new WebAppContext();
-        webAppContext.setContextPath("/");
-        webAppContext.setWar(".");
+        webAppContext.setWar("./WEB-INF/jsp/");
         webAppContext.addServlet(new ServletHolder(new ResponseServlet()), "/redirect/*");
 
         HandlerList handlers = new HandlerList();
