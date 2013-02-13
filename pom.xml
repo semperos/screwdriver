@@ -3,6 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>screwdriver</artifactId>
   <groupId>com.semperos</groupId>
+  <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Screwdriver</name>
   <properties>
@@ -95,8 +96,51 @@
 	</dependency>
   </dependencies>
   <build>
-    <plugins>
-      <plugin>
+	<resources>
+		<resource>
+			<directory>src/main/webapp</directory>
+		</resource>
+	</resources>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.0</version>
+			<configuration>
+				<source>1.6</source>
+				<target>1.6</target>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId>
+			<version>2.0</version>
+			<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>shade</goal>
+					</goals>
+					<configuration>
+						<artifactSet>
+							<includes>
+								<include>org.eclipse.jetty:*</include>
+								<include>log4j:*</include>
+							</includes>
+						</artifactSet>
+						<transformers>
+							<transformer
+								implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<manifestEntries>
+									<Main-Class>com.semperos.screwdriver.server.MainServer</Main-Class>
+									<Build-Number>123</Build-Number>
+								</manifestEntries>
+							</transformer>
+						</transformers>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		<plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.0</version>
         <configuration>
