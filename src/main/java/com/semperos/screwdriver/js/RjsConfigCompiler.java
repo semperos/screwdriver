@@ -52,7 +52,6 @@ public class RjsConfigCompiler extends RhinoCompiler {
             baseConfigObj.put("name", baseConfigObj, "vendor/almond-0.2.4");
             baseConfigObj.put("wrap", baseConfigObj, true);
             baseConfigObj.put("logLevel", baseConfigObj, 0);
-            baseConfigObj.put("originalBaseUrl", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/javascripts");
         } finally {
             Context.exit();
         }

@@ -15,5 +15,4 @@
     wrap: true,
     out: 'output/built/javascripts/common-built.js',  // also needs to be dynamic
     logLevel: 0,
-    originalBaseUrl: 'output/javascripts'
 }
