@@ -9,6 +9,6 @@
     name: 'vendor/almond-0.2.4',
     wrap: true,
     out: 'output/built/javascripts/common-built.js',
-    logLevel: 1,
+    logLevel: 0,
     originalBaseUrl: 'output/javascripts'
 }
