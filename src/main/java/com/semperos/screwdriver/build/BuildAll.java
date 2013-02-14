@@ -37,7 +37,7 @@ public class BuildAll {
         optimizeJs(cfg);
     }
 
-    private static void optimizeJs(Config cfg) {
+    private static void optimizeJs(Config cfg) throws IOException, RhinoEvaluatorException {
         RjsConfigCompiler compiler = new RjsConfigCompiler(cfg);
         compiler.compile();
     }
