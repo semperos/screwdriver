@@ -37,7 +37,8 @@ public class RhinoEvaluator {
 
     /**
      * @todo The two Screwdriver objects that get added to the JS runtime
-     * would probably be better implemented as "host objects."
+     * would probably be better implemented as "host objects," so that Mozilla's API
+     * could be used to set things like instance methods, static methods, etc.
      * See https://developer.mozilla.org/en/docs/Rhino/Embedding_tutorial#javaScriptHostObjects
      * and https://developer.mozilla.org/en-US/docs/Rhino/Examples#Implementing_Host_Objects
      */

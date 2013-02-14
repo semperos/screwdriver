@@ -8,30 +8,31 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base representation of a type of asset in the pipeline.
  */
 public class AssetSpec {
     private File assetPath;
-    private ArrayList<String> assetExtensions;
-    private ArrayList<String> assetIncludes;
-    private ArrayList<String> assetExcludes;
+    private List<String> assetExtensions;
+    private List<String> assetIncludes;
+    private List<String> assetExcludes;
     private File outputPath;
 
-    public ArrayList<String> getAssetIncludes() {
+    public List<String> getAssetIncludes() {
         return assetIncludes;
     }
 
-    public void setAssetIncludes(ArrayList<String> assetIncludes) {
+    public void setAssetIncludes(List<String> assetIncludes) {
         this.assetIncludes = assetIncludes;
     }
 
-    public ArrayList<String> getAssetExcludes() {
+    public List<String> getAssetExcludes() {
         return assetExcludes;
     }
 
-    public void setAssetExcludes(ArrayList<String> assetExcludes) {
+    public void setAssetExcludes(List<String> assetExcludes) {
         this.assetExcludes = assetExcludes;
     }
 
@@ -43,11 +44,11 @@ public class AssetSpec {
         this.assetPath = assetPath;
     }
 
-    public ArrayList<String> getAssetExtensions() {
+    public List<String> getAssetExtensions() {
         return assetExtensions;
     }
 
-    public void setAssetExtensions(ArrayList<String> assetExtensions) {
+    public void setAssetExtensions(List<String> assetExtensions) {
         this.assetExtensions = assetExtensions;
     }
 
@@ -59,11 +60,11 @@ public class AssetSpec {
         this.outputPath = outputPath;
     }
 
-    public AssetSpec(File assetPath, ArrayList<String> assetExtensions, File outputPath) {
+    public AssetSpec(File assetPath, List<String> assetExtensions, File outputPath) {
         this(assetPath, assetExtensions, null, outputPath);
     }
 
-    public AssetSpec(File assetPath, ArrayList<String> assetExtensions, ArrayList<String> assetIncludes, File outputPath) {
+    public AssetSpec(File assetPath, List<String> assetExtensions, List<String> assetIncludes, File outputPath) {
         this.assetPath = assetPath;
         this.assetExtensions = assetExtensions;
         this.assetIncludes = assetIncludes;
@@ -75,9 +76,9 @@ public class AssetSpec {
      *
      * @return List of all assets of this type currently in filesystem
      */
-    public ArrayList<File> findFiles() {
-        ArrayList<File> assets = new ArrayList<File>();
-        ArrayList<String> extensions = getAssetExtensions();
+    public List<File> findFiles() {
+        List<File> assets = new ArrayList<File>();
+        List<String> extensions = getAssetExtensions();
         for (String ext : extensions) {
             IOFileFilter fileFilter;
             if (assetIncludes != null && assetIncludes.size() > 0) {

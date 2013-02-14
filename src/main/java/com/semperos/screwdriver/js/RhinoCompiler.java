@@ -46,7 +46,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      * to set the {@literal scriptFilePath} field in the instance-local store.
      * @param absolutePathToScript
      */
-    public void addScriptFilePath(String absolutePathToScript) {
+    public void addSourceFilePath(String absolutePathToScript) {
         addInstanceField(SCRIPT_FILE_PATH_JS, absolutePathToScript);
     }
 

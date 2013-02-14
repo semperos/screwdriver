@@ -30,7 +30,7 @@ public class CoffeeScriptCompiler implements JsCompilation {
     @Override
     public String compile(String coffeeScriptSource, File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
-        rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());
+        rhinoCompiler.addSourceFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.compilerArgs(coffeeScriptSource);
         return rhinoCompiler.compile();
     }

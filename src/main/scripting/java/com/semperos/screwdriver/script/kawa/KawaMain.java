@@ -5,7 +5,6 @@ import com.semperos.screwdriver.Config;
 import com.semperos.screwdriver.cli.CommandBuild;
 import com.semperos.screwdriver.cli.CommandDispatcher;
 import com.semperos.screwdriver.cli.CommandMain;
-import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -39,8 +38,7 @@ public class KawaMain {
         // Build using defaults
         } else {
             Config cfg = new Config(cm);
-            PipelineEnvironment pe = new PipelineEnvironment(cfg);
-            CommandDispatcher.dispatch(jc, pe);
+            CommandDispatcher.dispatch(jc, cfg);
         }
     }
 }

@@ -36,7 +36,7 @@ public class LessCompiler implements JsCompilation {
     @Override
     public String compile(String lessSource, File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("LessCompiler", "com/semperos/screwdriver/js/extension/compile-less.js");
-        rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());
+        rhinoCompiler.addSourceFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.compilerArgs(new LessSource(sourceFile).getNormalizedContent());
         String ret;
         try {

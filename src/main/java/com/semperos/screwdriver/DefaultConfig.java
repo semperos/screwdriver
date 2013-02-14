@@ -43,4 +43,20 @@ public class DefaultConfig {
     public static ArrayList<String> getImageExcludes() {
         return new ArrayList<String>();
     }
+
+    public static boolean isOptimizeJs() {
+        return false;
+    }
+
+    public static boolean isOptimizeCss() {
+        return false;
+    }
+
+    public static boolean isOptimizeImage() {
+        return false;
+    }
+
+    public static ArrayList<String> getRjsModules() {
+        return new ArrayList<String>();
+    }
 }

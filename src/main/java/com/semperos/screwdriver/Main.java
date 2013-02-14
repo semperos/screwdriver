@@ -4,7 +4,6 @@ import com.beust.jcommander.JCommander;
 import com.semperos.screwdriver.cli.CommandBuild;
 import com.semperos.screwdriver.cli.CommandDispatcher;
 import com.semperos.screwdriver.cli.CommandMain;
-import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 
 /**
  * Entry-point to Screwdriver if used as executable JAR.
@@ -22,8 +21,7 @@ public class Main {
             System.exit(0);
         } else {
             Config cfg = new Config(cm);
-            PipelineEnvironment pe = new PipelineEnvironment(cfg);
-            CommandDispatcher.dispatch(jc, pe);
+            CommandDispatcher.dispatch(jc, cfg);
         }
     }
 }

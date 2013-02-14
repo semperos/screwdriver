@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -32,13 +32,13 @@ public class AssetSpecTest {
 
     @Test
     public void testGetAssetExtensions() throws Exception {
-        ArrayList<String> extensions = jsSpec.getAssetExtensions();
+        List<String> extensions = jsSpec.getAssetExtensions();
         assertTrue(extensions.size() != 0);
     }
 
     @Test
     public void testGetFiles() throws Exception {
-        ArrayList<File> files = jsSpec.findFiles();
+        List<File> files = jsSpec.findFiles();
         for (File f : files) {
             assertTrue(f.exists());
         }

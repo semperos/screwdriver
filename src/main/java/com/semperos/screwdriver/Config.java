@@ -4,6 +4,7 @@ import com.semperos.screwdriver.cli.CommandMain;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is basically a bag of config, currently used solely by the {@link com.semperos.screwdriver.pipeline.PipelineEnvironment}
@@ -13,12 +14,16 @@ public class Config {
     private Boolean debugMode;
     private File assetDirectory;
     private File outputDirectory;
-    private ArrayList<String> jsIncludes;
-    private ArrayList<String> cssIncludes;
-    private ArrayList<String> imageIncludes;
-    private ArrayList<String> jsExcludes;
-    private ArrayList<String> cssExcludes;
-    private ArrayList<String> imageExcludes;
+    private List<String> jsIncludes;
+    private List<String> cssIncludes;
+    private List<String> imageIncludes;
+    private List<String> jsExcludes;
+    private List<String> cssExcludes;
+    private List<String> imageExcludes;
+    private boolean optimizeJs;
+    private boolean optimizeCss;
+    private boolean optimizeImage;
+    private List<String> rjsModules;
 
     public Config() {
     }
@@ -33,6 +38,10 @@ public class Config {
         this.jsExcludes = cm.jsExcludes;
         this.cssExcludes = cm.cssExcludes;
         this.imageExcludes = cm.imageExcludes;
+        this.optimizeJs = cm.optimizeJs;
+        this.optimizeCss = cm.optimizeCss;
+        this.optimizeImage = cm.optimizeImage;
+        this.rjsModules = cm.rjsModules;
     }
 
     public File getAssetDirectory() {
@@ -51,7 +60,7 @@ public class Config {
         this.outputDirectory = outputDirectory;
     }
 
-    public ArrayList<String> getJsIncludes() {
+    public List<String> getJsIncludes() {
         return jsIncludes;
     }
 
@@ -59,7 +68,7 @@ public class Config {
         this.jsIncludes = jsIncludes;
     }
 
-    public ArrayList<String> getCssIncludes() {
+    public List<String> getCssIncludes() {
         return cssIncludes;
     }
 
@@ -67,7 +76,7 @@ public class Config {
         this.cssIncludes = cssIncludes;
     }
 
-    public ArrayList<String> getImageIncludes() {
+    public List<String> getImageIncludes() {
         return imageIncludes;
     }
 
@@ -75,7 +84,7 @@ public class Config {
         this.imageIncludes = imageIncludes;
     }
 
-    public ArrayList<String> getJsExcludes() {
+    public List<String> getJsExcludes() {
         return jsExcludes;
     }
 
@@ -83,7 +92,7 @@ public class Config {
         this.jsExcludes = jsExcludes;
     }
 
-    public ArrayList<String> getCssExcludes() {
+    public List<String> getCssExcludes() {
         return cssExcludes;
     }
 
@@ -91,7 +100,7 @@ public class Config {
         this.cssExcludes = cssExcludes;
     }
 
-    public ArrayList<String> getImageExcludes() {
+    public List<String> getImageExcludes() {
         return imageExcludes;
     }
 
@@ -99,4 +108,35 @@ public class Config {
         this.imageExcludes = imageExcludes;
     }
 
+    public boolean isOptimizeJs() {
+        return optimizeJs;
+    }
+
+    public void setOptimizeJs(boolean optimizeJs) {
+        this.optimizeJs = optimizeJs;
+    }
+
+    public boolean isOptimizeCss() {
+        return optimizeCss;
+    }
+
+    public void setOptimizeCss(boolean optimizeCss) {
+        this.optimizeCss = optimizeCss;
+    }
+
+    public boolean isOptimizeImage() {
+        return optimizeImage;
+    }
+
+    public void setOptimizeImage(boolean optimizeImage) {
+        this.optimizeImage = optimizeImage;
+    }
+
+    public List<String> getRjsModules() {
+        return rjsModules;
+    }
+
+    public void setRjsModules(ArrayList<String> rjsModules) {
+        this.rjsModules = rjsModules;
+    }
 }
