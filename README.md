@@ -30,8 +30,8 @@ When the Rhino shell is run in this manner, the project's classes are automatica
 
 Extraordinarily verbose, but works:
 
-```
-java -classpath ~/.m2/repository/org/mozilla/rhino/1.7R4/rhino-1.7R4.jar:~/.m2/repository/com/google/javascript/closure-compiler/rr2079.1/closure-compiler-rr2079.1.jar: org.mozilla.javascript.tools.shell.Main src/main/resources/com/semperos/screwdriver/js/vendor/r-2.1.4.js -o src/test/resources/com/semperos/screwdriver/sample/hardcoded-build.js
+```bash
+java -classpath ${HOME}/.m2/repository/org/mozilla/rhino/1.7R4/rhino-1.7R4.jar:${HOME}/.m2/repository/com/google/guava/guava/10.0.1/guava-10.0.1.jar:${HOME}/.m2/repository/com/google/protobuf/protobuf-java/2.4.1/protobuf-java-2.4.1.jar:${HOME}/.m2/repository/com/google/javascript/closure-compiler/rr2079.1/closure-compiler-rr2079.1.jar: org.mozilla.javascript.tools.shell.Main src/main/resources/com/semperos/screwdriver/js/vendor/r-2.1.4.js -o src/test/resources/com/semperos/screwdriver/sample/hardcoded-build.js
 ```
 
 The next step is to call RequireJS from Java via Rhino, in which case the Google Closure compiler JAR will already be on the classpath and all of this will be hidden behind a nice API.
