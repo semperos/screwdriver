@@ -4,6 +4,7 @@ import com.semperos.screwdriver.Config;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,27 +30,29 @@ public class RjsConfigCompiler extends RhinoCompiler {
         rhinoCompiler.addDependencies(deps);
     }
 
-    public void compile(Config cfg) {
+    public String compile() throws IOException, RhinoEvaluatorException {
+        processRjsModuleConfigs();
         rhinoCompiler.registerCompiler("process-rjs", "com/semperos/screwdriver/js/extension/process-rjs.js");
+        return rhinoCompiler.compile();
     }
 
     public Scriptable newBaseConfig() {
         Context ctx = Context.enter();
         Scriptable baseConfigObj = ctx.newObject(instanceScope);
         try {
-            baseConfigObj.put("mainConfigFile", baseConfigObj, "output/javascripts/common.js");
+            baseConfigObj.put("mainConfigFile", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/javascripts/common.js");
             baseConfigObj.put("optimize", baseConfigObj, "closure");
             Scriptable closureConfigObj = ctx.newObject(instanceScope);
             closureConfigObj.put("CompilerOptions", closureConfigObj, ctx.newObject(instanceScope));
             closureConfigObj.put("CompilationLevel", closureConfigObj, "SIMPLE_OPTIMIZATIONS");
             closureConfigObj.put("loggingLevel", closureConfigObj, "WARNING");
             baseConfigObj.put("closure", baseConfigObj, closureConfigObj);
-            baseConfigObj.put("baseUrl", baseConfigObj, "output/javascripts");
+            baseConfigObj.put("baseUrl", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/javascripts");
             baseConfigObj.put("findNestedDependencies", baseConfigObj, true);
             baseConfigObj.put("name", baseConfigObj, "vendor/almond-0.2.4");
             baseConfigObj.put("wrap", baseConfigObj, true);
             baseConfigObj.put("logLevel", baseConfigObj, 0);
-            baseConfigObj.put("originalBaseUrl", baseConfigObj, "output/javascripts");
+            baseConfigObj.put("originalBaseUrl", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/javascripts");
         } finally {
             Context.exit();
         }
@@ -74,7 +77,7 @@ public class RjsConfigCompiler extends RhinoCompiler {
                 Scriptable baseConfigObj = newBaseConfig();
                 baseConfigObj.put("include", baseConfigObj, ctx.newArray(instanceScope, ms));
                 baseConfigObj.put("insertRequire", baseConfigObj, ctx.newArray(instanceScope, ms));
-                baseConfigObj.put("out", baseConfigObj, "output/built/javascripts/" + m + "-built.js");
+                baseConfigObj.put("out", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/built/javascripts/" + m + "-built.js");
                 moduleConfigs.put(i, moduleConfigs, baseConfigObj);
             }
         } finally {

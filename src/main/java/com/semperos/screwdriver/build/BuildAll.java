@@ -38,12 +38,7 @@ public class BuildAll {
     }
 
     private static void optimizeJs(Config cfg) {
-        // 1. Boot up r.js via Rhino
         RjsConfigCompiler compiler = new RjsConfigCompiler(cfg);
-        // 2. Transform Screwdriver "config" for RequireJS optimizer to individual configs
-        //    for each main module to be optimized (like what Mimosa does, except here user has to
-        //    specify which are the main modules).
-        compiler.processRjsModuleConfigs();
-        // 3. Pass each config to requirejs.optimize via Rhino.
+        compiler.compile();
     }
 }
