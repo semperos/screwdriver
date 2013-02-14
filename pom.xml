@@ -251,5 +251,35 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>buildTestAssets</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+              <execution>
+                <id>buildAssets</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <mainClass>com.semperos.screwdriver.Main</mainClass>
+              <arguments>
+                <argument>-a</argument>
+                <argument>src/test/resources/com/semperos/screwdriver/sample/assets</argument>
+                <argument>-o</argument>
+                <argument>src/test/resources/com/semperos/screwdriver/sample/output</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
