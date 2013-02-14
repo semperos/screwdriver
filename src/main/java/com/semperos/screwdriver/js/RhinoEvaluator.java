@@ -35,6 +35,12 @@ public class RhinoEvaluator {
         return this.instanceScope;
     }
 
+    /**
+     * @todo The two Screwdriver objects that get added to the JS runtime
+     * would probably be better implemented as "host objects."
+     * See https://developer.mozilla.org/en/docs/Rhino/Embedding_tutorial#javaScriptHostObjects
+     * and https://developer.mozilla.org/en-US/docs/Rhino/Examples#Implementing_Host_Objects
+     */
     public RhinoEvaluator() {
         Context context = Context.enter();
         globalScope = context.initStandardObjects();
