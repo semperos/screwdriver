@@ -1,6 +1,11 @@
 {
     mainConfigFile: 'output/javascripts/common.js',
-    optimize: 'none',
+    optimize: 'closure',
+    closure: {
+        CompilerOptions: {},
+        CompilationLevel: 'SIMPLE_OPTIMIZATIONS',
+        loggingLevel: 'WARNING'
+    },
     baseUrl: 'output/javascripts', // was full canonical path
     findNestedDependencies: true,
     include: [ 'common' ],
