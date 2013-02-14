@@ -38,7 +38,7 @@ public class MainIntegrationTest {
                 new File(outputPath),
                 new RegexFileFilter(".*\\.png"),
                 DirectoryFileFilter.DIRECTORY);
-        assertEquals(6, jsFiles.size());
+        assertEquals(5, jsFiles.size());
         assertEquals(5, cssFiles.size());
         assertEquals(1, imageFiles.size());
     }
