@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Time: 1:59 AM
  * To change this template use File | Settings | File Templates.
  */
-public class LessCompiler {
+public class LessCompiler implements JsCompilation {
     private RhinoCompiler rhinoCompiler;
 
     public LessCompiler() {
@@ -33,6 +33,7 @@ public class LessCompiler {
      * @throws java.io.IOException
      * @throws RhinoEvaluatorException
      */
+    @Override
     public String compile(String lessSource, File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("LessCompiler", "com/semperos/screwdriver/js/extension/compile-less.js");
         rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());

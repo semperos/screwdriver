@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * Compile CoffeeScript via Rhino
  */
-public class CoffeeScriptCompiler {
+public class CoffeeScriptCompiler implements JsCompilation {
     private RhinoCompiler rhinoCompiler;
 
     public CoffeeScriptCompiler() {
@@ -27,6 +27,7 @@ public class CoffeeScriptCompiler {
      * @throws IOException
      * @throws RhinoEvaluatorException
      */
+    @Override
     public String compile(String coffeeScriptSource, File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
         rhinoCompiler.addScriptFilePath(sourceFile.getAbsolutePath());
