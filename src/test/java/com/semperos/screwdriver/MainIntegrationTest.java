@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,8 +16,12 @@ import static org.junit.Assert.assertEquals;
  * Integration test for application entry-point
  */
 public class MainIntegrationTest {
+    @Before
+    public void cleanupBefore() throws Exception {
+        TestUtil.deleteAssetDirectories();
+    }
     @After
-    public void cleanupTestOutput() throws Exception {
+    public void cleanupAfter() throws Exception {
         TestUtil.deleteAssetDirectories();
     }
 

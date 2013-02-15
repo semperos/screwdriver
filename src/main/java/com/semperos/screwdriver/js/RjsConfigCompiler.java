@@ -27,14 +27,14 @@ public class RjsConfigCompiler {
         rhinoCompiler = new RhinoCompiler(rjsSupport);
         rjsModules = cfg.getRjsModules();
         HashMap<String,String> deps = new HashMap<String,String>();
-        deps.put("r.js", "com/semperos/screwdriver/js/vendor/r-2.1.4.js");
+        deps.put("r.js", "com/semperos/screwdriver/js/vendor/r-patched.js");
         rhinoCompiler.addDependencies(deps);
     }
 
-    public String compile() throws IOException, RhinoEvaluatorException {
+    public void compile() throws IOException, RhinoEvaluatorException {
         processRjsModuleConfigs();
         rhinoCompiler.registerCompiler("process-rjs", "com/semperos/screwdriver/js/extension/process-rjs.js");
-        return rhinoCompiler.compile();
+        rhinoCompiler.compile();
     }
 
     public Scriptable newBaseConfig() {

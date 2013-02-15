@@ -45,5 +45,6 @@ public class TestUtil {
         FileUtils.deleteDirectory(new File(testOutputDirectory(), "javascripts"));
         FileUtils.deleteDirectory(new File(testOutputDirectory(), "stylesheets"));
         FileUtils.deleteDirectory(new File(testOutputDirectory(), "images"));
+        FileUtils.deleteDirectory(new File(testOutputDirectory(), "built"));
     }
 }

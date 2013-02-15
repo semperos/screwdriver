@@ -116,10 +116,18 @@ public class RhinoCompiler extends RhinoEvaluator {
     public String compile (int lineno, Object securityDomain) throws IOException, JavaScriptException {
         Context context = Context.enter();
         Reader reader = new InputStreamReader(program);
-        return (String)context.evaluateReader(instanceScope,
+        Object ret = context.evaluateReader(instanceScope,
                 reader,
                 programName,
                 lineno,
                 securityDomain);
+        if (ret instanceof org.mozilla.javascript.Undefined) {
+            // This is really 'void'. Perhaps a separate 'compile' method
+            // should be used that has 'void' as its return type, and that
+            // get used by the likes of the RjsConfigCompiler
+            return "";
+        } else {
+            return (String) ret;
+        }
     }
 }
