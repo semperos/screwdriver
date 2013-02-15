@@ -18,7 +18,7 @@ import java.util.List;
  *   * Add those objects to an array, say of __Screwdriver.rjsMainModules, which can then
  *     be iterated through in the evaluated JavaScript and passed to requirejs.optimize
  */
-public class RjsConfigCompiler extends RhinoCompiler {
+public class RjsConfigCompiler {
     private RhinoCompiler rhinoCompiler;
     private List<String> rjsModules;
 
