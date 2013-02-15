@@ -54,7 +54,10 @@ public class RhinoEvaluator {
         } else {
             globalScope = (ScriptableObject) context.initStandardObjects(scriptableObject);
             // For now, the reason to do the above at all is to define required functions
-            // in JS land
+            // in JS land.
+            /**
+             * @todo This should be the technique used for other JS libraries that require us to provide definitions of things like print
+             */
             String[] necessaryFunctions = { "print", "load" };
             globalScope.defineFunctionProperties(necessaryFunctions, globalScope.getClass(), ScriptableObject.DONTENUM);
             Scriptable argsObj = context.newArray(globalScope, new Object[] {});
