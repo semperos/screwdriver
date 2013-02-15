@@ -2,6 +2,7 @@ package com.semperos.screwdriver.js;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
 import java.io.*;
 import java.util.HashMap;
@@ -43,8 +44,16 @@ public class RhinoEvaluator {
      * and https://developer.mozilla.org/en-US/docs/Rhino/Examples#Implementing_Host_Objects
      */
     public RhinoEvaluator() {
+        this(null);
+    }
+
+    public RhinoEvaluator(ScriptableObject scriptableObject) {
         Context context = Context.enter();
-        globalScope = context.initStandardObjects();
+        if (scriptableObject == null) {
+            globalScope = context.initStandardObjects();
+        } else {
+            globalScope = context.initStandardObjects(scriptableObject);
+        }
         globalScrewdriver = context.newObject(globalScope);
         globalScrewdriver.put("description",
                 globalScrewdriver,

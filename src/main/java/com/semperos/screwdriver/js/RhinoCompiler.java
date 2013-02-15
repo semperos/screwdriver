@@ -2,6 +2,7 @@ package com.semperos.screwdriver.js;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.JavaScriptException;
+import org.mozilla.javascript.ScriptableObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,13 @@ public class RhinoCompiler extends RhinoEvaluator {
     public static final String SCRIPT_SOURCE_JS = "scriptSource";
     public static final String COMPILER_OPTIONS_JS = "compilerOptions";
     public static final String SCRIPT_FILE_PATH_JS = "scriptFilePath";
+
+    public RhinoCompiler() {
+    }
+
+    public RhinoCompiler(ScriptableObject scriptableObject) {
+        super(scriptableObject);
+    }
 
     /**
      * Convenience method for calling {@link RhinoEvaluator#addInstanceField(String, Object)}

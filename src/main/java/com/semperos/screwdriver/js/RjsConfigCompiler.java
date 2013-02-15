@@ -23,7 +23,8 @@ public class RjsConfigCompiler {
     private List<String> rjsModules;
 
     public RjsConfigCompiler(Config cfg) {
-        rhinoCompiler = new RhinoCompiler();
+        RjsRuntimeSupport rjsSupport = new RjsRuntimeSupport();
+        rhinoCompiler = new RhinoCompiler(rjsSupport);
         rjsModules = cfg.getRjsModules();
         HashMap<String,String> deps = new HashMap<String,String>();
         deps.put("r.js", "com/semperos/screwdriver/js/vendor/r-2.1.4.js");
