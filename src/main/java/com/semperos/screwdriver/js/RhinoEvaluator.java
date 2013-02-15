@@ -23,7 +23,7 @@ import java.util.Map;
 public class RhinoEvaluator {
     public static final String GLOBAL_SD_JS = "__ScrewdriverGlobal";
     public static final String INST_SD_JS = "__Screwdriver";
-    protected Scriptable globalScope;
+    protected ScriptableObject globalScope;
     protected Scriptable instanceScope;
     protected Scriptable globalScrewdriver;
     protected Scriptable instanceScrewdriver;
@@ -52,7 +52,13 @@ public class RhinoEvaluator {
         if (scriptableObject == null) {
             globalScope = context.initStandardObjects();
         } else {
-            globalScope = context.initStandardObjects(scriptableObject);
+            globalScope = (ScriptableObject) context.initStandardObjects(scriptableObject);
+            // For now, the reason to do the above at all is to define required functions
+            // in JS land
+            String[] necessaryFunctions = { "print", "load" };
+            globalScope.defineFunctionProperties(necessaryFunctions, globalScope.getClass(), ScriptableObject.DONTENUM);
+            Scriptable argsObj = context.newArray(globalScope, new Object[] {});
+            globalScope.defineProperty("arguments", argsObj, ScriptableObject.DONTENUM);
         }
         globalScrewdriver = context.newObject(globalScope);
         globalScrewdriver.put("description",
