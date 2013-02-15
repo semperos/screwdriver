@@ -38,12 +38,12 @@ public class RjsConfigCompiler {
 
     public Scriptable newBaseConfig() {
         Context ctx = Context.enter();
-        Scriptable baseConfigObj = ctx.newObject(instanceScope);
+        Scriptable baseConfigObj = ctx.newObject(rhinoCompiler.getInstanceScope());
         try {
             baseConfigObj.put("mainConfigFile", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/javascripts/common.js");
             baseConfigObj.put("optimize", baseConfigObj, "closure");
-            Scriptable closureConfigObj = ctx.newObject(instanceScope);
-            closureConfigObj.put("CompilerOptions", closureConfigObj, ctx.newObject(instanceScope));
+            Scriptable closureConfigObj = ctx.newObject(rhinoCompiler.getInstanceScope());
+            closureConfigObj.put("CompilerOptions", closureConfigObj, ctx.newObject(rhinoCompiler.getInstanceScope()));
             closureConfigObj.put("CompilationLevel", closureConfigObj, "SIMPLE_OPTIMIZATIONS");
             closureConfigObj.put("loggingLevel", closureConfigObj, "WARNING");
             baseConfigObj.put("closure", baseConfigObj, closureConfigObj);
@@ -65,20 +65,21 @@ public class RjsConfigCompiler {
     public void processRjsModuleConfigs() {
         Context ctx = Context.enter();
         try{
-            instanceScrewdriver.put("rjs", instanceScrewdriver, ctx.newObject(instanceScope));
             // Now include module-specific configuration for each target module
-            Scriptable rjs = (Scriptable) instanceScrewdriver.get("rjs", instanceScrewdriver);
-            rjs.put("moduleConfigs", rjs, ctx.newArray(instanceScope, rjsModules.size()));
-            Scriptable moduleConfigs = (Scriptable) rjs.get("moduleConfigs", rjs);
+            Scriptable rjs = ctx.newObject(rhinoCompiler.getInstanceScope());
+            Scriptable moduleConfigs = ctx.newArray(rhinoCompiler.getInstanceScope(), rjsModules.size());
             for (int i = 0; i < rjsModules.size(); i++) {
                 String m = rjsModules.get(i);
                 Object[] ms = new Object[]{ m };
                 Scriptable baseConfigObj = newBaseConfig();
-                baseConfigObj.put("include", baseConfigObj, ctx.newArray(instanceScope, ms));
-                baseConfigObj.put("insertRequire", baseConfigObj, ctx.newArray(instanceScope, ms));
+                baseConfigObj.put("include", baseConfigObj, ctx.newArray(rhinoCompiler.getInstanceScope(), ms));
+                baseConfigObj.put("insertRequire", baseConfigObj, ctx.newArray(rhinoCompiler.getInstanceScope(), ms));
                 baseConfigObj.put("out", baseConfigObj, "src/test/resources/com/semperos/screwdriver/sample/output/built/javascripts/" + m + "-built.js");
                 moduleConfigs.put(i, moduleConfigs, baseConfigObj);
             }
+            // "Save" changes
+            rjs.put("moduleConfigs", rjs, moduleConfigs);
+            rhinoCompiler.addInstanceField("rjs", rjs);
         } finally {
             Context.exit();
         }
