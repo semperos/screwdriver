@@ -6,6 +6,7 @@ import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,5 +42,9 @@ public class BuildJs {
         for (File f : jsAssetSpec.findFiles()) {
             build(f);
         }
+    }
+
+    public void delete(File sourceFile) {
+        FileUtils.delete(jsAssetSpec.outputFile(sourceFile));
     }
 }

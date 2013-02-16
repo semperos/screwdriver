@@ -16,9 +16,25 @@ import java.io.IOException;
 public class CompileCoffeeScriptListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(CompileCoffeeScriptListener.class);
     JsAssetSpec jsAssetSpec;
+    BuildJs buildJs;
 
     public CompileCoffeeScriptListener(JsAssetSpec jsAssetSpec) {
         this.jsAssetSpec = jsAssetSpec;
+        buildJs = new BuildJs(jsAssetSpec);
+    }
+
+    public void buildFile(File file) {
+        try {
+            buildJs.build(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RhinoEvaluatorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteFile(File file) {
+        buildJs.delete(file);
     }
 
     @Override
@@ -46,26 +62,20 @@ public class CompileCoffeeScriptListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        // compile file
+        logger.info("Compiling new file " + file.toString() + " to JavaScript.");
+        buildFile(file);
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Compiling " + file.toString() + " to JavaScript.");
-        BuildJs buildJs = new BuildJs(jsAssetSpec);
-        try {
-            buildJs.build(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RhinoEvaluatorException e) {
-            e.printStackTrace();
-        }
-        // compile file
+        logger.info("Compiling " + file.toString() + " to JavaScript.");
+        buildFile(file);
     }
 
     @Override
     public void onFileDelete(File file) {
-        // delete output file
+        logger.info("Compiling " + file.toString() + " to JavaScript.");
+        deleteFile(file);
     }
 
     @Override
