@@ -1,16 +1,25 @@
 package com.semperos.screwdriver.watch;
 
+import com.semperos.screwdriver.build.BuildJs;
+import com.semperos.screwdriver.js.RhinoEvaluatorException;
+import com.semperos.screwdriver.pipeline.JsAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Handle how CoffeeScript maps to JavaScript files
  */
 public class CompileCoffeeScriptListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(CompileCoffeeScriptListener.class);
+    JsAssetSpec jsAssetSpec;
+
+    public CompileCoffeeScriptListener(JsAssetSpec jsAssetSpec) {
+        this.jsAssetSpec = jsAssetSpec;
+    }
 
     @Override
     public void onStart(FileAlterationObserver fileAlterationObserver) {
@@ -42,7 +51,15 @@ public class CompileCoffeeScriptListener implements FileAlterationListener {
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("File " + file.toString() + " changed.");
+        logger.debug("Compiling " + file.toString() + " to JavaScript.");
+        BuildJs buildJs = new BuildJs(jsAssetSpec);
+        try {
+            buildJs.build(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RhinoEvaluatorException e) {
+            e.printStackTrace();
+        }
         // compile file
     }
 
