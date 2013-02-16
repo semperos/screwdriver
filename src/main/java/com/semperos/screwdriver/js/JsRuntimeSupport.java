@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class RjsRuntimeSupport extends ScriptableObject {
+public class JsRuntimeSupport extends ScriptableObject {
 
     private static final long serialVersionUID = 1L;
-//    private static Logger logger = Logger.getLogger(RjsRuntimeSupport.class);
+//    private static Logger logger = Logger.getLogger(JsRuntimeSupport.class);
     private static final boolean silent = false;
 
     @Override
@@ -32,7 +32,7 @@ public class RjsRuntimeSupport extends ScriptableObject {
 
     public static void load(Context cx, Scriptable thisObj, Object[] args,
                             Function funObj) throws FileNotFoundException, IOException {
-        RjsRuntimeSupport shell = (RjsRuntimeSupport) getTopLevelScope(thisObj);
+        JsRuntimeSupport shell = (JsRuntimeSupport) getTopLevelScope(thisObj);
         for (int i = 0; i < args.length; i++) {
 //            logger.info("Loading file " + Context.toString(args[i]));
             System.out.println("Loading file " + Context.toString(args[i]));

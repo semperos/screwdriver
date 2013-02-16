@@ -1,10 +1,3 @@
-/**
- * This function is required by env.js
- */
-print = function(message) {
-    java.lang.System.out.println(message);
-};
-
 /*
  * Envjs core-env.1.2.13
  * Pure JavaScript Browser Environment

@@ -17,7 +17,8 @@ public class LessCompiler implements JsCompilation {
     private RhinoCompiler rhinoCompiler;
 
     public LessCompiler() {
-        rhinoCompiler = new RhinoCompiler();
+        JsRuntimeSupport jsRuntimeSupport = new JsRuntimeSupport();
+        rhinoCompiler = new RhinoCompiler(jsRuntimeSupport);
         HashMap<String,String> deps = new HashMap<String,String>();
         deps.put("util.js", "com/semperos/screwdriver/js/extension/util.js");
         deps.put("env.js", "com/semperos/screwdriver/js/vendor/env.rhino.1.2.js");
