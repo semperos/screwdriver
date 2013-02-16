@@ -31,3 +31,19 @@ When the Rhino shell is run in this manner, the project's classes are automatica
  * https://github.com/yeungda/jcoffeescript
  * https://github.com/remear/java-assetSpec-pipeline
  * https://github.com/sstephenson/sprockets
+
+## License ##
+
+Copyright 2013 Daniel Gregoire (semperos), Kirill Orlov (rheol)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+<blockquote>http://www.apache.org/licenses/LICENSE-2.0</blockquote>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
