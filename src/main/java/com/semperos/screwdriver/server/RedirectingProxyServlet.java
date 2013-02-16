@@ -1,19 +1,21 @@
 package com.semperos.screwdriver.server;
 
-import java.io.IOException;
-import java.net.URI;
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.proxy.ProxyServlet;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
-import org.eclipse.jetty.proxy.ProxyServlet;
+import java.io.IOException;
+import java.net.URI;
 
 @SuppressWarnings("serial")
 public class RedirectingProxyServlet extends ProxyServlet
 {
+    private static Logger logger = Logger.getLogger(RedirectingProxyServlet.class);
+
     public void init(ServletConfig config) throws ServletException
     {
         super.init(config);
@@ -35,7 +37,7 @@ public class RedirectingProxyServlet extends ProxyServlet
         if (query != null) proxyPath += "?" + query;
         
         URI newUri = URI.create(proxyPath).normalize();
-        System.out.println("Redirecting to " + newUri);
+        logger.info("Redirecting to " + newUri);
         return newUri;
     }
 

@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.js;
 
+import org.apache.log4j.Logger;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
@@ -13,7 +14,7 @@ import java.io.InputStreamReader;
 public class JsRuntimeSupport extends ScriptableObject {
 
     private static final long serialVersionUID = 1L;
-//    private static Logger logger = Logger.getLogger(JsRuntimeSupport.class);
+    private static Logger logger = Logger.getLogger(JsRuntimeSupport.class);
     private static final boolean silent = false;
 
     @Override
@@ -26,22 +27,20 @@ public class JsRuntimeSupport extends ScriptableObject {
         if (silent)
             return;
         for (int i = 0; i < args.length; i++)
-//            logger.info(Context.toString(args[i]));
-            System.out.println(Context.toString(args[i]));
+            logger.info(Context.toString(args[i]));
     }
 
     public static void load(Context cx, Scriptable thisObj, Object[] args,
                             Function funObj) throws FileNotFoundException, IOException {
         JsRuntimeSupport shell = (JsRuntimeSupport) getTopLevelScope(thisObj);
         for (int i = 0; i < args.length; i++) {
-//            logger.info("Loading file " + Context.toString(args[i]));
-            System.out.println("Loading file " + Context.toString(args[i]));
+            logger.info("Loading file " + Context.toString(args[i]));
             shell.processSource(cx, Context.toString(args[i]));
         }
     }
 
     private void processSource(Context cx, String filename)
-            throws FileNotFoundException, IOException {
+            throws IOException {
         cx.evaluateReader(this, new InputStreamReader(getInputStream(filename)), filename, 1, null);
     }
 

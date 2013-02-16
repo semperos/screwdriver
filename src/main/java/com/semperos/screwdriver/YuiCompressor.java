@@ -4,6 +4,7 @@
 package com.semperos.screwdriver;
 
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
+import org.apache.log4j.Logger;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 
@@ -13,6 +14,8 @@ import java.io.*;
  * Compress JavaScript or CSS using the YUI Compressor
  */
 public class YuiCompressor {
+    private static Logger logger = Logger.getLogger(YuiCompressor.class);
+
     public static void compress(String extension, File inputFile, File outputFile) {
         try {
             Reader in = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
@@ -44,18 +47,18 @@ public class YuiCompressor {
         @Override
         public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
             if (line < 0) {
-                System.err.println(message);
+                logger.warn(message);
             } else {
-                System.err.println("YuiCompressor WARNING: " + line + ":" + lineOffset + ':' + message);
+                logger.warn("YuiCompressor WARNING: " + line + ":" + lineOffset + ':' + message);
             }
         }
 
         @Override
         public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
             if (line < 0) {
-                System.err.println(message);
+                logger.error(message);
             } else {
-                System.err.println("YuiCompressor ERROR: " + line + ":" + lineOffset + ':' + message);
+                logger.error("YuiCompressor ERROR: " + line + ":" + lineOffset + ':' + message);
             }
         }
 

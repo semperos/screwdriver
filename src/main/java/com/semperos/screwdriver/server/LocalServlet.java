@@ -1,13 +1,12 @@
 package com.semperos.screwdriver.server;
 
-import java.io.IOException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class LocalServlet extends HttpServlet
@@ -24,7 +23,7 @@ public class LocalServlet extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        System.out.println(request.getRequestURI());
+        logger.info(request.getRequestURI());
         request.getRequestDispatcher(jspPath).forward(request, response);
     }
 }
