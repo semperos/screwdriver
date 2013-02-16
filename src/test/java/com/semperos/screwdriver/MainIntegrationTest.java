@@ -27,20 +27,19 @@ public class MainIntegrationTest {
 
     @Test
     public void testMain() throws Exception {
-        String outputPath = "src/test/resources/com/semperos/screwdriver/sample/output";
-        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets",
-                "-o", outputPath };
+        String[] args = { "-a", TestUtil.assetDirectoryPath(),
+                "-o", TestUtil.outputDirectoryPath() };
         Main.main(args);
         LinkedList<File> jsFiles = (LinkedList<File>) FileUtils.listFiles(
-                new File(outputPath),
+                TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.js"),
                 DirectoryFileFilter.DIRECTORY);
         LinkedList<File> cssFiles = (LinkedList<File>) FileUtils.listFiles(
-                new File(outputPath),
+                TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.css"),
                 DirectoryFileFilter.DIRECTORY);
         LinkedList<File> imageFiles = (LinkedList<File>) FileUtils.listFiles(
-                new File(outputPath),
+                TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.png"),
                 DirectoryFileFilter.DIRECTORY);
         assertEquals(5, jsFiles.size());
@@ -50,28 +49,41 @@ public class MainIntegrationTest {
 
     @Test
     public void testMainWithCssIncludes() throws Exception {
-        String outputPath = "src/test/resources/com/semperos/screwdriver/sample/output";
-        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets",
-                "-o", outputPath,
+        String[] args = { "-a", TestUtil.assetDirectoryPath(),
+                "-o", TestUtil.outputDirectoryPath(),
                 "-icss", ".*?main\\.less"};
         Main.main(args);
-        LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(new File(outputPath), new RegexFileFilter(".*\\.css"), DirectoryFileFilter.DIRECTORY);
+        LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(TestUtil.outputDirectory(),
+                new RegexFileFilter(".*\\.css"), DirectoryFileFilter.DIRECTORY);
         assertEquals(1, files.size());
         assertEquals("main.css", files.get(0).getName());
     }
 
     @Test
     public void testMainWithImageExcludes() throws Exception {
-        String outputPath = "src/test/resources/com/semperos/screwdriver/sample/output";
-        String[] args = { "-a", "src/test/resources/com/semperos/screwdriver/sample/assets",
-                "-o", outputPath,
+        String[] args = { "-a", TestUtil.assetDirectoryPath(),
+                "-o", TestUtil.outputDirectoryPath(),
                 "-eimage", ".*?screwdriver_icon\\.png" };
         Main.main(args);
         LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(
-                new File(outputPath),
+                TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.png"),
                 DirectoryFileFilter.DIRECTORY);
         assertEquals(0, files.size());
+    }
+
+    @Test
+    public void testMainWithJsOptimizations() throws Exception {
+        String[] args = { "-a", TestUtil.assetDirectoryPath(),
+                "-o", TestUtil.outputDirectoryPath(),
+                "-ojs",
+                "--rjs-modules", "common", "main" };
+        Main.main(args);
+        LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(
+                new File(TestUtil.outputDirectoryPath(), "built/javascripts"),
+                new RegexFileFilter(".*-built\\.js"),
+                DirectoryFileFilter.DIRECTORY);
+        assertEquals(2, files.size());
     }
 
 }

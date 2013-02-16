@@ -7,44 +7,48 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/7/13
- * Time: 2:27 PM
- * To change this template use File | Settings | File Templates.
+ * Data needed across tests
  */
 public class TestUtil {
-    public static File testAssetDirectory() {
-        return new File(System.getProperty("user.dir"),
-                /**
-                 * @todo Set base path up correctly
-                 */
-                "src/test/resources/com/semperos/screwdriver/sample/assets");
+    public static String assetDirectoryPath() {
+        return "src/test/resources/com/semperos/screwdriver/sample/assets";
     }
 
-    public static File testOutputDirectory() {
+    public static String outputDirectoryPath() {
+        return "src/test/resources/com/semperos/screwdriver/sample/output";
+    }
+
+    public static File assetDirectory() {
         return new File(System.getProperty("user.dir"),
                 /**
                  * @todo Set base path up correctly
                  */
-                "src/test/resources/com/semperos/screwdriver/sample/output");
+                assetDirectoryPath());
+    }
+
+    public static File outputDirectory() {
+        return new File(System.getProperty("user.dir"),
+                /**
+                 * @todo Set base path up correctly
+                 */
+                outputDirectoryPath());
     }
 
     public static PipelineEnvironment newPipelineEnvironment() {
-        return new PipelineEnvironment(TestUtil.testConfig());
+        return new PipelineEnvironment(TestUtil.baseConfig());
     }
 
-    private static Config testConfig() {
+    private static Config baseConfig() {
         Config cfg = new Config();
-        cfg.setAssetDirectory(TestUtil.testAssetDirectory());
-        cfg.setOutputDirectory(testOutputDirectory());
+        cfg.setAssetDirectory(TestUtil.assetDirectory());
+        cfg.setOutputDirectory(outputDirectory());
         return cfg;
     }
 
     public static void deleteAssetDirectories() throws IOException {
-        FileUtils.deleteDirectory(new File(testOutputDirectory(), "javascripts"));
-        FileUtils.deleteDirectory(new File(testOutputDirectory(), "stylesheets"));
-        FileUtils.deleteDirectory(new File(testOutputDirectory(), "images"));
-        FileUtils.deleteDirectory(new File(testOutputDirectory(), "built"));
+        FileUtils.deleteDirectory(new File(outputDirectory(), "javascripts"));
+        FileUtils.deleteDirectory(new File(outputDirectory(), "stylesheets"));
+        FileUtils.deleteDirectory(new File(outputDirectory(), "images"));
+        FileUtils.deleteDirectory(new File(outputDirectory(), "built"));
     }
 }
