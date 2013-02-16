@@ -1,6 +1,6 @@
 # Screwdriver #
 
-Web assetSpec management for CI builds and local development using a lightweight Java stack.
+Web asset management for CI builds and local development using a lightweight Java stack.
 
 ## Clojure REPL ##
 
