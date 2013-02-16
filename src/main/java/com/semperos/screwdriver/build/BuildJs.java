@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.build;
 
+import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
@@ -22,9 +23,9 @@ public class BuildJs {
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
-        String sourceCode = BuildUtil.readFile(sourceFile);
+        String sourceCode = FileUtil.readFile(sourceFile);
         if (FilenameUtils.isExtension(sourceFile.toString(), "coffee")) {
-            return this.coffeeScriptCompiler.compile(sourceCode, sourceFile);
+            return this.coffeeScriptCompiler.compile(sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
             return idc.compile(sourceCode, sourceFile);
@@ -32,7 +33,7 @@ public class BuildJs {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        BuildUtil.writeFile(compile(sourceFile),
+        FileUtil.writeFile(compile(sourceFile),
                 jsAssetSpec.outputFile(sourceFile));
     }
 

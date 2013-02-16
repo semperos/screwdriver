@@ -1,6 +1,5 @@
 package com.semperos.screwdriver.js;
 
-import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,14 +17,27 @@ public class CoffeeScriptCompilerTest {
 
     @Test
     public void testCompile() throws Exception {
-        String source = "asdf = 2 + 2;";
         String expected = "(function() {\n" +
-                "  var asdf;\n" +
+                "  var __hasProp = {}.hasOwnProperty,\n" +
+                "    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };\n" +
                 "\n" +
-                "  asdf = 2 + 2;\n" +
+                "  define([], function() {\n" +
+                "    var Screwdriver;\n" +
+                "    return Screwdriver = (function(_super) {\n" +
                 "\n" +
-                "}).call(this);".trim();
-        String result = this.compiler.compile(source, new File("/tmp")).trim();
-        assertEquals(result,expected);
+                "      __extends(Screwdriver, _super);\n" +
+                "\n" +
+                "      function Screwdriver() {\n" +
+                "        return Screwdriver.__super__.constructor.apply(this, arguments);\n" +
+                "      }\n" +
+                "\n" +
+                "      return Screwdriver;\n" +
+                "\n" +
+                "    })(Tool);\n" +
+                "  });\n" +
+                "\n" +
+                "}).call(this);";
+        String result = this.compiler.compile(new File("src/test/resources/com/semperos/screwdriver/sample/assets/javascripts/tools/screwdriver.coffee")).trim();
+        assertEquals(result.trim(),expected.trim());
     }
 }

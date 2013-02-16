@@ -1,4 +1,4 @@
-package com.semperos.screwdriver.build;
+package com.semperos.screwdriver;
 
 import org.apache.commons.io.FileUtils;
 
@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 /**
  * Formalize constructor for assetSpec-specific builders.
  */
-public class BuildUtil {
+public class FileUtil {
     public static String readFile(File sourceFile) throws IOException {
         return readFile(sourceFile, Charset.forName("UTF-8"));
     }

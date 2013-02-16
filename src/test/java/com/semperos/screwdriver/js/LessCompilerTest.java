@@ -1,19 +1,5 @@
 package com.semperos.screwdriver.js;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-
-import static org.junit.Assert.assertEquals;
-
-/**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/8/13
- * Time: 2:13 AM
- * To change this template use File | Settings | File Templates.
- */
 public class LessCompilerTest {
     private LessCompiler compiler;
 

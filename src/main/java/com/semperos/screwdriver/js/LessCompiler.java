@@ -29,17 +29,15 @@ public class LessCompiler implements JsCompilation {
     /**
      * Compile LESS to JavaScript
      *
-     * @param lessSource The LESS source code to be compiled
      * @return The resultant JavaScript
      * @throws java.io.IOException
      * @throws RhinoEvaluatorException
      */
     @Override
-    public String compile(String lessSource, File sourceFile) throws IOException, RhinoEvaluatorException {
+    public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("LessCompiler", "com/semperos/screwdriver/js/extension/compile-less.js");
         rhinoCompiler.addSourceFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.compilerArgs(new LessSource(sourceFile).getNormalizedContent());
-        String ret;
         try {
             return rhinoCompiler.compile();
         } catch (JavaScriptException e) {

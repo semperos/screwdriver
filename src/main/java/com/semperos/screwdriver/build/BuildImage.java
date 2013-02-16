@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.build;
 
+import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
 
 import java.io.File;
@@ -24,7 +25,7 @@ public class BuildImage {
     }
 
     public void build(File sourceFile) throws IOException {
-        BuildUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
+        FileUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
     }
 
     public void buildAll() throws IOException {

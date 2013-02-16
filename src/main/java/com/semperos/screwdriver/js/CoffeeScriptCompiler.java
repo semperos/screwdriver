@@ -1,5 +1,7 @@
 package com.semperos.screwdriver.js;
 
+import com.semperos.screwdriver.FileUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,16 +24,15 @@ public class CoffeeScriptCompiler implements JsCompilation {
      *
      * @todo Research why the registerCompiler method has to go here.
      *
-     * @param coffeeScriptSource The CoffeeScript source code to be compiled
      * @return The resultant JavaScript
      * @throws IOException
      * @throws RhinoEvaluatorException
      */
     @Override
-    public String compile(String coffeeScriptSource, File sourceFile) throws IOException, RhinoEvaluatorException {
+    public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
         rhinoCompiler.registerCompiler("CoffeeScriptCompiler", "com/semperos/screwdriver/js/extension/compile-coffeescript.js");
         rhinoCompiler.addSourceFilePath(sourceFile.getAbsolutePath());
-        rhinoCompiler.compilerArgs(coffeeScriptSource);
+        rhinoCompiler.compilerArgs(FileUtil.readFile(sourceFile));
         return rhinoCompiler.compile();
     }
 }
