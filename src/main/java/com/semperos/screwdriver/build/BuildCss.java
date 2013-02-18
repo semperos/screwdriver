@@ -6,16 +6,13 @@ import com.semperos.screwdriver.js.LessCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/7/13
- * Time: 1:02 PM
- * To change this template use File | Settings | File Templates.
+ * Basic API for building files that compile to CSS
  */
 public class BuildCss {
 
@@ -45,5 +42,9 @@ public class BuildCss {
         for (File f : cssAssetSpec.findFiles()) {
             build(f);
         }
+    }
+
+    public void delete(File sourceFile) {
+        FileUtils.delete(cssAssetSpec.outputFile(sourceFile));
     }
 }

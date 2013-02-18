@@ -24,13 +24,17 @@ public class WatcherMain {
             System.exit(0);
         } else {
             Config cfg = new Config(cm);
-            logger.info("Starting CoffeeScript watcher...");
+            logger.info("Starting asset watcher...");
             long interval = 100;
             PipelineEnvironment pe = new PipelineEnvironment(cfg);
             AssetFileObserver fileObserver = new AssetFileObserver(pe);
             FileAlterationObserver coffeeScriptObserver = fileObserver.observeCoffeeScript();
+            FileAlterationObserver lessObserver = fileObserver.observeLess();
+            FileAlterationObserver imageObserver = fileObserver.observeImage();
             FileAlterationMonitor monitor = new FileAlterationMonitor(interval);
             monitor.addObserver(coffeeScriptObserver);
+            monitor.addObserver(lessObserver);
+            monitor.addObserver(imageObserver);
             monitor.start();
         }
     }

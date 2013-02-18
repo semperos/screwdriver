@@ -2,6 +2,7 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
+import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,5 +33,9 @@ public class BuildImage {
         for (File f : imageAssetSpec.findFiles()) {
             build(f);
         }
+    }
+
+    public void delete(File sourceFile) {
+        FileUtils.delete(imageAssetSpec.outputFile(sourceFile));
     }
 }
