@@ -6,8 +6,8 @@ import com.semperos.screwdriver.js.LessCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,9 +35,13 @@ public class BuildCss {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        logger.info("Compiling file " + sourceFile.toString() + " to CSS.");
-        FileUtil.writeFile(compile(sourceFile),
-                cssAssetSpec.outputFile(sourceFile));
+        File outputFile = cssAssetSpec.outputFile(sourceFile);
+        if ((!outputFile.exists()) ||
+                (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
+            logger.info("Compiling file " + sourceFile.toString() + " to CSS.");
+            FileUtil.writeFile(compile(sourceFile),
+                    cssAssetSpec.outputFile(sourceFile));
+        }
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
@@ -47,6 +51,6 @@ public class BuildCss {
     }
 
     public void delete(File sourceFile) {
-        FileUtils.delete(cssAssetSpec.outputFile(sourceFile));
+        cssAssetSpec.outputFile(sourceFile).delete();
     }
 }

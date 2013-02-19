@@ -5,9 +5,9 @@ import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
-import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,9 +36,13 @@ public class BuildJs {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        logger.info("Compiling file " + sourceFile.toString() + " to JavaScript.");
-        FileUtil.writeFile(compile(sourceFile),
-                jsAssetSpec.outputFile(sourceFile));
+        File outputFile = jsAssetSpec.outputFile(sourceFile);
+        if ((!outputFile.exists()) ||
+                (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
+            logger.info("Compiling file " + sourceFile.toString() + " to JavaScript.");
+            FileUtil.writeFile(compile(sourceFile),
+                    jsAssetSpec.outputFile(sourceFile));
+        }
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
@@ -48,6 +52,6 @@ public class BuildJs {
     }
 
     public void delete(File sourceFile) {
-        FileUtils.delete(jsAssetSpec.outputFile(sourceFile));
+        jsAssetSpec.outputFile(sourceFile).delete();
     }
 }

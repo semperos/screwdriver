@@ -2,8 +2,8 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +28,12 @@ public class BuildImage {
     }
 
     public void build(File sourceFile) throws IOException {
-        logger.info("Processing file " + sourceFile.toString() + " as an image.");
-        FileUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
+        File outputFile = imageAssetSpec.outputFile(sourceFile);
+        if ((!outputFile.exists()) ||
+                (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
+            logger.info("Processing file " + sourceFile.toString() + " as an image.");
+            FileUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
+        }
     }
 
     public void buildAll() throws IOException {
@@ -39,6 +43,6 @@ public class BuildImage {
     }
 
     public void delete(File sourceFile) {
-        FileUtils.delete(imageAssetSpec.outputFile(sourceFile));
+        imageAssetSpec.outputFile(sourceFile).delete();
     }
 }
