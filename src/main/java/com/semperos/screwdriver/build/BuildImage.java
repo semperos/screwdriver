@@ -2,6 +2,7 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
+import org.apache.log4j.Logger;
 import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.IOException;
  * keep them at a certain size or quality level.
  */
 public class BuildImage {
+    private static Logger logger = Logger.getLogger(BuildImage.class);
     ImageAssetSpec imageAssetSpec;
     public BuildImage(ImageAssetSpec imageAssetSpec) {
         this.imageAssetSpec = imageAssetSpec;
@@ -26,6 +28,7 @@ public class BuildImage {
     }
 
     public void build(File sourceFile) throws IOException {
+        logger.info("Processing file " + sourceFile.toString() + " as an image.");
         FileUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
     }
 

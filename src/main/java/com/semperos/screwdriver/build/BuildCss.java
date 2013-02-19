@@ -6,6 +6,7 @@ import com.semperos.screwdriver.js.LessCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * Basic API for building files that compile to CSS
  */
 public class BuildCss {
-
+    private static Logger logger = Logger.getLogger(BuildCss.class);
     private CssAssetSpec cssAssetSpec;
 
     public BuildCss(CssAssetSpec cssAssetSpec) {
@@ -34,6 +35,7 @@ public class BuildCss {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
+        logger.info("Compiling file " + sourceFile.toString() + " to CSS.");
         FileUtil.writeFile(compile(sourceFile),
                 cssAssetSpec.outputFile(sourceFile));
     }

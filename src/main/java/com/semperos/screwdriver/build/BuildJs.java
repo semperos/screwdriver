@@ -2,10 +2,11 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.IdentityCompiler;
-import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.js.CoffeeScriptCompiler;
+import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.JsAssetSpec;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.apache.tools.ant.util.FileUtils;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.IOException;
  * Build assets that compile to JavaScript
  */
 public class BuildJs {
+    private static Logger logger = Logger.getLogger(BuildJs.class);
     private JsAssetSpec jsAssetSpec;
     private CoffeeScriptCompiler coffeeScriptCompiler;
 
@@ -34,6 +36,7 @@ public class BuildJs {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
+        logger.info("Compiling file " + sourceFile.toString() + " to JavaScript.");
         FileUtil.writeFile(compile(sourceFile),
                 jsAssetSpec.outputFile(sourceFile));
     }
