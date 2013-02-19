@@ -144,9 +144,9 @@ public class AssetSpec {
     }
 
     /**
-     * NOTE: This method is intended to be overridden by subclasses
-     * that need specific file name mangling for compiled output,
-     * e.g., {@literal foo.coffee} to {@literal foo.js}.
+     * In the simplest case (copying), a target file name is the
+     * same as the source file name. For compilation workflows,
+     * this looks more like {@literal foo.coffee} to {@literal foo.js}.
      *
      * @param sourceFileName
      * @return
