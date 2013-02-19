@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
@@ -30,18 +31,9 @@ public class MainIntegrationTest {
         String[] args = { "-a", TestUtil.assetDirectoryPath(),
                 "-o", TestUtil.outputDirectoryPath() };
         Main.main(args);
-        LinkedList<File> jsFiles = (LinkedList<File>) FileUtils.listFiles(
-                TestUtil.outputDirectory(),
-                new RegexFileFilter(".*\\.js"),
-                DirectoryFileFilter.DIRECTORY);
-        LinkedList<File> cssFiles = (LinkedList<File>) FileUtils.listFiles(
-                TestUtil.outputDirectory(),
-                new RegexFileFilter(".*\\.css"),
-                DirectoryFileFilter.DIRECTORY);
-        LinkedList<File> imageFiles = (LinkedList<File>) FileUtils.listFiles(
-                TestUtil.outputDirectory(),
-                new RegexFileFilter(".*\\.png"),
-                DirectoryFileFilter.DIRECTORY);
+        Collection<File> jsFiles = TestUtil.jsOutputFiles();
+        Collection<File> cssFiles = TestUtil.cssOutputFiles();
+        Collection<File> imageFiles = TestUtil.imageOutputFiles();
         assertEquals(5, jsFiles.size());
         assertEquals(5, cssFiles.size());
         assertEquals(2, imageFiles.size());
@@ -53,8 +45,7 @@ public class MainIntegrationTest {
                 "-o", TestUtil.outputDirectoryPath(),
                 "-icss", ".*?main\\.less"};
         Main.main(args);
-        LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(TestUtil.outputDirectory(),
-                new RegexFileFilter(".*\\.css"), DirectoryFileFilter.DIRECTORY);
+        LinkedList<File> files = (LinkedList<File>) TestUtil.cssOutputFiles();
         assertEquals(1, files.size());
         assertEquals("main.css", files.get(0).getName());
     }
@@ -63,7 +54,7 @@ public class MainIntegrationTest {
     public void testMainWithImageExcludes() throws Exception {
         String[] args = { "-a", TestUtil.assetDirectoryPath(),
                 "-o", TestUtil.outputDirectoryPath(),
-                "-eimage", ".*?screwdriver_icon\\.png" };
+                "-eimage", "screwdriver_icon\\.png" };
         Main.main(args);
         LinkedList<File> files = (LinkedList<File>) FileUtils.listFiles(
                 TestUtil.outputDirectory(),

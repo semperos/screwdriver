@@ -1,5 +1,7 @@
 package com.semperos.screwdriver;
 
+import org.apache.commons.io.filefilter.IOFileFilter;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Default values for configurable aspects of Screwdriver.
  */
 public class DefaultConfig {
-    public static boolean getDebug() {
+    public static boolean isDebugMode() {
         return false;
     }
 
@@ -57,5 +59,29 @@ public class DefaultConfig {
 
     public static ArrayList<String> getRjsModules() {
         return new ArrayList<String>();
+    }
+
+    public static IOFileFilter getJsFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getCssFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getImageFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getJsDirFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getCssDirFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getImageDirFilter() {
+        return null;
     }
 }

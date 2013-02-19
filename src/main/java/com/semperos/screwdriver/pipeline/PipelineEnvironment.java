@@ -48,6 +48,12 @@ public class PipelineEnvironment {
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
         jsAssetSpec = new JsAssetSpec(jsAssetPath, jsAssetExtensions, jsOutputPath);
+        if (cfg.getJsFileFilter() != null) {
+            jsAssetSpec.setAssetFileFilter(cfg.getJsFileFilter());
+        }
+        if (cfg.getJsDirFilter() != null) {
+            jsAssetSpec.setAssetDirFilter(cfg.getJsDirFilter());
+        }
         if (cfg.getJsIncludes() != null && cfg.getJsIncludes().size() > 0) {
             jsAssetSpec.setAssetIncludes(cfg.getJsIncludes());
         } else {
@@ -62,6 +68,12 @@ public class PipelineEnvironment {
         cssAssetExtensions.add("sass");
         cssAssetExtensions.add("styl");
         cssAssetSpec = new  CssAssetSpec(cssAssetPath, cssAssetExtensions, cssOutputPath);
+        if (cfg.getCssFileFilter() != null) {
+            cssAssetSpec.setAssetFileFilter(cfg.getCssFileFilter());
+        }
+        if (cfg.getCssDirFilter() != null) {
+            cssAssetSpec.setAssetDirFilter(cfg.getCssDirFilter());
+        }
         if (cfg.getCssIncludes() != null && cfg.getCssIncludes().size() > 0) {
             cssAssetSpec.setAssetIncludes(cfg.getCssIncludes());
         } else {
@@ -79,6 +91,12 @@ public class PipelineEnvironment {
         imageAssetExtensions.add("png");
         imageAssetExtensions.add("svg");
         imageAssetSpec = new ImageAssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
+        if (cfg.getImageFileFilter() != null) {
+            imageAssetSpec.setAssetFileFilter(cfg.getImageFileFilter());
+        }
+        if (cfg.getImageDirFilter() != null) {
+            imageAssetSpec.setAssetDirFilter(cfg.getImageDirFilter());
+        }
         if (cfg.getImageIncludes() != null && cfg.getImageIncludes().size() > 0) {
             imageAssetSpec.setAssetIncludes(cfg.getImageIncludes());
         } else {

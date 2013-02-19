@@ -5,6 +5,7 @@ import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,11 +15,30 @@ import java.util.List;
  * Base representation of a type of asset in the pipeline.
  */
 public class AssetSpec {
+    private static Logger logger = Logger.getLogger(AssetSpec.class);
     private File assetPath;
     private List<String> assetExtensions;
+    private IOFileFilter assetFileFilter;
+    private IOFileFilter assetDirFilter;
     private List<String> assetIncludes;
     private List<String> assetExcludes;
     private File outputPath;
+
+    public IOFileFilter getAssetFileFilter() {
+        return assetFileFilter;
+    }
+
+    public void setAssetFileFilter(IOFileFilter assetFileFilter) {
+        this.assetFileFilter = assetFileFilter;
+    }
+
+    public IOFileFilter getAssetDirFilter() {
+        return assetDirFilter;
+    }
+
+    public void setAssetDirFilter(IOFileFilter assetDirFilter) {
+        this.assetDirFilter = assetDirFilter;
+    }
 
     public List<String> getAssetIncludes() {
         return assetIncludes;
@@ -77,49 +97,62 @@ public class AssetSpec {
      * @return List of all assets of this type currently in filesystem
      */
     public List<File> findFiles() {
+        File path = getAssetPath();
+        if (!path.exists()) {
+            throw new RuntimeException("One of the directories that Screwdriver expects to work with " +
+                    "does not exist: " + path.getAbsolutePath());
+        }
         List<File> assets = new ArrayList<File>();
         List<String> extensions = getAssetExtensions();
-        for (String ext : extensions) {
-            IOFileFilter fileFilter;
-            if (assetIncludes != null && assetIncludes.size() > 0) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < assetIncludes.size(); i++) {
-                    sb.append("(")
-                            .append(assetIncludes.get(i).trim())
-                            .append(")");
-                    if (i != assetIncludes.size() - 1) {
-                        sb.append("|");
-                    }
-                }
-                fileFilter = new RegexFileFilter(sb.toString());
-            } else if (assetExcludes != null && assetExcludes.size() > 0) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < assetExcludes.size(); i++) {
-                    sb.append("(")
-                            .append(assetExcludes.get(i).trim())
-                            .append(")");
-                    if (i != assetExcludes.size() - 1) {
-                        sb.append("|");
-                    }
-                }
-                fileFilter = new NotFileFilter(new RegexFileFilter(sb.toString()));
-            } else {
+        IOFileFilter fileFilter;
+        IOFileFilter dirFilter;
+        if (assetDirFilter != null) {
+            dirFilter = assetDirFilter;
+        } else {
+            dirFilter = DirectoryFileFilter.DIRECTORY;
+        }
+        if (assetFileFilter != null) {
+            assets.addAll(FileUtils.listFiles(
+                    path,
+                    assetFileFilter,
+                    dirFilter));
+        } else if (assetIncludes != null && assetIncludes.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            buildRegexFilterPattern(sb, assetIncludes);
+            fileFilter = new RegexFileFilter(sb.toString());
+            assets.addAll(FileUtils.listFiles(
+                    path,
+                    fileFilter,
+                    dirFilter));
+        } else if (assetExcludes != null && assetExcludes.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            buildRegexFilterPattern(sb, assetExcludes);
+            fileFilter = new NotFileFilter(new RegexFileFilter(sb.toString()));
+            assets.addAll(FileUtils.listFiles(
+                    path,
+                    fileFilter,
+                    dirFilter));
+        }  else {
+            for (String ext : extensions) {
                 fileFilter = new RegexFileFilter(".*?\\." + ext);
-            }
-
-            File path = getAssetPath();
-            if (!path.exists()) {
-                throw new RuntimeException("One of the directories that Screwdriver expects to work with " +
-                        "does not exist: " + path.getAbsolutePath());
-            } else {
                 assets.addAll(FileUtils.listFiles(
                         path,
                         fileFilter,
-                        DirectoryFileFilter.DIRECTORY
-                ));
+                        dirFilter));
             }
         }
         return assets;
+    }
+
+    private void buildRegexFilterPattern(StringBuilder sb, List<String> assetPatterns) {
+        for (int i = 0; i < assetPatterns.size(); i++) {
+            sb.append("(")
+                    .append(assetPatterns.get(i).trim())
+                    .append(")");
+            if (i != assetPatterns.size() - 1) {
+                sb.append("|");
+            }
+        }
     }
 
     public static String getRelevantPath(File baseThatDoesNotMatter, File baseForOutput, File sourceFile) {

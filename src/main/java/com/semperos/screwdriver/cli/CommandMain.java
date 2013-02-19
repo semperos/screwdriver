@@ -18,7 +18,7 @@ public class CommandMain {
     public String script;
 
     @Parameter(names = { "-d", "--debug" }, description = "Debug mode")
-    public boolean debug = DefaultConfig.getDebug();
+    public boolean debug = DefaultConfig.isDebugMode();
 
     @Parameter(names = { "-h", "--help" }, help = true)
     public boolean help;

@@ -1,6 +1,7 @@
 package com.semperos.screwdriver;
 
 import com.semperos.screwdriver.cli.CommandMain;
+import org.apache.commons.io.filefilter.IOFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,11 +15,17 @@ public class Config {
     private Boolean debugMode;
     private File assetDirectory;
     private File outputDirectory;
+    private IOFileFilter jsFileFilter;
+    private IOFileFilter jsDirFilter;
     private List<String> jsIncludes;
-    private List<String> cssIncludes;
-    private List<String> imageIncludes;
     private List<String> jsExcludes;
+    private IOFileFilter cssFileFilter;
+    private IOFileFilter cssDirFilter;
+    private List<String> cssIncludes;
     private List<String> cssExcludes;
+    private IOFileFilter imageFileFilter;
+    private IOFileFilter imageDirFilter;
+    private List<String> imageIncludes;
     private List<String> imageExcludes;
     private boolean optimizeJs;
     private boolean optimizeCss;
@@ -26,14 +33,21 @@ public class Config {
     private List<String> rjsModules;
 
     public Config() {
-        this.debugMode = DefaultConfig.getDebug();
+        this.debugMode = DefaultConfig.isDebugMode();
         this.assetDirectory = new File(DefaultConfig.getAssetDirectory());
         this.outputDirectory = new File(DefaultConfig.getOutputDirectory());
+        this.jsFileFilter = DefaultConfig.getJsFileFilter();
+        this.jsDirFilter = DefaultConfig.getJsDirFilter();
         this.jsIncludes = DefaultConfig.getJsIncludes();
-        this.cssIncludes = DefaultConfig.getCssIncludes();
-        this.imageIncludes = DefaultConfig.getImageIncludes();
         this.jsExcludes = DefaultConfig.getJsExcludes();
+        this.cssFileFilter = DefaultConfig.getCssFileFilter();
+        this.cssDirFilter = DefaultConfig.getCssDirFilter();
+        this.cssIncludes = DefaultConfig.getCssIncludes();
         this.cssExcludes = DefaultConfig.getCssExcludes();
+        this.imageFileFilter = DefaultConfig.getImageFileFilter();
+        this.imageDirFilter = DefaultConfig.getImageDirFilter();
+
+        this.imageIncludes = DefaultConfig.getImageIncludes();
         this.imageExcludes = DefaultConfig.getImageExcludes();
         this.optimizeJs = DefaultConfig.isOptimizeJs();
         this.optimizeCss = DefaultConfig.isOptimizeCss();
@@ -55,6 +69,62 @@ public class Config {
         this.optimizeCss = cm.optimizeCss;
         this.optimizeImage = cm.optimizeImage;
         this.rjsModules = cm.rjsModules;
+    }
+
+    public Boolean isDebugMode() {
+        return debugMode;
+    }
+
+    public void setDebugMode(Boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    public IOFileFilter getJsFileFilter() {
+        return jsFileFilter;
+    }
+
+    public void setJsFileFilter(IOFileFilter jsFileFilter) {
+        this.jsFileFilter = jsFileFilter;
+    }
+
+    public IOFileFilter getCssFileFilter() {
+        return cssFileFilter;
+    }
+
+    public void setCssFileFilter(IOFileFilter cssFileFilter) {
+        this.cssFileFilter = cssFileFilter;
+    }
+
+    public IOFileFilter getImageFileFilter() {
+        return imageFileFilter;
+    }
+
+    public void setImageFileFilter(IOFileFilter imageFileFilter) {
+        this.imageFileFilter = imageFileFilter;
+    }
+
+    public IOFileFilter getJsDirFilter() {
+        return jsDirFilter;
+    }
+
+    public void setJsDirFilter(IOFileFilter jsDirFilter) {
+        this.jsDirFilter = jsDirFilter;
+    }
+
+    public IOFileFilter getCssDirFilter() {
+        return cssDirFilter;
+    }
+
+    public void setCssDirFilter(IOFileFilter cssDirFilter) {
+        this.cssDirFilter = cssDirFilter;
+    }
+
+    public IOFileFilter getImageDirFilter() {
+        return imageDirFilter;
+    }
+
+    public void setImageDirFilter(IOFileFilter imageDirFilter) {
+        this.imageDirFilter = imageDirFilter;
     }
 
     public File getAssetDirectory() {
