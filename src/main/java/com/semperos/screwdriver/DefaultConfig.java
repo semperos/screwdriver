@@ -11,7 +11,6 @@ public class DefaultConfig {
         return false;
     }
 
-
     public static String getAssetDirectory() {
         return System.getProperty("user.dir");
     }
