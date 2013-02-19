@@ -44,7 +44,7 @@ public class MainIntegrationTest {
                 DirectoryFileFilter.DIRECTORY);
         assertEquals(5, jsFiles.size());
         assertEquals(5, cssFiles.size());
-        assertEquals(1, imageFiles.size());
+        assertEquals(2, imageFiles.size());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class MainIntegrationTest {
                 TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.png"),
                 DirectoryFileFilter.DIRECTORY);
-        assertEquals(0, files.size());
+        assertEquals(1, files.size());
     }
 
     @Test
