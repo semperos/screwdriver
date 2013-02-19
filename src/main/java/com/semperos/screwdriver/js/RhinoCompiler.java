@@ -20,6 +20,7 @@ public class RhinoCompiler extends RhinoEvaluator {
     private String programName;
     public static final String SCRIPT_SOURCE_JS = "scriptSource";
     public static final String COMPILER_OPTIONS_JS = "compilerOptions";
+    public static final String COMPILER_LOCALS_JS = "compilerLocals";
     public static final String SCRIPT_FILE_PATH_JS = "scriptFilePath";
 
     public RhinoCompiler() {
@@ -45,8 +46,18 @@ public class RhinoCompiler extends RhinoEvaluator {
      *
      * @param compilerOptions A map of options to pass to the underlying JavaScript compiler
      */
-    public void addCompilerOptions(HashMap<String,String> compilerOptions) {
+    public void addCompilerOptions(HashMap<String,Object> compilerOptions) {
         addInstanceField(COMPILER_OPTIONS_JS, compilerOptions);
+    }
+
+    /**
+     * Convenience method for calling {@link RhinoEvaluator#addInstanceField(String, Object)}
+     * to set the {@code compilerOptions} field in the instance-local store.
+     *
+     * @param compilerLocals A map of options to pass to the underlying JavaScript compiler
+     */
+    public void addCompilerLocals(HashMap<String,Object> compilerLocals) {
+        addInstanceField(COMPILER_LOCALS_JS, compilerLocals);
     }
 
     /**
@@ -78,7 +89,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @param scriptSource
      */
     public void compilerArgs(String scriptSource) {
-        compilerArgs(scriptSource, new HashMap<String, String>());
+        compilerArgs(scriptSource, new HashMap<String, Object>());
     }
 
     /**
@@ -88,9 +99,22 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @param scriptSource
      * @param compilerOptions
      */
-    public void compilerArgs(String scriptSource, HashMap<String,String> compilerOptions) {
+    public void compilerArgs(String scriptSource, HashMap<String,Object> compilerOptions) {
+        compilerArgs(scriptSource, compilerOptions, new HashMap<String,Object>());
+
+    }
+
+    /**
+     * Pass in the source code to be compiled, any arguments to the compiler, and then
+     * any locals expected to be defined
+     * @param scriptSource
+     * @param compilerOptions
+     * @param compilerLocals
+     */
+    public void compilerArgs(String scriptSource, HashMap<String,Object> compilerOptions, HashMap<String,Object> compilerLocals) {
         addScriptSource(scriptSource);
         addCompilerOptions(compilerOptions);
+        addCompilerLocals(compilerLocals);
     }
 
     /**

@@ -37,7 +37,7 @@ public class CoffeeScriptCompilerTest {
                 "  });\n" +
                 "\n" +
                 "}).call(this);";
-        String result = this.compiler.compile(new File("src/test/resources/com/semperos/screwdriver/sample/assets/javascripts/tools/screwdriver.coffee")).trim();
+        String result = this.compiler.compile(new File("src/test/resources/com/semperos/screwdriver/sample/assets/javascripts/tools/screwdriver.coffee"));
         assertEquals(result.trim(),expected.trim());
     }
 }

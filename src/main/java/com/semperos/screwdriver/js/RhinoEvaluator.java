@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.js;
 
+import org.apache.log4j.Logger;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
@@ -21,6 +22,7 @@ import java.util.Map;
  *
  */
 public class RhinoEvaluator {
+    private static Logger logger = Logger.getLogger(RhinoEvaluator.class);
     public static final String GLOBAL_SD_JS = "__ScrewdriverGlobal";
     public static final String INST_SD_JS = "__Screwdriver";
     protected ScriptableObject globalScope;
@@ -120,10 +122,20 @@ public class RhinoEvaluator {
         Context.exit();
     }
 
-    public void addInstanceField(String varName, HashMap<String,String> varValues) {
+    /**
+     * Given a {@link HashMap}, do the right thing for creating a JavaScript object
+     * in the instance scope of this evaluator.
+     *
+     * Nothing is done to the values in the {@link HashMap} provided, so only use
+     * simple values that Rhino can deal with.
+     *
+     * @param varName
+     * @param varValues
+     */
+    public void addInstanceField(String varName, HashMap<String,Object> varValues) {
         Context context = Context.enter();
         Scriptable x = context.newObject(instanceScope);
-        for (Map.Entry<String,String> val : varValues.entrySet()) {
+        for (Map.Entry<String,Object> val : varValues.entrySet()) {
             x.put(val.getKey(), x, val.getValue());
         }
         addInstanceField(varName, x);
