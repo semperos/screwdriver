@@ -1,8 +1,7 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.build.BuildJs;
-import com.semperos.screwdriver.js.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.JsAssetSpec;
+import com.semperos.screwdriver.build.BuildImage;
+import com.semperos.screwdriver.pipeline.ImageAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
@@ -11,28 +10,26 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Watch files that target JavaScript
+ * Process image files
  */
-public class CompileCoffeeScriptListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileCoffeeScriptListener.class);
-    BuildJs buildJs;
+public class ProcessAsImageListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(ProcessAsImageListener.class);
+    BuildImage buildImage;
 
-    public CompileCoffeeScriptListener(JsAssetSpec jsAssetSpec) {
-        buildJs = new BuildJs(jsAssetSpec);
+    public ProcessAsImageListener(ImageAssetSpec imageAssetSpec) {
+        buildImage = new BuildImage(imageAssetSpec);
     }
 
     public void buildFile(File file) {
         try {
-            buildJs.build(file);
-        } catch (RhinoEvaluatorException e) {
-            e.printStackTrace();
+            buildImage.build(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void deleteFile(File file) {
-        buildJs.delete(file);
+        buildImage.delete(file);
     }
 
     @Override
@@ -42,13 +39,13 @@ public class CompileCoffeeScriptListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to JavaScript.");
+        logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it as an image.");
         buildFile(file);
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to JavaScript.");
+        logger.debug("Responding to change in file " + file.toString() + " by reprocessing it as an image.");
         buildFile(file);
     }
 

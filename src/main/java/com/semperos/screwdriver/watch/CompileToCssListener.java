@@ -1,7 +1,8 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.build.BuildImage;
-import com.semperos.screwdriver.pipeline.ImageAssetSpec;
+import com.semperos.screwdriver.build.BuildCss;
+import com.semperos.screwdriver.js.RhinoEvaluatorException;
+import com.semperos.screwdriver.pipeline.CssAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
@@ -10,26 +11,28 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Process image files
+ * Watch LESS files
  */
-public class CompileImageListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileImageListener.class);
-    BuildImage buildImage;
+public class CompileToCssListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(CompileToCssListener.class);
+    BuildCss buildCss;
 
-    public CompileImageListener(ImageAssetSpec imageAssetSpec) {
-        buildImage = new BuildImage(imageAssetSpec);
+    public CompileToCssListener(CssAssetSpec cssAssetSpec) {
+        buildCss = new BuildCss(cssAssetSpec);
     }
 
     public void buildFile(File file) {
         try {
-            buildImage.build(file);
+            buildCss.build(file);
+        } catch (RhinoEvaluatorException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void deleteFile(File file) {
-        buildImage.delete(file);
+        buildCss.delete(file);
     }
 
     @Override
@@ -39,13 +42,13 @@ public class CompileImageListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it as an image.");
+        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to CSS.");
         buildFile(file);
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by reprocessing it as an image.");
+        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to CSS.");
         buildFile(file);
     }
 

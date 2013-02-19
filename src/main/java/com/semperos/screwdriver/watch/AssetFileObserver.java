@@ -59,14 +59,14 @@ public class AssetFileObserver {
     public FileAlterationObserver observeCoffeeScript() {
         IOFileFilter filter = setupFilters("coffee");
         FileAlterationObserver observer = new FileAlterationObserver(pe.getJsAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileCoffeeScriptListener(pe.getJsAssetSpec()));
+        observer.addListener(new CompileToJsListener(pe.getJsAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeLess() {
         IOFileFilter filter = setupFilters("less");
         FileAlterationObserver observer = new FileAlterationObserver(pe.getCssAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileLessListener(pe.getCssAssetSpec()));
+        observer.addListener(new CompileToCssListener(pe.getCssAssetSpec()));
         return observer;
     }
 
@@ -78,7 +78,7 @@ public class AssetFileObserver {
         }
         IOFileFilter filter = setupFilters(extensions);
         FileAlterationObserver observer = new FileAlterationObserver(pe.getImageAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileImageListener(pe.getImageAssetSpec()));
+        observer.addListener(new ProcessAsImageListener(pe.getImageAssetSpec()));
         return observer;
     }
 }

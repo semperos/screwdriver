@@ -1,8 +1,8 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.build.BuildCss;
+import com.semperos.screwdriver.build.BuildJs;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.CssAssetSpec;
+import com.semperos.screwdriver.pipeline.JsAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
@@ -11,19 +11,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Watch LESS files
+ * Watch files that target JavaScript
  */
-public class CompileLessListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileLessListener.class);
-    BuildCss buildCss;
+public class CompileToJsListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(CompileToJsListener.class);
+    BuildJs buildJs;
 
-    public CompileLessListener(CssAssetSpec cssAssetSpec) {
-        buildCss = new BuildCss(cssAssetSpec);
+    public CompileToJsListener(JsAssetSpec jsAssetSpec) {
+        buildJs = new BuildJs(jsAssetSpec);
     }
 
     public void buildFile(File file) {
         try {
-            buildCss.build(file);
+            buildJs.build(file);
         } catch (RhinoEvaluatorException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class CompileLessListener implements FileAlterationListener {
     }
 
     public void deleteFile(File file) {
-        buildCss.delete(file);
+        buildJs.delete(file);
     }
 
     @Override
@@ -42,13 +42,13 @@ public class CompileLessListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to CSS.");
+        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to JavaScript.");
         buildFile(file);
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to CSS.");
+        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to JavaScript.");
         buildFile(file);
     }
 

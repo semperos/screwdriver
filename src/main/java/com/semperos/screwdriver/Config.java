@@ -26,6 +26,19 @@ public class Config {
     private List<String> rjsModules;
 
     public Config() {
+        this.debugMode = DefaultConfig.getDebug();
+        this.assetDirectory = new File(DefaultConfig.getAssetDirectory());
+        this.outputDirectory = new File(DefaultConfig.getOutputDirectory());
+        this.jsIncludes = DefaultConfig.getJsIncludes();
+        this.cssIncludes = DefaultConfig.getCssIncludes();
+        this.imageIncludes = DefaultConfig.getImageIncludes();
+        this.jsExcludes = DefaultConfig.getJsExcludes();
+        this.cssExcludes = DefaultConfig.getCssExcludes();
+        this.imageExcludes = DefaultConfig.getImageExcludes();
+        this.optimizeJs = DefaultConfig.isOptimizeJs();
+        this.optimizeCss = DefaultConfig.isOptimizeCss();
+        this.optimizeImage = DefaultConfig.isOptimizeImage();
+        this.rjsModules = DefaultConfig.getRjsModules();
     }
 
     public Config(CommandMain cm) {
