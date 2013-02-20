@@ -1,10 +1,5 @@
 __Screwdriver.result = 'COMPILATION FAILED';
 
-// function LessCompilerException(message) {
-//     this.message = message;
-//     this.name = "LessCompilerException";
-// }
-
 var parser = new less.Parser();
 parser.parse(__Screwdriver.scriptSource, function(e, tree) {
     if (e instanceof Object) {
