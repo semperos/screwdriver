@@ -1,6 +1,6 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.build.BuildTemplate;
+import com.semperos.screwdriver.build.BuildServerTemplate;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
@@ -15,15 +15,15 @@ import java.io.IOException;
  */
 public class CompileToHtmlListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(CompileToHtmlListener.class);
-    private BuildTemplate buildTemplate;
+    private BuildServerTemplate buildServerTemplate;
 
     public CompileToHtmlListener(ServerTemplateAssetSpec serverTemplateAssetSpec) {
-        buildTemplate = new BuildTemplate(serverTemplateAssetSpec);
+        buildServerTemplate = new BuildServerTemplate(serverTemplateAssetSpec);
     }
 
     public void buildFile(File file) {
         try {
-            buildTemplate.build(file);
+            buildServerTemplate.build(file);
         } catch (RhinoEvaluatorException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class CompileToHtmlListener implements FileAlterationListener {
     }
 
     public void deleteFile(File file) {
-        buildTemplate.delete(file);
+        buildServerTemplate.delete(file);
     }
 
     @Override

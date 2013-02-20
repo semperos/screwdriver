@@ -15,12 +15,12 @@ import java.io.IOException;
 /**
  * Build "server side" templates
  */
-public class BuildTemplate {
-    private static Logger logger = Logger.getLogger(BuildTemplate.class);
+public class BuildServerTemplate {
+    private static Logger logger = Logger.getLogger(BuildServerTemplate.class);
     private ServerTemplateAssetSpec serverTemplateAssetSpec;
     private JadeCompiler jadeCompiler;
 
-    public BuildTemplate(ServerTemplateAssetSpec serverTemplateAssetSpec) {
+    public BuildServerTemplate(ServerTemplateAssetSpec serverTemplateAssetSpec) {
         this.serverTemplateAssetSpec = serverTemplateAssetSpec;
         jadeCompiler = new JadeCompiler();
     }

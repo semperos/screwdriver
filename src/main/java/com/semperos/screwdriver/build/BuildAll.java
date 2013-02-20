@@ -29,8 +29,8 @@ public class BuildAll {
         BuildImage image = new BuildImage(imageAssetSpec);
         image.buildAll();
 
-        BuildTemplate template = new BuildTemplate(serverTemplateAssetSpec);
-        template.buildAll();
+        BuildServerTemplate serverTemplate = new BuildServerTemplate(serverTemplateAssetSpec);
+        serverTemplate.buildAll();
     }
 
     public static void buildAndOptimize(Config cfg) throws IOException, RhinoEvaluatorException {
