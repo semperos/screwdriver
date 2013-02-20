@@ -1,4 +1,4 @@
-package com.semperos.screwdriver.js;
+package com.semperos.screwdriver.js.rhino;
 
 import org.apache.log4j.Logger;
 import org.mozilla.javascript.Context;

@@ -1,4 +1,4 @@
-package com.semperos.screwdriver.js;
+package com.semperos.screwdriver.js.rhino;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.JavaScriptException;

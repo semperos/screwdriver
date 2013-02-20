@@ -13,6 +13,7 @@ public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
     private CssAssetSpec cssAssetSpec;
     private ImageAssetSpec imageAssetSpec;
+    private TemplateAssetSpec templateAssetSpec;
     private ServerTemplateAssetSpec serverTemplateAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
@@ -39,6 +40,14 @@ public class PipelineEnvironment {
         this.imageAssetSpec = imageAssetSpec;
     }
 
+    public TemplateAssetSpec getTemplateAssetSpec() {
+        return templateAssetSpec;
+    }
+
+    public void setTemplateAssetSpec(TemplateAssetSpec templateAssetSpec) {
+        this.templateAssetSpec = templateAssetSpec;
+    }
+
     public ServerTemplateAssetSpec getServerTemplateAssetSpec() {
         return serverTemplateAssetSpec;
     }
@@ -57,6 +66,9 @@ public class PipelineEnvironment {
         jsAssetExtensions.add("js");
         jsAssetExtensions.add("coffee");
         jsAssetSpec = new JsAssetSpec(jsAssetPath, jsAssetExtensions, jsOutputPath);
+        /**
+         * @todo The following is repeated throughout this method; refactor
+         */
         if (cfg.getJsFileFilter() != null) {
             jsAssetSpec.setAssetFileFilter(cfg.getJsFileFilter());
         }
@@ -71,7 +83,7 @@ public class PipelineEnvironment {
 
         File cssAssetPath = new File(cfg.getAssetDirectory(), "stylesheets");
         File cssOutputPath = new File(cfg.getOutputDirectory(), "stylesheets");
-        ArrayList<String> cssAssetExtensions = new ArrayList<String>();
+        ArrayList<String> cssAssetExtensions = new ArrayList<>();
         cssAssetExtensions.add("css");
         cssAssetExtensions.add("less");
         cssAssetExtensions.add("sass");
@@ -92,7 +104,7 @@ public class PipelineEnvironment {
 
         File imageAssetPath = new File(cfg.getAssetDirectory(), "images");
         File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
-        ArrayList<String> imageAssetExtensions = new ArrayList<String>();
+        ArrayList<String> imageAssetExtensions = new ArrayList<>();
         imageAssetExtensions.add("bmp");
         imageAssetExtensions.add("gif");
         imageAssetExtensions.add("jpg");
@@ -112,11 +124,28 @@ public class PipelineEnvironment {
             imageAssetSpec.setAssetExcludes(cfg.getImageExcludes());
         }
 
-        File templateAssetPath = new File(cfg.getAssetDirectory(), "server_templates");
-        File templateOutputPath = cfg.getOutputDirectory();
-        ArrayList<String> templateExtensions = new ArrayList<>();
-        templateExtensions.add("jade");
-        serverTemplateAssetSpec = new ServerTemplateAssetSpec(templateAssetPath, templateExtensions, templateOutputPath);
+        File TemplateAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
+        File TemplateOutputPath = cfg.getOutputDirectory();
+        ArrayList<String> TemplateExtensions = new ArrayList<>();
+        TemplateExtensions.add("dust");
+        templateAssetSpec= new TemplateAssetSpec(TemplateAssetPath, TemplateExtensions, TemplateOutputPath);
+        if (cfg.getTemplateFileFilter() != null) {
+            templateAssetSpec.setAssetFileFilter(cfg.getTemplateFileFilter());
+        }
+        if (cfg.getTemplateDirFilter() != null) {
+            templateAssetSpec.setAssetDirFilter(cfg.getTemplateDirFilter());
+        }
+        if (cfg.getTemplateIncludes() != null && cfg.getTemplateIncludes().size() > 0) {
+            templateAssetSpec.setAssetIncludes(cfg.getTemplateIncludes());
+        } else {
+            templateAssetSpec.setAssetExcludes(cfg.getTemplateExcludes());
+        }
+
+        File serverTemplateAssetPath = new File(cfg.getAssetDirectory(), "server_templates");
+        File serverTemplateOutputPath = cfg.getOutputDirectory();
+        ArrayList<String> serverTemplateExtensions = new ArrayList<>();
+        serverTemplateExtensions.add("jade");
+        serverTemplateAssetSpec = new ServerTemplateAssetSpec(serverTemplateAssetPath, serverTemplateExtensions, serverTemplateOutputPath);
         serverTemplateAssetSpec.setAssetLocals(cfg.getServerTemplateLocals());
         if (cfg.getServerTemplateFileFilter() != null) {
             serverTemplateAssetSpec.setAssetFileFilter(cfg.getServerTemplateFileFilter());

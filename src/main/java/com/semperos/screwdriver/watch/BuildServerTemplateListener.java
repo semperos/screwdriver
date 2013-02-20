@@ -1,7 +1,7 @@
 package com.semperos.screwdriver.watch;
 
 import com.semperos.screwdriver.build.BuildServerTemplate;
-import com.semperos.screwdriver.js.RhinoEvaluatorException;
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;

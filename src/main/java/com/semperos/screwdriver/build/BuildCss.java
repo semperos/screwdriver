@@ -3,7 +3,7 @@ package com.semperos.screwdriver.build;
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.LessCompiler;
-import com.semperos.screwdriver.js.RhinoEvaluatorException;
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.FileUtils;

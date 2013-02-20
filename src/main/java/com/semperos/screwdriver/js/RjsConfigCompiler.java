@@ -1,6 +1,8 @@
 package com.semperos.screwdriver.js;
 
 import com.semperos.screwdriver.Config;
+import com.semperos.screwdriver.js.rhino.RhinoCompiler;
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
@@ -11,8 +13,7 @@ import java.util.List;
 /**
  * Generate and process RequireJS optimizer configurations for JavaScript files.
  */
-public class RjsConfigCompiler {
-    private RhinoCompiler rhinoCompiler;
+public class RjsConfigCompiler extends AbstractCompiler {
     private List<String> rjsModules;
 
     public RjsConfigCompiler(Config cfg) {

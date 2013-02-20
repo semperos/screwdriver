@@ -1,5 +1,7 @@
 package com.semperos.screwdriver.js;
 
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
+
 import java.io.File;
 import java.io.IOException;
 

@@ -9,33 +9,24 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Compiler for Jade templates (compiles to HTML)
+ * Compile Dust templates to JavaScript via Rhino
  */
-public class JadeCompiler extends AbstractCompiler implements JsCompilation {
+public class DustCompiler extends AbstractCompiler implements JsCompilation {
 
-    public JadeCompiler() {
+    public DustCompiler() {
         rhinoCompiler = new RhinoCompiler(new JsRuntimeSupport());
         HashMap<String,String> deps = new HashMap<String,String>();
-        deps.put("env.js", "com/semperos/screwdriver/js/vendor/env.rhino.1.2.js");
-        deps.put("jade.js", "com/semperos/screwdriver/js/vendor/jade-0.27.7.js");
+//        deps.put("env.js", "com/semperos/screwdriver/js/vendor/env.rhino.1.2.js");
+        deps.put("jade.js", "com/semperos/screwdriver/js/vendor/dust-full-1.2.0.js");
         rhinoCompiler.addDependencies(deps);
     }
 
-    /**
-     * Compile Jade files to HTML
-     *
-     * @param sourceFile
-     * @return
-     * @throws IOException
-     * @throws com.semperos.screwdriver.js.rhino.RhinoEvaluatorException
-     */
     @Override
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
-        rhinoCompiler.registerCompiler("JadeCompiler", "com/semperos/screwdriver/js/extension/compile-jade.js");
+        rhinoCompiler.registerCompiler("DustCompiler", "com/semperos/screwdriver/js/extension/compile-dust.js");
         rhinoCompiler.addSourceFilePath(sourceFile.getAbsolutePath());
         rhinoCompiler.addScriptSource(FileUtil.readFile(sourceFile));
         rhinoCompiler.addCompilerOptions(compilerOptions);
-        rhinoCompiler.addCompilerLocals(compilerLocals);
         return rhinoCompiler.compile();
     }
 }

@@ -27,6 +27,10 @@ public class Config {
     private IOFileFilter imageDirFilter;
     private List<String> imageIncludes;
     private List<String> imageExcludes;
+    private List<String> templateIncludes;
+    private List<String> templateExcludes;
+    private IOFileFilter templateFileFilter;
+    private IOFileFilter templateDirFilter;
     private List<String> serverTemplateIncludes;
     private List<String> serverTemplateExcludes;
     private IOFileFilter serverTemplateFileFilter;
@@ -53,11 +57,15 @@ public class Config {
         this.imageDirFilter = DefaultConfig.getImageDirFilter();
         this.imageIncludes = DefaultConfig.getImageIncludes();
         this.imageExcludes = DefaultConfig.getImageExcludes();
-        this.serverTemplateIncludes = DefaultConfig.getTemplateIncludes();
-        this.serverTemplateExcludes = DefaultConfig.getTemplateExcludes();
-        this.serverTemplateFileFilter = DefaultConfig.getTemplateFileFilter();
-        this.serverTemplateDirFilter = DefaultConfig.getTemplateDirFilter();
-        this.serverTemplateLocals = DefaultConfig.getTemplateLocals();
+        this.templateIncludes = DefaultConfig.getTemplateIncludes();
+        this.templateExcludes = DefaultConfig.getTemplateExcludes();
+        this.templateFileFilter = DefaultConfig.getTemplateFileFilter();
+        this.templateDirFilter = DefaultConfig.getTemplateDirFilter();
+        this.serverTemplateIncludes = DefaultConfig.getServerTemplateIncludes();
+        this.serverTemplateExcludes = DefaultConfig.getServerTemplateExcludes();
+        this.serverTemplateFileFilter = DefaultConfig.getServerTemplateFileFilter();
+        this.serverTemplateDirFilter = DefaultConfig.getServerTemplateDirFilter();
+        this.serverTemplateLocals = DefaultConfig.getServerTemplateLocals();
 
         this.optimizeJs = DefaultConfig.isOptimizeJs();
         this.optimizeCss = DefaultConfig.isOptimizeCss();
@@ -183,6 +191,38 @@ public class Config {
 
     public void setImageExcludes(ArrayList<String> imageExcludes) {
         this.imageExcludes = imageExcludes;
+    }
+
+    public List<String> getTemplateIncludes() {
+        return templateIncludes;
+    }
+
+    public void setTemplateIncludes(List<String> templateIncludes) {
+        this.templateIncludes = templateIncludes;
+    }
+
+    public List<String> getTemplateExcludes() {
+        return templateExcludes;
+    }
+
+    public void setTemplateExcludes(List<String> templateExcludes) {
+        this.templateExcludes = templateExcludes;
+    }
+
+    public IOFileFilter getTemplateFileFilter() {
+        return templateFileFilter;
+    }
+
+    public void setTemplateFileFilter(IOFileFilter templateFileFilter) {
+        this.templateFileFilter = templateFileFilter;
+    }
+
+    public IOFileFilter getTemplateDirFilter() {
+        return templateDirFilter;
+    }
+
+    public void setTemplateDirFilter(IOFileFilter templateDirFilter) {
+        this.templateDirFilter = templateDirFilter;
     }
 
     public List<String> getServerTemplateIncludes() {

@@ -2,9 +2,9 @@ package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.IdentityCompiler;
-import com.semperos.screwdriver.js.JadeCompiler;
+import com.semperos.screwdriver.js.DustCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
+import com.semperos.screwdriver.pipeline.TemplateAssetSpec;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -13,23 +13,22 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Build "server side" templates
+ * Build client-side JavaScript templates
  */
-public class BuildServerTemplate {
-    private static Logger logger = Logger.getLogger(BuildServerTemplate.class);
-    private ServerTemplateAssetSpec serverTemplateAssetSpec;
-    private JadeCompiler jadeCompiler;
+public class BuildTemplate {
+    private static Logger logger = Logger.getLogger(BuildTemplate.class);
+    private TemplateAssetSpec templateAssetSpec;
+    private DustCompiler dustCompiler;
 
-    public BuildServerTemplate(ServerTemplateAssetSpec serverTemplateAssetSpec) {
-        this.serverTemplateAssetSpec = serverTemplateAssetSpec;
-        jadeCompiler = new JadeCompiler();
+    public BuildTemplate(TemplateAssetSpec templateAssetSpec) {
+        this.templateAssetSpec = templateAssetSpec;
+        dustCompiler = new DustCompiler();
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
         String sourceCode = FileUtil.readFile(sourceFile);
-        if (FilenameUtils.isExtension(sourceFile.toString(), "jade")) {
-            jadeCompiler.setCompilerLocals(serverTemplateAssetSpec.getAssetLocals());
-            return jadeCompiler.compile(sourceFile);
+        if (FilenameUtils.isExtension(sourceFile.toString(), "dust")) {
+            return this.dustCompiler.compile(sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
             return idc.compile(sourceCode, sourceFile);
@@ -37,22 +36,18 @@ public class BuildServerTemplate {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        File outputFile = serverTemplateAssetSpec.outputFile(sourceFile);
+        File outputFile = templateAssetSpec.outputFile(sourceFile);
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            logger.info("Compiling template file " + sourceFile.toString() + " to HTML.");
+            logger.info("Compiling template in " + sourceFile.toString() + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile),
                     outputFile);
         }
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : serverTemplateAssetSpec.findFiles()) {
+        for (File f : templateAssetSpec.findFiles()) {
             build(f);
         }
-    }
-
-    public void delete(File sourceFile) {
-        serverTemplateAssetSpec.outputFile(sourceFile).delete();
     }
 }

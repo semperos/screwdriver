@@ -1,5 +1,7 @@
 package com.semperos.screwdriver.js;
 
+import com.semperos.screwdriver.js.rhino.RhinoCompiler;
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import org.mozilla.javascript.JavaScriptException;
 
 import java.io.File;
@@ -7,14 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Created with IntelliJ IDEA.
- * User: semperos
- * Date: 2/8/13
- * Time: 1:59 AM
- * To change this template use File | Settings | File Templates.
+ * Compile LESS to CSS via Rhino
  */
-public class LessCompiler implements JsCompilation {
-    private RhinoCompiler rhinoCompiler;
+public class LessCompiler extends AbstractCompiler implements JsCompilation {
 
     public LessCompiler() {
         rhinoCompiler = new RhinoCompiler(new JsRuntimeSupport());
@@ -30,7 +27,7 @@ public class LessCompiler implements JsCompilation {
      *
      * @return The resultant JavaScript
      * @throws java.io.IOException
-     * @throws RhinoEvaluatorException
+     * @throws com.semperos.screwdriver.js.rhino.RhinoEvaluatorException
      */
     @Override
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {

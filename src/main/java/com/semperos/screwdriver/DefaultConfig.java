@@ -55,6 +55,14 @@ public class DefaultConfig {
         return new ArrayList<String>();
     }
 
+    public static ArrayList<String> getServerTemplateIncludes() {
+        return new ArrayList<String>();
+    }
+
+    public static ArrayList<String> getServerTemplateExcludes() {
+        return new ArrayList<String>();
+    }
+
     public static boolean isOptimizeJs() {
         return false;
     }
@@ -103,7 +111,15 @@ public class DefaultConfig {
         return null;
     }
 
-    public static Map<String,Object> getTemplateLocals() {
+    public static IOFileFilter getServerTemplateFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getServerTemplateDirFilter() {
+        return null;
+    }
+
+    public static Map<String,Object> getServerTemplateLocals() {
         return new HashMap<String,Object>();
     }
 }

@@ -1,6 +1,8 @@
 package com.semperos.screwdriver.js;
 
 import com.semperos.screwdriver.FileUtil;
+import com.semperos.screwdriver.js.rhino.RhinoCompiler;
+import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +11,7 @@ import java.util.HashMap;
 /**
  * Compile CoffeeScript via Rhino
  */
-public class CoffeeScriptCompiler implements JsCompilation {
-    private RhinoCompiler rhinoCompiler;
+public class CoffeeScriptCompiler extends AbstractCompiler implements JsCompilation {
 
     public CoffeeScriptCompiler() {
         rhinoCompiler = new RhinoCompiler();
@@ -26,7 +27,7 @@ public class CoffeeScriptCompiler implements JsCompilation {
      *
      * @return The resultant JavaScript
      * @throws IOException
-     * @throws RhinoEvaluatorException
+     * @throws com.semperos.screwdriver.js.rhino.RhinoEvaluatorException
      */
     @Override
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
