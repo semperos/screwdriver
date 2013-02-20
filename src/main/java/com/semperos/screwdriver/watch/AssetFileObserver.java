@@ -84,8 +84,8 @@ public class AssetFileObserver {
 
     public FileAlterationObserver observeTemplate() {
         IOFileFilter filter = setupFilters("jade");
-        FileAlterationObserver observer = new FileAlterationObserver(pe.getTemplateAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileToHtmlListener(pe.getTemplateAssetSpec()));
+        FileAlterationObserver observer = new FileAlterationObserver(pe.getServerTemplateAssetSpec().getAssetPath(), filter);
+        observer.addListener(new CompileToHtmlListener(pe.getServerTemplateAssetSpec()));
         return observer;
     }
 }

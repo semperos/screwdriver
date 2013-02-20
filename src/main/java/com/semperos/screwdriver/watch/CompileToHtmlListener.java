@@ -2,7 +2,7 @@ package com.semperos.screwdriver.watch;
 
 import com.semperos.screwdriver.build.BuildTemplate;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.TemplateAssetSpec;
+import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
@@ -17,8 +17,8 @@ public class CompileToHtmlListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(CompileToHtmlListener.class);
     private BuildTemplate buildTemplate;
 
-    public CompileToHtmlListener(TemplateAssetSpec templateAssetSpec) {
-        buildTemplate = new BuildTemplate(templateAssetSpec);
+    public CompileToHtmlListener(ServerTemplateAssetSpec serverTemplateAssetSpec) {
+        buildTemplate = new BuildTemplate(serverTemplateAssetSpec);
     }
 
     public void buildFile(File file) {

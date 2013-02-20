@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Asset specifications for "server-side" templates
  */
-public class TemplateAssetSpec extends AssetSpec {
-    public TemplateAssetSpec(File assetPath, List<String> assetExtensions, File outputPath) {
+public class ServerTemplateAssetSpec extends AssetSpec {
+    public ServerTemplateAssetSpec(File assetPath, List<String> assetExtensions, File outputPath) {
         super(assetPath, assetExtensions, outputPath);
     }
 

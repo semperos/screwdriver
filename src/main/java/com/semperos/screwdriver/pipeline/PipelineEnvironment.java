@@ -13,7 +13,7 @@ public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
     private CssAssetSpec cssAssetSpec;
     private ImageAssetSpec imageAssetSpec;
-    private TemplateAssetSpec templateAssetSpec;
+    private ServerTemplateAssetSpec serverTemplateAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
         return jsAssetSpec;
@@ -39,12 +39,12 @@ public class PipelineEnvironment {
         this.imageAssetSpec = imageAssetSpec;
     }
 
-    public TemplateAssetSpec getTemplateAssetSpec() {
-        return templateAssetSpec;
+    public ServerTemplateAssetSpec getServerTemplateAssetSpec() {
+        return serverTemplateAssetSpec;
     }
 
-    public void setTemplateAssetSpec(TemplateAssetSpec templateAssetSpec) {
-        this.templateAssetSpec = templateAssetSpec;
+    public void setServerTemplateAssetSpec(ServerTemplateAssetSpec serverTemplateAssetSpec) {
+        this.serverTemplateAssetSpec = serverTemplateAssetSpec;
     }
 
     /**
@@ -116,18 +116,18 @@ public class PipelineEnvironment {
         File templateOutputPath = cfg.getOutputDirectory();
         ArrayList<String> templateExtensions = new ArrayList<>();
         templateExtensions.add("jade");
-        templateAssetSpec = new TemplateAssetSpec(templateAssetPath, templateExtensions, templateOutputPath);
-        templateAssetSpec.setAssetLocals(cfg.getTemplateLocals());
-        if (cfg.getTemplateFileFilter() != null) {
-            templateAssetSpec.setAssetFileFilter(cfg.getTemplateFileFilter());
+        serverTemplateAssetSpec = new ServerTemplateAssetSpec(templateAssetPath, templateExtensions, templateOutputPath);
+        serverTemplateAssetSpec.setAssetLocals(cfg.getServerTemplateLocals());
+        if (cfg.getServerTemplateFileFilter() != null) {
+            serverTemplateAssetSpec.setAssetFileFilter(cfg.getServerTemplateFileFilter());
         }
-        if (cfg.getTemplateDirFilter() != null) {
-            templateAssetSpec.setAssetDirFilter(cfg.getTemplateDirFilter());
+        if (cfg.getServerTemplateDirFilter() != null) {
+            serverTemplateAssetSpec.setAssetDirFilter(cfg.getServerTemplateDirFilter());
         }
-        if (cfg.getTemplateIncludes() != null && cfg.getTemplateIncludes().size() > 0) {
-            templateAssetSpec.setAssetIncludes(cfg.getTemplateIncludes());
+        if (cfg.getServerTemplateIncludes() != null && cfg.getServerTemplateIncludes().size() > 0) {
+            serverTemplateAssetSpec.setAssetIncludes(cfg.getServerTemplateIncludes());
         } else {
-            templateAssetSpec.setAssetExcludes(cfg.getTemplateExcludes());
+            serverTemplateAssetSpec.setAssetExcludes(cfg.getServerTemplateExcludes());
         }
     }
 

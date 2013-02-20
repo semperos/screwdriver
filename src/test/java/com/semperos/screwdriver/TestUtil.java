@@ -49,7 +49,7 @@ public class TestUtil {
         HashMap<String,Object> templateLocals = new HashMap<>();
         templateLocals.put("pageTitle", "Testing Jade");
         templateLocals.put("youAreUsingJade", true);
-        cfg.setTemplateLocals(templateLocals);
+        cfg.setServerTemplateLocals(templateLocals);
         return cfg;
     }
 

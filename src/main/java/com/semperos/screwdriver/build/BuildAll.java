@@ -18,7 +18,7 @@ public class BuildAll {
         JsAssetSpec jsAssetSpec = pe.getJsAssetSpec();
         CssAssetSpec cssAssetSpec = pe.getCssAssetSpec();
         ImageAssetSpec imageAssetSpec = pe.getImageAssetSpec();
-        TemplateAssetSpec templateAssetSpec = pe.getTemplateAssetSpec();
+        ServerTemplateAssetSpec serverTemplateAssetSpec = pe.getServerTemplateAssetSpec();
 
         BuildJs js = new BuildJs(jsAssetSpec);
         js.buildAll();
@@ -29,7 +29,7 @@ public class BuildAll {
         BuildImage image = new BuildImage(imageAssetSpec);
         image.buildAll();
 
-        BuildTemplate template = new BuildTemplate(templateAssetSpec);
+        BuildTemplate template = new BuildTemplate(serverTemplateAssetSpec);
         template.buildAll();
     }
 

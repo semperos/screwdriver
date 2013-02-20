@@ -28,11 +28,11 @@ public class Config {
     private IOFileFilter imageDirFilter;
     private List<String> imageIncludes;
     private List<String> imageExcludes;
-    private List<String> templateIncludes;
-    private List<String> templateExcludes;
-    private IOFileFilter templateFileFilter;
-    private IOFileFilter templateDirFilter;
-    private Map<String,Object> templateLocals;
+    private List<String> serverTemplateIncludes;
+    private List<String> serverTemplateExcludes;
+    private IOFileFilter serverTemplateFileFilter;
+    private IOFileFilter serverTemplateDirFilter;
+    private Map<String,Object> serverTemplateLocals;
     private boolean optimizeJs;
     private boolean optimizeCss;
     private boolean optimizeImage;
@@ -54,11 +54,11 @@ public class Config {
         this.imageDirFilter = DefaultConfig.getImageDirFilter();
         this.imageIncludes = DefaultConfig.getImageIncludes();
         this.imageExcludes = DefaultConfig.getImageExcludes();
-        this.templateIncludes = DefaultConfig.getTemplateIncludes();
-        this.templateExcludes = DefaultConfig.getTemplateExcludes();
-        this.templateFileFilter = DefaultConfig.getTemplateFileFilter();
-        this.templateDirFilter = DefaultConfig.getTemplateDirFilter();
-        this.templateLocals = DefaultConfig.getTemplateLocals();
+        this.serverTemplateIncludes = DefaultConfig.getTemplateIncludes();
+        this.serverTemplateExcludes = DefaultConfig.getTemplateExcludes();
+        this.serverTemplateFileFilter = DefaultConfig.getTemplateFileFilter();
+        this.serverTemplateDirFilter = DefaultConfig.getTemplateDirFilter();
+        this.serverTemplateLocals = DefaultConfig.getTemplateLocals();
 
         this.optimizeJs = DefaultConfig.isOptimizeJs();
         this.optimizeCss = DefaultConfig.isOptimizeCss();
@@ -202,44 +202,44 @@ public class Config {
         this.imageExcludes = imageExcludes;
     }
 
-    public List<String> getTemplateIncludes() {
-        return templateIncludes;
+    public List<String> getServerTemplateIncludes() {
+        return serverTemplateIncludes;
     }
 
-    public void setTemplateIncludes(List<String> templateIncludes) {
-        this.templateIncludes = templateIncludes;
+    public void setServerTemplateIncludes(List<String> serverTemplateIncludes) {
+        this.serverTemplateIncludes = serverTemplateIncludes;
     }
 
-    public List<String> getTemplateExcludes() {
-        return templateExcludes;
+    public List<String> getServerTemplateExcludes() {
+        return serverTemplateExcludes;
     }
 
-    public void setTemplateExcludes(List<String> templateExcludes) {
-        this.templateExcludes = templateExcludes;
+    public void setServerTemplateExcludes(List<String> serverTemplateExcludes) {
+        this.serverTemplateExcludes = serverTemplateExcludes;
     }
 
-    public IOFileFilter getTemplateFileFilter() {
-        return templateFileFilter;
+    public IOFileFilter getServerTemplateFileFilter() {
+        return serverTemplateFileFilter;
     }
 
-    public void setTemplateFileFilter(IOFileFilter templateFileFilter) {
-        this.templateFileFilter = templateFileFilter;
+    public void setServerTemplateFileFilter(IOFileFilter serverTemplateFileFilter) {
+        this.serverTemplateFileFilter = serverTemplateFileFilter;
     }
 
-    public IOFileFilter getTemplateDirFilter() {
-        return templateDirFilter;
+    public IOFileFilter getServerTemplateDirFilter() {
+        return serverTemplateDirFilter;
     }
 
-    public void setTemplateDirFilter(IOFileFilter templateDirFilter) {
-        this.templateDirFilter = templateDirFilter;
+    public void setServerTemplateDirFilter(IOFileFilter serverTemplateDirFilter) {
+        this.serverTemplateDirFilter = serverTemplateDirFilter;
     }
 
-    public Map<String, Object> getTemplateLocals() {
-        return templateLocals;
+    public Map<String, Object> getServerTemplateLocals() {
+        return serverTemplateLocals;
     }
 
-    public void setTemplateLocals(Map<String, Object> templateLocals) {
-        this.templateLocals = templateLocals;
+    public void setServerTemplateLocals(Map<String, Object> serverTemplateLocals) {
+        this.serverTemplateLocals = serverTemplateLocals;
     }
 
     public boolean isOptimizeJs() {

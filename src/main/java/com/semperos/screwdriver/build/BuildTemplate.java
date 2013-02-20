@@ -4,7 +4,7 @@ import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.JadeCompiler;
 import com.semperos.screwdriver.js.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.TemplateAssetSpec;
+import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -17,18 +17,18 @@ import java.io.IOException;
  */
 public class BuildTemplate {
     private static Logger logger = Logger.getLogger(BuildTemplate.class);
-    private TemplateAssetSpec templateAssetSpec;
+    private ServerTemplateAssetSpec serverTemplateAssetSpec;
     private JadeCompiler jadeCompiler;
 
-    public BuildTemplate(TemplateAssetSpec templateAssetSpec) {
-        this.templateAssetSpec = templateAssetSpec;
+    public BuildTemplate(ServerTemplateAssetSpec serverTemplateAssetSpec) {
+        this.serverTemplateAssetSpec = serverTemplateAssetSpec;
         jadeCompiler = new JadeCompiler();
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
         String sourceCode = FileUtil.readFile(sourceFile);
         if (FilenameUtils.isExtension(sourceFile.toString(), "jade")) {
-            jadeCompiler.setCompilerLocals(templateAssetSpec.getAssetLocals());
+            jadeCompiler.setCompilerLocals(serverTemplateAssetSpec.getAssetLocals());
             return jadeCompiler.compile(sourceFile);
         } else {
             IdentityCompiler idc = new IdentityCompiler();
@@ -37,7 +37,7 @@ public class BuildTemplate {
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        File outputFile = templateAssetSpec.outputFile(sourceFile);
+        File outputFile = serverTemplateAssetSpec.outputFile(sourceFile);
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
             logger.info("Compiling template file " + sourceFile.toString() + " to HTML.");
@@ -47,12 +47,12 @@ public class BuildTemplate {
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : templateAssetSpec.findFiles()) {
+        for (File f : serverTemplateAssetSpec.findFiles()) {
             build(f);
         }
     }
 
     public void delete(File sourceFile) {
-        templateAssetSpec.outputFile(sourceFile).delete();
+        serverTemplateAssetSpec.outputFile(sourceFile).delete();
     }
 }
