@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * Watch files that compile to HTML
  */
-public class CompileToHtmlListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileToHtmlListener.class);
+public class BuildServerTemplateListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(BuildServerTemplateListener.class);
     private BuildServerTemplate buildServerTemplate;
 
-    public CompileToHtmlListener(ServerTemplateAssetSpec serverTemplateAssetSpec) {
+    public BuildServerTemplateListener(ServerTemplateAssetSpec serverTemplateAssetSpec) {
         buildServerTemplate = new BuildServerTemplate(serverTemplateAssetSpec);
     }
 

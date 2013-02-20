@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * Watch LESS files
  */
-public class CompileToCssListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileToCssListener.class);
+public class BuildCssListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(BuildCssListener.class);
     BuildCss buildCss;
 
-    public CompileToCssListener(CssAssetSpec cssAssetSpec) {
+    public BuildCssListener(CssAssetSpec cssAssetSpec) {
         buildCss = new BuildCss(cssAssetSpec);
     }
 

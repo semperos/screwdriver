@@ -59,14 +59,14 @@ public class AssetFileObserver {
     public FileAlterationObserver observeCoffeeScript() {
         IOFileFilter filter = setupFilters("coffee");
         FileAlterationObserver observer = new FileAlterationObserver(pe.getJsAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileToJsListener(pe.getJsAssetSpec()));
+        observer.addListener(new BuildJsListener(pe.getJsAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeLess() {
         IOFileFilter filter = setupFilters("less");
         FileAlterationObserver observer = new FileAlterationObserver(pe.getCssAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileToCssListener(pe.getCssAssetSpec()));
+        observer.addListener(new BuildCssListener(pe.getCssAssetSpec()));
         return observer;
     }
 
@@ -78,14 +78,14 @@ public class AssetFileObserver {
         }
         IOFileFilter filter = setupFilters(extensions);
         FileAlterationObserver observer = new FileAlterationObserver(pe.getImageAssetSpec().getAssetPath(), filter);
-        observer.addListener(new ProcessAsImageListener(pe.getImageAssetSpec()));
+        observer.addListener(new BuildImageListener(pe.getImageAssetSpec()));
         return observer;
     }
 
-    public FileAlterationObserver observeTemplate() {
+    public FileAlterationObserver observeServerTemplate() {
         IOFileFilter filter = setupFilters("jade");
         FileAlterationObserver observer = new FileAlterationObserver(pe.getServerTemplateAssetSpec().getAssetPath(), filter);
-        observer.addListener(new CompileToHtmlListener(pe.getServerTemplateAssetSpec()));
+        observer.addListener(new BuildServerTemplateListener(pe.getServerTemplateAssetSpec()));
         return observer;
     }
 }

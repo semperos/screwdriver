@@ -12,11 +12,11 @@ import java.io.IOException;
 /**
  * Process image files
  */
-public class ProcessAsImageListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(ProcessAsImageListener.class);
+public class BuildImageListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(BuildImageListener.class);
     BuildImage buildImage;
 
-    public ProcessAsImageListener(ImageAssetSpec imageAssetSpec) {
+    public BuildImageListener(ImageAssetSpec imageAssetSpec) {
         buildImage = new BuildImage(imageAssetSpec);
     }
 

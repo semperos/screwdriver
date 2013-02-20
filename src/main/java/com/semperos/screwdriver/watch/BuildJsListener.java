@@ -13,11 +13,11 @@ import java.io.IOException;
 /**
  * Watch files that target JavaScript
  */
-public class CompileToJsListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(CompileToJsListener.class);
+public class BuildJsListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(BuildJsListener.class);
     BuildJs buildJs;
 
-    public CompileToJsListener(JsAssetSpec jsAssetSpec) {
+    public BuildJsListener(JsAssetSpec jsAssetSpec) {
         buildJs = new BuildJs(jsAssetSpec);
     }
 
