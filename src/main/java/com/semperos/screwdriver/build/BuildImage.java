@@ -32,7 +32,7 @@ public class BuildImage {
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
             logger.info("Processing file " + sourceFile.toString() + " as an image.");
-            FileUtil.copyFile(sourceFile, imageAssetSpec.outputFile(sourceFile));
+            FileUtil.copyFile(sourceFile, outputFile);
         }
     }
 

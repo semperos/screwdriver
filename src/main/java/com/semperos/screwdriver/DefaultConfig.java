@@ -4,6 +4,8 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Default values for configurable aspects of Screwdriver.
@@ -25,15 +27,11 @@ public class DefaultConfig {
         return new ArrayList<String>();
     }
 
-    public static ArrayList<String> getCssIncludes() {
-        return new ArrayList<String>();
-    }
-
-    public static ArrayList<String> getImageIncludes() {
-        return new ArrayList<String>();
-    }
-
     public static ArrayList<String> getJsExcludes() {
+        return new ArrayList<String>();
+    }
+
+    public static ArrayList<String> getCssIncludes() {
         return new ArrayList<String>();
     }
 
@@ -41,7 +39,19 @@ public class DefaultConfig {
         return new ArrayList<String>();
     }
 
+    public static ArrayList<String> getImageIncludes() {
+        return new ArrayList<String>();
+    }
+
     public static ArrayList<String> getImageExcludes() {
+        return new ArrayList<String>();
+    }
+
+    public static ArrayList<String> getTemplateIncludes() {
+        return new ArrayList<String>();
+    }
+
+    public static ArrayList<String> getTemplateExcludes() {
         return new ArrayList<String>();
     }
 
@@ -83,5 +93,17 @@ public class DefaultConfig {
 
     public static IOFileFilter getImageDirFilter() {
         return null;
+    }
+
+    public static IOFileFilter getTemplateFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getTemplateDirFilter() {
+        return null;
+    }
+
+    public static Map<String,Object> getTemplateLocals() {
+        return new HashMap<String,Object>();
     }
 }

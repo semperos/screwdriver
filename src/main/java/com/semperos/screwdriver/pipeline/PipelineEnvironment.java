@@ -13,6 +13,7 @@ public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
     private CssAssetSpec cssAssetSpec;
     private ImageAssetSpec imageAssetSpec;
+    private TemplateAssetSpec templateAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
         return jsAssetSpec;
@@ -36,6 +37,14 @@ public class PipelineEnvironment {
 
     public void setImageAssetSpec(ImageAssetSpec imageAssetSpec) {
         this.imageAssetSpec = imageAssetSpec;
+    }
+
+    public TemplateAssetSpec getTemplateAssetSpec() {
+        return templateAssetSpec;
+    }
+
+    public void setTemplateAssetSpec(TemplateAssetSpec templateAssetSpec) {
+        this.templateAssetSpec = templateAssetSpec;
     }
 
     /**
@@ -101,6 +110,24 @@ public class PipelineEnvironment {
             imageAssetSpec.setAssetIncludes(cfg.getImageIncludes());
         } else {
             imageAssetSpec.setAssetExcludes(cfg.getImageExcludes());
+        }
+
+        File templateAssetPath = new File(cfg.getAssetDirectory(), "server_templates");
+        File templateOutputPath = cfg.getOutputDirectory();
+        ArrayList<String> templateExtensions = new ArrayList<>();
+        templateExtensions.add("jade");
+        templateAssetSpec = new TemplateAssetSpec(templateAssetPath, templateExtensions, templateOutputPath);
+        templateAssetSpec.setAssetLocals(cfg.getTemplateLocals());
+        if (cfg.getTemplateFileFilter() != null) {
+            templateAssetSpec.setAssetFileFilter(cfg.getTemplateFileFilter());
+        }
+        if (cfg.getTemplateDirFilter() != null) {
+            templateAssetSpec.setAssetDirFilter(cfg.getTemplateDirFilter());
+        }
+        if (cfg.getTemplateIncludes() != null && cfg.getTemplateIncludes().size() > 0) {
+            templateAssetSpec.setAssetIncludes(cfg.getTemplateIncludes());
+        } else {
+            templateAssetSpec.setAssetExcludes(cfg.getTemplateExcludes());
         }
     }
 

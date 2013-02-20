@@ -24,9 +24,7 @@ public class ExcludesIntegrationTest {
     @Before
     public void setup() throws Exception {
         TestUtil.deleteAssetDirectories();
-        cfg = new Config();
-        cfg.setAssetDirectory(TestUtil.assetDirectory());
-        cfg.setOutputDirectory(TestUtil.outputDirectory());
+        cfg = TestUtil.baseConfig();
     }
 
     @After

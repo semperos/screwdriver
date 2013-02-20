@@ -41,7 +41,7 @@ public class BuildJs {
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
             logger.info("Compiling file " + sourceFile.toString() + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile),
-                    jsAssetSpec.outputFile(sourceFile));
+                    outputFile);
         }
     }
 

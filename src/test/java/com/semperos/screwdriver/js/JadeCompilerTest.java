@@ -44,7 +44,7 @@ public class JadeCompilerTest {
         HashMap<String,Object> compilerOptions = new HashMap<>();
         compilerOptions.put("pretty", true);
         compiler.setCompilerOptions(compilerOptions);
-        String result = compiler.compile(new File("src/test/resources/com/semperos/screwdriver/sample/views/index.jade"));
+        String result = compiler.compile(new File("src/test/resources/com/semperos/screwdriver/sample/assets/server_templates/index.jade"));
         assertEquals(result.trim(),expected.trim());
     }
 }

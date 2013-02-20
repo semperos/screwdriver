@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Rhino evaluation with facilities to support running a compiler
@@ -46,7 +47,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      *
      * @param compilerOptions A map of options to pass to the underlying JavaScript compiler
      */
-    public void addCompilerOptions(HashMap<String,Object> compilerOptions) {
+    public void addCompilerOptions(Map<String,Object> compilerOptions) {
         addInstanceField(COMPILER_OPTIONS_JS, compilerOptions);
     }
 
@@ -56,7 +57,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      *
      * @param compilerLocals A map of options to pass to the underlying JavaScript compiler
      */
-    public void addCompilerLocals(HashMap<String,Object> compilerLocals) {
+    public void addCompilerLocals(Map<String,Object> compilerLocals) {
         addInstanceField(COMPILER_LOCALS_JS, compilerLocals);
     }
 
@@ -99,7 +100,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @param scriptSource
      * @param compilerOptions
      */
-    public void compilerArgs(String scriptSource, HashMap<String,Object> compilerOptions) {
+    public void compilerArgs(String scriptSource, Map<String,Object> compilerOptions) {
         compilerArgs(scriptSource, compilerOptions, new HashMap<String,Object>());
 
     }
@@ -111,7 +112,7 @@ public class RhinoCompiler extends RhinoEvaluator {
      * @param compilerOptions
      * @param compilerLocals
      */
-    public void compilerArgs(String scriptSource, HashMap<String,Object> compilerOptions, HashMap<String,Object> compilerLocals) {
+    public void compilerArgs(String scriptSource, Map<String,Object> compilerOptions, Map<String,Object> compilerLocals) {
         addScriptSource(scriptSource);
         addCompilerOptions(compilerOptions);
         addCompilerLocals(compilerLocals);

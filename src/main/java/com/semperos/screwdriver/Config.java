@@ -6,6 +6,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is basically a bag of config, currently used solely by the {@link com.semperos.screwdriver.pipeline.PipelineEnvironment}
@@ -27,6 +28,11 @@ public class Config {
     private IOFileFilter imageDirFilter;
     private List<String> imageIncludes;
     private List<String> imageExcludes;
+    private List<String> templateIncludes;
+    private List<String> templateExcludes;
+    private IOFileFilter templateFileFilter;
+    private IOFileFilter templateDirFilter;
+    private Map<String,Object> templateLocals;
     private boolean optimizeJs;
     private boolean optimizeCss;
     private boolean optimizeImage;
@@ -189,6 +195,46 @@ public class Config {
 
     public void setImageExcludes(ArrayList<String> imageExcludes) {
         this.imageExcludes = imageExcludes;
+    }
+
+    public List<String> getTemplateIncludes() {
+        return templateIncludes;
+    }
+
+    public void setTemplateIncludes(List<String> templateIncludes) {
+        this.templateIncludes = templateIncludes;
+    }
+
+    public List<String> getTemplateExcludes() {
+        return templateExcludes;
+    }
+
+    public void setTemplateExcludes(List<String> templateExcludes) {
+        this.templateExcludes = templateExcludes;
+    }
+
+    public IOFileFilter getTemplateFileFilter() {
+        return templateFileFilter;
+    }
+
+    public void setTemplateFileFilter(IOFileFilter templateFileFilter) {
+        this.templateFileFilter = templateFileFilter;
+    }
+
+    public IOFileFilter getTemplateDirFilter() {
+        return templateDirFilter;
+    }
+
+    public void setTemplateDirFilter(IOFileFilter templateDirFilter) {
+        this.templateDirFilter = templateDirFilter;
+    }
+
+    public Map<String, Object> getTemplateLocals() {
+        return templateLocals;
+    }
+
+    public void setTemplateLocals(Map<String, Object> templateLocals) {
+        this.templateLocals = templateLocals;
     }
 
     public boolean isOptimizeJs() {

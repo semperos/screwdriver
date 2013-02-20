@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base representation of a type of asset in the pipeline.
@@ -22,6 +23,7 @@ public class AssetSpec {
     private IOFileFilter assetDirFilter;
     private List<String> assetIncludes;
     private List<String> assetExcludes;
+    private Map<String,Object> assetLocals;
     private File outputPath;
 
     public IOFileFilter getAssetFileFilter() {
@@ -70,6 +72,14 @@ public class AssetSpec {
 
     public void setAssetExtensions(List<String> assetExtensions) {
         this.assetExtensions = assetExtensions;
+    }
+
+    public Map<String, Object> getAssetLocals() {
+        return assetLocals;
+    }
+
+    public void setAssetLocals(Map<String, Object> assetLocals) {
+        this.assetLocals = assetLocals;
     }
 
     public File getOutputPath() {

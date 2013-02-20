@@ -20,6 +20,7 @@ public class WatchAll {
         FileAlterationObserver coffeeScriptObserver = fileObserver.observeCoffeeScript();
         FileAlterationObserver lessObserver = fileObserver.observeLess();
         FileAlterationObserver imageObserver = fileObserver.observeImage();
+        FileAlterationObserver templateObserver = fileObserver.observeTemplate();
         FileAlterationMonitor monitor = new FileAlterationMonitor(interval);
         monitor.addObserver(coffeeScriptObserver);
         monitor.addObserver(lessObserver);

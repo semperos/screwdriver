@@ -8,6 +8,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Data needed across tests
@@ -41,10 +42,14 @@ public class TestUtil {
         return new PipelineEnvironment(TestUtil.baseConfig());
     }
 
-    private static Config baseConfig() {
+    public static Config baseConfig() {
         Config cfg = new Config();
         cfg.setAssetDirectory(TestUtil.assetDirectory());
         cfg.setOutputDirectory(outputDirectory());
+        HashMap<String,Object> templateLocals = new HashMap<>();
+        templateLocals.put("pageTitle", "Testing Jade");
+        templateLocals.put("youAreUsingJade", true);
+        cfg.setTemplateLocals(templateLocals);
         return cfg;
     }
 

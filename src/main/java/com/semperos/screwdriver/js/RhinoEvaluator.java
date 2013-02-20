@@ -6,7 +6,6 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -123,21 +122,23 @@ public class RhinoEvaluator {
     }
 
     /**
-     * Given a {@link HashMap}, do the right thing for creating a JavaScript object
+     * Given a {@link Map}, do the right thing for creating a JavaScript object
      * in the instance scope of this evaluator.
      *
-     * Nothing is done to the values in the {@link HashMap} provided, so only use
+     * Nothing is done to the values in the {@link Map} provided, so only use
      * simple values that Rhino can deal with.
      *
      * @param varName
      * @param varValues
      */
-    public void addInstanceField(String varName, HashMap<String,Object> varValues) {
-        Context context = Context.enter();
-        Scriptable x = context.newObject(instanceScope);
-        for (Map.Entry<String,Object> val : varValues.entrySet()) {
-            x.put(val.getKey(), x, val.getValue());
+    public void addInstanceField(String varName, Map<String,Object> varValues) {
+        if (varValues != null) {
+            Context context = Context.enter();
+            Scriptable x = context.newObject(instanceScope);
+            for (Map.Entry<String,Object> val : varValues.entrySet()) {
+                x.put(val.getKey(), x, val.getValue());
+            }
+            addInstanceField(varName, x);
         }
-        addInstanceField(varName, x);
     }
 }
