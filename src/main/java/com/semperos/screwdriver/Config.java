@@ -1,6 +1,5 @@
 package com.semperos.screwdriver;
 
-import com.semperos.screwdriver.cli.CommandMain;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
 import java.io.File;
@@ -64,22 +63,6 @@ public class Config {
         this.optimizeCss = DefaultConfig.isOptimizeCss();
         this.optimizeImage = DefaultConfig.isOptimizeImage();
         this.rjsModules = DefaultConfig.getRjsModules();
-    }
-
-    public Config(CommandMain cm) {
-        this.debugMode = cm.debug;
-        this.assetDirectory = (new File(cm.assetDirectory));
-        this.outputDirectory = (new File(cm.outputDirectory));
-        this.jsIncludes = cm.jsIncludes;
-        this.cssIncludes = cm.cssIncludes;
-        this.imageIncludes = cm.imageIncludes;
-        this.jsExcludes = cm.jsExcludes;
-        this.cssExcludes = cm.cssExcludes;
-        this.imageExcludes = cm.imageExcludes;
-        this.optimizeJs = cm.optimizeJs;
-        this.optimizeCss = cm.optimizeCss;
-        this.optimizeImage = cm.optimizeImage;
-        this.rjsModules = cm.rjsModules;
     }
 
     public Boolean isDebugMode() {
