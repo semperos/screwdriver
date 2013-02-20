@@ -52,9 +52,14 @@ public class Config {
         this.cssExcludes = DefaultConfig.getCssExcludes();
         this.imageFileFilter = DefaultConfig.getImageFileFilter();
         this.imageDirFilter = DefaultConfig.getImageDirFilter();
-
         this.imageIncludes = DefaultConfig.getImageIncludes();
         this.imageExcludes = DefaultConfig.getImageExcludes();
+        this.templateIncludes = DefaultConfig.getTemplateIncludes();
+        this.templateExcludes = DefaultConfig.getTemplateExcludes();
+        this.templateFileFilter = DefaultConfig.getTemplateFileFilter();
+        this.templateDirFilter = DefaultConfig.getTemplateDirFilter();
+        this.templateLocals = DefaultConfig.getTemplateLocals();
+
         this.optimizeJs = DefaultConfig.isOptimizeJs();
         this.optimizeCss = DefaultConfig.isOptimizeCss();
         this.optimizeImage = DefaultConfig.isOptimizeImage();
