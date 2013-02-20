@@ -9,14 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @todo Steps needed:
- *   * Create generic {@link org.mozilla.javascript.ScriptableObject} class to handle
- *     properties used for RequireJS optimizer's config (see hardcoded-build.js).
- *   * For each needed build (determined by user-provided list of main JS modules to target),
- *     create unique instance of that object and set it's data accordingly (i.e., change values
- *     based on the config needs for each main JS module)
- *   * Add those objects to an array, say of __Screwdriver.rjsMainModules, which can then
- *     be iterated through in the evaluated JavaScript and passed to requirejs.optimize
+ * Generate and process RequireJS optimizer configurations for JavaScript files.
  */
 public class RjsConfigCompiler {
     private RhinoCompiler rhinoCompiler;
