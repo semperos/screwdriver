@@ -34,7 +34,7 @@ Note the use of the `clojureScripting` profile, which makes the use of Clojure c
 
 ## License ##
 
-Copyright 2013 Daniel Gregoire (semperos), Kirill Orlov (rheol)
+Copyright 2013 Daniel Gregoire (semperos), Kirill Orlov (rheol,koberidze)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
