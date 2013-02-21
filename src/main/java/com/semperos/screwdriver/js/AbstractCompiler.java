@@ -2,6 +2,7 @@ package com.semperos.screwdriver.js;
 
 import com.semperos.screwdriver.js.rhino.RhinoCompiler;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,8 +10,8 @@ import java.util.Map;
  */
 abstract public class AbstractCompiler {
     protected RhinoCompiler rhinoCompiler;
-    protected Map<String,Object> compilerOptions;
-    protected Map<String,Object> compilerLocals;
+    protected Map<String,Object> compilerOptions = new HashMap<>();
+    protected Map<String,Object> compilerLocals = new HashMap<>();
 
     public Map<String, Object> getCompilerOptions() {
         return compilerOptions;

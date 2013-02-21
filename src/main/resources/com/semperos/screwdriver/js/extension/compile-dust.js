@@ -1,0 +1,1 @@
+dust.compile(__Screwdriver.scriptSource, __Screwdriver.compilerOptions.dustRegistrationName);
