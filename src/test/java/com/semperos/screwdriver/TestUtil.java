@@ -58,6 +58,7 @@ public class TestUtil {
         FileUtils.deleteDirectory(new File(outputDirectory(), "stylesheets"));
         FileUtils.deleteDirectory(new File(outputDirectory(), "images"));
         FileUtils.deleteDirectory(new File(outputDirectory(), "built"));
+        (new File(outputDirectory(), "index.html")).delete();
     }
 
     public static Collection<File> jsOutputFiles() {

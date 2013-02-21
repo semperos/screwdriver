@@ -50,4 +50,8 @@ public class BuildTemplate {
             build(f);
         }
     }
+
+    public void delete(File sourceFile) {
+        templateAssetSpec.outputFile(sourceFile).delete();
+    }
 }

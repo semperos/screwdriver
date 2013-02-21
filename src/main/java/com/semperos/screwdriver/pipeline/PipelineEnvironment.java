@@ -125,7 +125,7 @@ public class PipelineEnvironment {
         }
 
         File TemplateAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
-        File TemplateOutputPath = cfg.getOutputDirectory();
+        File TemplateOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
         ArrayList<String> TemplateExtensions = new ArrayList<>();
         TemplateExtensions.add("dust");
         templateAssetSpec= new TemplateAssetSpec(TemplateAssetPath, TemplateExtensions, TemplateOutputPath);

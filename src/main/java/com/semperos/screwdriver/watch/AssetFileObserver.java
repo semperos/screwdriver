@@ -88,4 +88,11 @@ public class AssetFileObserver {
         observer.addListener(new BuildServerTemplateListener(pe.getServerTemplateAssetSpec()));
         return observer;
     }
+
+    public FileAlterationObserver observeTemplate() {
+        IOFileFilter filter = setupFilters("dust");
+        FileAlterationObserver observer = new FileAlterationObserver(pe.getTemplateAssetSpec().getAssetPath(), filter);
+        observer.addListener(new BuildTemplateListener(pe.getTemplateAssetSpec()));
+        return observer;
+    }
 }
