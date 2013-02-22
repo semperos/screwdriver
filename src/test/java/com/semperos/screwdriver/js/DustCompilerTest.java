@@ -22,7 +22,9 @@ public class DustCompilerTest {
         File f = new File("src/test/resources/com/semperos/screwdriver/sample/assets/javascripts/views/home_template.dust");
         String result = compiler.compile(f);
         String fileBaseName = FilenameUtils.getBaseName(f.toString());
-        Pattern patt = Pattern.compile("dust\\.register\\(\"" + fileBaseName + "\",");
-        assertTrue(patt.matcher(result).find());
+        Pattern dustPatt = Pattern.compile("dust\\.register\\(\"" + fileBaseName + "\",");
+        assertTrue(result.startsWith("define"));
+        assertTrue(result.endsWith("});"));
+        assertTrue(dustPatt.matcher(result).find());
     }
 }
