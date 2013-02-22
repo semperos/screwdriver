@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.watch;
 
+import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.build.BuildCss;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.CssAssetSpec;
@@ -15,10 +16,12 @@ import java.io.IOException;
  */
 public class BuildCssListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(BuildCssListener.class);
+    CssAssetSpec assetSpec;
     BuildCss buildCss;
 
     public BuildCssListener(CssAssetSpec cssAssetSpec) {
-        buildCss = new BuildCss(cssAssetSpec);
+        assetSpec = cssAssetSpec;
+        buildCss = new BuildCss(assetSpec);
     }
 
     public void buildFile(File file) {
@@ -42,20 +45,26 @@ public class BuildCssListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to CSS.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to CSS.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to CSS.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to change in file " + file.toString() + " by recompiling it to CSS.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileDelete(File file) {
-        logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
-        deleteFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
+            deleteFile(file);
+        }
     }
 
     @Override

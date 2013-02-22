@@ -1,7 +1,7 @@
 package com.semperos.screwdriver.pipeline;
 
+import com.semperos.screwdriver.FileUtil;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
@@ -25,6 +25,17 @@ public class AssetSpec {
     private List<String> assetExcludes;
     private Map<String,Object> assetLocals;
     private File outputPath;
+
+    public AssetSpec(File assetPath, List<String> assetExtensions, File outputPath) {
+        this(assetPath, assetExtensions, null, outputPath);
+    }
+
+    public AssetSpec(File assetPath, List<String> assetExtensions, List<String> assetIncludes, File outputPath) {
+        this.assetPath = assetPath;
+        this.assetExtensions = assetExtensions;
+        this.assetIncludes = assetIncludes;
+        this.outputPath = outputPath;
+    }
 
     public IOFileFilter getAssetFileFilter() {
         return assetFileFilter;
@@ -90,15 +101,12 @@ public class AssetSpec {
         this.outputPath = outputPath;
     }
 
-    public AssetSpec(File assetPath, List<String> assetExtensions, File outputPath) {
-        this(assetPath, assetExtensions, null, outputPath);
+    protected IOFileFilter defaultFileFilter() {
+        return FileUtil.fileFilterForExtensions(this.getAssetExtensions());
     }
 
-    public AssetSpec(File assetPath, List<String> assetExtensions, List<String> assetIncludes, File outputPath) {
-        this.assetPath = assetPath;
-        this.assetExtensions = assetExtensions;
-        this.assetIncludes = assetIncludes;
-        this.outputPath = outputPath;
+    protected IOFileFilter defaultDirectoryFilter() {
+        return FileUtil.defaultDirectoryFilter();
     }
 
     /**
@@ -113,45 +121,46 @@ public class AssetSpec {
                     "does not exist: " + path.getAbsolutePath());
         }
         List<File> assets = new ArrayList<File>();
-        List<String> extensions = getAssetExtensions();
+        IOFileFilter fileFilter = activeAssetFileFilter();
+        IOFileFilter dirFilter = activeAssetDirFilter();
+        assets.addAll(FileUtils.listFiles(
+                path,
+                fileFilter,
+                dirFilter));
+        return assets;
+    }
+
+    /**
+     * Taking into account all configuration
+     * @return
+     */
+    public IOFileFilter activeAssetFileFilter() {
         IOFileFilter fileFilter;
-        IOFileFilter dirFilter;
-        if (assetDirFilter != null) {
-            dirFilter = assetDirFilter;
-        } else {
-            dirFilter = DirectoryFileFilter.DIRECTORY;
-        }
         if (assetFileFilter != null) {
-            assets.addAll(FileUtils.listFiles(
-                    path,
-                    assetFileFilter,
-                    dirFilter));
+            logger.debug("TRADOC should be HERE with custom file filter");
+            fileFilter = assetFileFilter;
         } else if (assetIncludes != null && assetIncludes.size() > 0) {
             StringBuilder sb = new StringBuilder();
             buildRegexFilterPattern(sb, assetIncludes);
             fileFilter = new RegexFileFilter(sb.toString());
-            assets.addAll(FileUtils.listFiles(
-                    path,
-                    fileFilter,
-                    dirFilter));
         } else if (assetExcludes != null && assetExcludes.size() > 0) {
             StringBuilder sb = new StringBuilder();
             buildRegexFilterPattern(sb, assetExcludes);
             fileFilter = new NotFileFilter(new RegexFileFilter(sb.toString()));
-            assets.addAll(FileUtils.listFiles(
-                    path,
-                    fileFilter,
-                    dirFilter));
         }  else {
-            for (String ext : extensions) {
-                fileFilter = new RegexFileFilter(".*?\\." + ext);
-                assets.addAll(FileUtils.listFiles(
-                        path,
-                        fileFilter,
-                        dirFilter));
-            }
+            fileFilter = defaultFileFilter();
         }
-        return assets;
+        return fileFilter;
+    }
+
+    public IOFileFilter activeAssetDirFilter() {
+        IOFileFilter dirFilter;
+        if (assetDirFilter != null) {
+            dirFilter = assetDirFilter;
+        } else {
+            dirFilter = defaultDirectoryFilter();
+        }
+        return dirFilter;
     }
 
     private void buildRegexFilterPattern(StringBuilder sb, List<String> assetPatterns) {

@@ -17,14 +17,14 @@ public class WatchAll {
         long interval = 100;
         PipelineEnvironment pe = new PipelineEnvironment(cfg);
         AssetFileObserver fileObserver = new AssetFileObserver(pe);
-        FileAlterationObserver coffeeScriptObserver = fileObserver.observeCoffeeScript();
-        FileAlterationObserver lessObserver = fileObserver.observeLess();
+        FileAlterationObserver jsObserver = fileObserver.observeJs();
+        FileAlterationObserver cssObserver = fileObserver.observeCss();
         FileAlterationObserver imageObserver = fileObserver.observeImage();
         FileAlterationObserver templateObserver = fileObserver.observeTemplate();
         FileAlterationObserver serverTemplateObserver = fileObserver.observeServerTemplate();
         FileAlterationMonitor monitor = new FileAlterationMonitor(interval);
-        monitor.addObserver(coffeeScriptObserver);
-        monitor.addObserver(lessObserver);
+        monitor.addObserver(jsObserver);
+        monitor.addObserver(cssObserver);
         monitor.addObserver(imageObserver);
         monitor.addObserver(templateObserver);
         monitor.addObserver(serverTemplateObserver);

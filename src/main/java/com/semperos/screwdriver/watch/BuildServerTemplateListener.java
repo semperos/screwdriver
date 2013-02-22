@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.watch;
 
+import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.build.BuildServerTemplate;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
@@ -15,10 +16,12 @@ import java.io.IOException;
  */
 public class BuildServerTemplateListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(BuildServerTemplateListener.class);
+    ServerTemplateAssetSpec assetSpec;
     private BuildServerTemplate buildServerTemplate;
 
     public BuildServerTemplateListener(ServerTemplateAssetSpec serverTemplateAssetSpec) {
-        buildServerTemplate = new BuildServerTemplate(serverTemplateAssetSpec);
+        assetSpec = serverTemplateAssetSpec;
+        buildServerTemplate = new BuildServerTemplate(assetSpec);
     }
 
     public void buildFile(File file) {
@@ -42,20 +45,26 @@ public class BuildServerTemplateListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to HTML.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to HTML.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by recompiling it to HTML.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to change in file " + file.toString() + " by recompiling it to HTML.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileDelete(File file) {
-        logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
-        deleteFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
+            deleteFile(file);
+        }
     }
 
     @Override

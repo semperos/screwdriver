@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.watch;
 
+import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.build.BuildImage;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
@@ -14,10 +15,12 @@ import java.io.IOException;
  */
 public class BuildImageListener implements FileAlterationListener {
     private static Logger logger = Logger.getLogger(BuildImageListener.class);
+    ImageAssetSpec assetSpec;
     BuildImage buildImage;
 
     public BuildImageListener(ImageAssetSpec imageAssetSpec) {
-        buildImage = new BuildImage(imageAssetSpec);
+        assetSpec = imageAssetSpec;
+        buildImage = new BuildImage(assetSpec);
     }
 
     public void buildFile(File file) {
@@ -39,20 +42,26 @@ public class BuildImageListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it as an image.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it as an image.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileChange(File file) {
-        logger.debug("Responding to change in file " + file.toString() + " by reprocessing it as an image.");
-        buildFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to change in file " + file.toString() + " by reprocessing it as an image.");
+            buildFile(file);
+        }
     }
 
     @Override
     public void onFileDelete(File file) {
-        logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
-        deleteFile(file);
+        if (FileUtil.isActiveFile(file, assetSpec)) {
+            logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
+            deleteFile(file);
+        }
     }
 
     @Override
