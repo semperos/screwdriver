@@ -3,6 +3,7 @@ package com.semperos.screwdriver.build;
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.ImageAssetSpec;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -17,9 +18,9 @@ import java.io.IOException;
  */
 public class BuildImage {
     private static Logger logger = Logger.getLogger(BuildImage.class);
-    ImageAssetSpec imageAssetSpec;
-    public BuildImage(ImageAssetSpec imageAssetSpec) {
-        this.imageAssetSpec = imageAssetSpec;
+    ImageAssetSpec assetSpec;
+    public BuildImage(ImageAssetSpec assetSpec) {
+        this.assetSpec = assetSpec;
     }
 
     public void compile(File sourceFile) {
@@ -28,21 +29,27 @@ public class BuildImage {
     }
 
     public void build(File sourceFile) throws IOException {
-        File outputFile = imageAssetSpec.outputFile(sourceFile);
+        File outputFile = assetSpec.outputFile(sourceFile);
+        String sourceFileName = sourceFile.toString();
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            logger.info("Processing file " + sourceFile.toString() + " as an image.");
-            FileUtil.copyFile(sourceFile, outputFile);
+            if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+                logger.info("Processing image file " + sourceFileName + ".");
+                FileUtil.copyFile(sourceFile, outputFile);
+            } else {
+                logger.info("Copying file " + sourceFileName + " from the images directory.");
+                FileUtil.copyFile(sourceFile, outputFile);
+            }
         }
     }
 
     public void buildAll() throws IOException {
-        for (File f : imageAssetSpec.findFiles()) {
+        for (File f : assetSpec.findFiles()) {
             build(f);
         }
     }
 
     public void delete(File sourceFile) {
-        imageAssetSpec.outputFile(sourceFile).delete();
+        assetSpec.outputFile(sourceFile).delete();
     }
 }

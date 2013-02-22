@@ -144,6 +144,7 @@ public class PipelineEnvironment {
         File serverTemplateAssetPath = new File(cfg.getAssetDirectory(), "server_templates");
         File serverTemplateOutputPath = cfg.getOutputDirectory();
         ArrayList<String> serverTemplateExtensions = new ArrayList<>();
+        serverTemplateExtensions.add("html");
         serverTemplateExtensions.add("jade");
         serverTemplateAssetSpec = new ServerTemplateAssetSpec(serverTemplateAssetPath, serverTemplateExtensions, serverTemplateOutputPath);
         serverTemplateAssetSpec.setAssetLocals(cfg.getServerTemplateLocals());

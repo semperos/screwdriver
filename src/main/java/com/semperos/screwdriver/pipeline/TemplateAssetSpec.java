@@ -15,6 +15,10 @@ public class TemplateAssetSpec extends AssetSpec {
 
     @Override
     public String outputFileName(String sourceFileName) {
-        return FilenameUtils.getBaseName(sourceFileName) + ".js";
+        if (getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+            return FilenameUtils.getBaseName(sourceFileName) + ".js";
+        } else {
+            return sourceFileName;
+        }
     }
 }

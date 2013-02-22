@@ -21,7 +21,7 @@ public class BuildAll {
         TemplateAssetSpec templateAssetSpec = pe.getTemplateAssetSpec();
         ServerTemplateAssetSpec serverTemplateAssetSpec = pe.getServerTemplateAssetSpec();
 
-        BuildJs js = new BuildJs(jsAssetSpec);
+        BuildJs js = new BuildJs(pe, jsAssetSpec);
         js.buildAll();
 
         BuildCss css = new BuildCss(cssAssetSpec);

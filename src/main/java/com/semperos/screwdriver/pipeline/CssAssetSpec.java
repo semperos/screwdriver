@@ -19,6 +19,10 @@ public class CssAssetSpec extends AssetSpec {
 
     @Override
     public String outputFileName(String sourceFileName) {
-        return FilenameUtils.getBaseName(sourceFileName) + ".css";
+        if (getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+            return FilenameUtils.getBaseName(sourceFileName) + ".css";
+        } else {
+            return sourceFileName;
+        }
     }
 }

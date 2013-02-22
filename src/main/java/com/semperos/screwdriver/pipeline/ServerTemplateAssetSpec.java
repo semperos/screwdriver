@@ -15,7 +15,11 @@ public class ServerTemplateAssetSpec extends AssetSpec {
 
     @Override
     public String outputFileName(String sourceFileName) {
-        return FilenameUtils.getBaseName(sourceFileName) + ".html";
+        if (getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+            return FilenameUtils.getBaseName(sourceFileName) + ".html";
+        } else {
+            return sourceFileName;
+        }
     }
 
 }

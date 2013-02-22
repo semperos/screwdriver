@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.JadeCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.ServerTemplateAssetSpec;
@@ -17,42 +16,48 @@ import java.io.IOException;
  */
 public class BuildServerTemplate {
     private static Logger logger = Logger.getLogger(BuildServerTemplate.class);
-    private ServerTemplateAssetSpec serverTemplateAssetSpec;
+    private ServerTemplateAssetSpec assetSpec;
     private JadeCompiler jadeCompiler;
 
-    public BuildServerTemplate(ServerTemplateAssetSpec serverTemplateAssetSpec) {
-        this.serverTemplateAssetSpec = serverTemplateAssetSpec;
+    public BuildServerTemplate(ServerTemplateAssetSpec assetSpec) {
+        this.assetSpec = assetSpec;
         jadeCompiler = new JadeCompiler();
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
-        String sourceCode = FileUtil.readFile(sourceFile);
-        if (FilenameUtils.isExtension(sourceFile.toString(), "jade")) {
-            jadeCompiler.setCompilerLocals(serverTemplateAssetSpec.getAssetLocals());
+        String sourceFileName = sourceFile.toString();
+        if (FilenameUtils.isExtension(sourceFileName, "html")) {
+            return FileUtil.readFile(sourceFile);
+        } else if (FilenameUtils.isExtension(sourceFileName, "jade")) {
+            jadeCompiler.setCompilerLocals(assetSpec.getAssetLocals());
             return jadeCompiler.compile(sourceFile);
         } else {
-            IdentityCompiler idc = new IdentityCompiler();
-            return idc.compile(sourceCode, sourceFile);
+            throw new RuntimeException("File of type " + sourceFileName + " is not supported by JavaScript compilation at this time.");
         }
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        File outputFile = serverTemplateAssetSpec.outputFile(sourceFile);
+        File outputFile = assetSpec.outputFile(sourceFile);
+        String sourceFileName = sourceFile.toString();
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            logger.info("Compiling template file " + sourceFile.toString() + " to HTML.");
-            FileUtil.writeFile(compile(sourceFile),
-                    outputFile);
+            if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+                logger.info("Compiling template file " + sourceFileName + " to HTML.");
+                FileUtil.writeFile(compile(sourceFile), outputFile);
+            } else {
+                logger.info("Copying file " + sourceFileName + " from the server templates directory.");
+                FileUtil.copyFile(sourceFile, outputFile);
+            }
         }
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : serverTemplateAssetSpec.findFiles()) {
+        for (File f : assetSpec.findFiles()) {
             build(f);
         }
     }
 
     public void delete(File sourceFile) {
-        serverTemplateAssetSpec.outputFile(sourceFile).delete();
+        assetSpec.outputFile(sourceFile).delete();
     }
 }

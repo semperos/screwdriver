@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.IdentityCompiler;
 import com.semperos.screwdriver.js.DustCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.TemplateAssetSpec;
@@ -17,41 +16,45 @@ import java.io.IOException;
  */
 public class BuildTemplate {
     private static Logger logger = Logger.getLogger(BuildTemplate.class);
-    private TemplateAssetSpec templateAssetSpec;
+    private TemplateAssetSpec assetSpec;
     private DustCompiler dustCompiler;
 
-    public BuildTemplate(TemplateAssetSpec templateAssetSpec) {
-        this.templateAssetSpec = templateAssetSpec;
+    public BuildTemplate(TemplateAssetSpec assetSpec) {
+        this.assetSpec = assetSpec;
         dustCompiler = new DustCompiler();
     }
 
     public String compile(File sourceFile) throws IOException, RhinoEvaluatorException {
-        String sourceCode = FileUtil.readFile(sourceFile);
-        if (FilenameUtils.isExtension(sourceFile.toString(), "dust")) {
+        String sourceFileName = sourceFile.toString();
+        if (FilenameUtils.isExtension(sourceFileName, "dust")) {
             return this.dustCompiler.compile(sourceFile);
         } else {
-            IdentityCompiler idc = new IdentityCompiler();
-            return idc.compile(sourceCode, sourceFile);
+            throw new RuntimeException("File of type " + sourceFileName + " is not supported by JavaScript compilation at this time.");
         }
     }
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
-        File outputFile = templateAssetSpec.outputFile(sourceFile);
+        File outputFile = assetSpec.outputFile(sourceFile);
+        String sourceFileName = sourceFile.toString();
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            logger.info("Compiling template in " + sourceFile.toString() + " to JavaScript.");
-            FileUtil.writeFile(compile(sourceFile),
-                    outputFile);
+            if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+                logger.info("Compiling template file " + sourceFileName + " to JavaScript.");
+                FileUtil.writeFile(compile(sourceFile), outputFile);
+            } else {
+                logger.info("Copying file " + sourceFileName + " from the templates directory.");
+                FileUtil.copyFile(sourceFile, outputFile);
+            }
         }
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {
-        for (File f : templateAssetSpec.findFiles()) {
+        for (File f : assetSpec.findFiles()) {
             build(f);
         }
     }
 
     public void delete(File sourceFile) {
-        templateAssetSpec.outputFile(sourceFile).delete();
+        assetSpec.outputFile(sourceFile).delete();
     }
 }

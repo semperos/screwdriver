@@ -2,6 +2,7 @@ package com.semperos.screwdriver.pipeline;
 
 import com.semperos.screwdriver.FileUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
@@ -102,7 +103,11 @@ public class AssetSpec {
     }
 
     protected IOFileFilter defaultFileFilter() {
-        return FileUtil.fileFilterForExtensions(this.getAssetExtensions());
+        //  This was the default, being removed to widen the scope,
+        //  since extension-based dispatch is implemented at the Build level
+        //  anyway, to call the right Rhino-based compilers.
+        //  return FileUtil.fileFilterForExtensions(this.getAssetExtensions());
+        return FileFilterUtils.fileFileFilter();
     }
 
     protected IOFileFilter defaultDirectoryFilter() {
@@ -137,7 +142,6 @@ public class AssetSpec {
     public IOFileFilter activeAssetFileFilter() {
         IOFileFilter fileFilter;
         if (assetFileFilter != null) {
-            logger.debug("TRADOC should be HERE with custom file filter");
             fileFilter = assetFileFilter;
         } else if (assetIncludes != null && assetIncludes.size() > 0) {
             StringBuilder sb = new StringBuilder();
