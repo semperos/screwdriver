@@ -3,7 +3,6 @@ package com.semperos.screwdriver.pipeline;
 import com.semperos.screwdriver.Config;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * Environment for managing paths to various assets to be processed
@@ -60,12 +59,9 @@ public class PipelineEnvironment {
      * @todo Unhardcode as needed
      */
     public PipelineEnvironment(Config cfg) {
-        File jsAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
-        File jsOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
-        ArrayList<String> jsAssetExtensions = new ArrayList<String>();
-        jsAssetExtensions.add("js");
-        jsAssetExtensions.add("coffee");
-        jsAssetSpec = new JsAssetSpec(jsAssetPath, jsAssetExtensions, jsOutputPath);
+        File jsAssetPath = new File(cfg.getAssetDirectory(), cfg.getJsSubDirectoryName());
+        File jsOutputPath = new File(cfg.getOutputDirectory(), cfg.getJsSubDirectoryName());
+        jsAssetSpec = new JsAssetSpec(jsAssetPath, cfg.getJsExtensions(), jsOutputPath);
         /**
          * @todo The following is repeated throughout this method; refactor
          */
@@ -81,14 +77,9 @@ public class PipelineEnvironment {
             jsAssetSpec.setAssetExcludes(cfg.getJsExcludes());
         }
 
-        File cssAssetPath = new File(cfg.getAssetDirectory(), "stylesheets");
-        File cssOutputPath = new File(cfg.getOutputDirectory(), "stylesheets");
-        ArrayList<String> cssAssetExtensions = new ArrayList<>();
-        cssAssetExtensions.add("css");
-        cssAssetExtensions.add("less");
-        cssAssetExtensions.add("sass");
-        cssAssetExtensions.add("styl");
-        cssAssetSpec = new  CssAssetSpec(cssAssetPath, cssAssetExtensions, cssOutputPath);
+        File cssAssetPath = new File(cfg.getAssetDirectory(), cfg.getCssSubDirectoryName());
+        File cssOutputPath = new File(cfg.getOutputDirectory(), cfg.getCssSubDirectoryName());
+        cssAssetSpec = new  CssAssetSpec(cssAssetPath, cfg.getCssExtensions(), cssOutputPath);
         if (cfg.getCssFileFilter() != null) {
             cssAssetSpec.setAssetFileFilter(cfg.getCssFileFilter());
         }
@@ -102,16 +93,9 @@ public class PipelineEnvironment {
         }
 
 
-        File imageAssetPath = new File(cfg.getAssetDirectory(), "images");
-        File imageOutputPath = new File(cfg.getOutputDirectory(), "images");
-        ArrayList<String> imageAssetExtensions = new ArrayList<>();
-        imageAssetExtensions.add("bmp");
-        imageAssetExtensions.add("gif");
-        imageAssetExtensions.add("jpg");
-        imageAssetExtensions.add("jpeg");
-        imageAssetExtensions.add("png");
-        imageAssetExtensions.add("svg");
-        imageAssetSpec = new ImageAssetSpec(imageAssetPath, imageAssetExtensions, imageOutputPath);
+        File imageAssetPath = new File(cfg.getAssetDirectory(), cfg.getImageSubDirectoryName());
+        File imageOutputPath = new File(cfg.getOutputDirectory(), cfg.getImageSubDirectoryName());
+        imageAssetSpec = new ImageAssetSpec(imageAssetPath, cfg.getImageExtensions(), imageOutputPath);
         if (cfg.getImageFileFilter() != null) {
             imageAssetSpec.setAssetFileFilter(cfg.getImageFileFilter());
         }
@@ -124,11 +108,9 @@ public class PipelineEnvironment {
             imageAssetSpec.setAssetExcludes(cfg.getImageExcludes());
         }
 
-        File TemplateAssetPath = new File(cfg.getAssetDirectory(), "javascripts");
-        File TemplateOutputPath = new File(cfg.getOutputDirectory(), "javascripts");
-        ArrayList<String> TemplateExtensions = new ArrayList<>();
-        TemplateExtensions.add("dust");
-        templateAssetSpec= new TemplateAssetSpec(TemplateAssetPath, TemplateExtensions, TemplateOutputPath);
+        File templateAssetPath = new File(cfg.getAssetDirectory(), cfg.getJsSubDirectoryName());
+        File templateOutputPath = new File(cfg.getOutputDirectory(), cfg.getJsSubDirectoryName());
+        templateAssetSpec= new TemplateAssetSpec(templateAssetPath, cfg.getTemplateExtensions(), templateOutputPath);
         if (cfg.getTemplateFileFilter() != null) {
             templateAssetSpec.setAssetFileFilter(cfg.getTemplateFileFilter());
         }
@@ -141,12 +123,11 @@ public class PipelineEnvironment {
             templateAssetSpec.setAssetExcludes(cfg.getTemplateExcludes());
         }
 
-        File serverTemplateAssetPath = new File(cfg.getAssetDirectory(), "server_templates");
+        File serverTemplateAssetPath = new File(cfg.getAssetDirectory(), cfg.getServerTemplateSubDirectoryName());
         File serverTemplateOutputPath = cfg.getOutputDirectory();
-        ArrayList<String> serverTemplateExtensions = new ArrayList<>();
-        serverTemplateExtensions.add("html");
-        serverTemplateExtensions.add("jade");
-        serverTemplateAssetSpec = new ServerTemplateAssetSpec(serverTemplateAssetPath, serverTemplateExtensions, serverTemplateOutputPath);
+        serverTemplateAssetSpec = new ServerTemplateAssetSpec(serverTemplateAssetPath,
+                cfg.getServerTemplateExtensions(),
+                serverTemplateOutputPath);
         serverTemplateAssetSpec.setAssetLocals(cfg.getServerTemplateLocals());
         if (cfg.getServerTemplateFileFilter() != null) {
             serverTemplateAssetSpec.setAssetFileFilter(cfg.getServerTemplateFileFilter());

@@ -15,6 +15,18 @@ public class Config {
     private Boolean debugMode;
     private File assetDirectory;
     private File outputDirectory;
+    private String jsSubDirectoryName;
+    private String cssSubDirectoryName;
+    private String imageSubDirectoryName;
+    private String templateSubDirectoryName;
+    private String serverTemplateSubDirectoryName;
+    private String staticAssetSubDirectoryName;
+    private ArrayList<String> jsExtensions;
+    private ArrayList<String> cssExtensions;
+    private ArrayList<String> imageExtensions;
+    private ArrayList<String> templateExtensions;
+    private ArrayList<String> serverTemplateExtensions;
+    private ArrayList<String> staticAssetExtensions;
     private IOFileFilter jsFileFilter;
     private IOFileFilter jsDirFilter;
     private List<String> jsIncludes;
@@ -45,6 +57,18 @@ public class Config {
         this.debugMode = DefaultConfig.isDebugMode();
         this.assetDirectory = new File(DefaultConfig.getAssetDirectory());
         this.outputDirectory = new File(DefaultConfig.getOutputDirectory());
+        this.jsSubDirectoryName = DefaultConfig.getJsSubDirectoryName();
+        this.cssSubDirectoryName = DefaultConfig.getCssSubDirectoryName();
+        this.imageSubDirectoryName = DefaultConfig.getImageSubDirectoryName();
+        this.templateSubDirectoryName = DefaultConfig.getTemplateSubDirectoryName();
+        this.serverTemplateSubDirectoryName = DefaultConfig.getServerTemplateSubDirectoryName();
+        this.staticAssetSubDirectoryName = DefaultConfig.getStaticAssetDirectoryName();
+        this.jsExtensions = DefaultConfig.getJsExtensions();
+        this.cssExtensions = DefaultConfig.getCssExtensions();
+        this.imageExtensions = DefaultConfig.getImageExtensions();
+        this.templateExtensions = DefaultConfig.getTemplateExtensions();
+        this.serverTemplateExtensions = DefaultConfig.getServerTemplateExtensions();
+        this.staticAssetExtensions = DefaultConfig.getStaticAssetExtensions();
         this.jsFileFilter = DefaultConfig.getJsFileFilter();
         this.jsDirFilter = DefaultConfig.getJsDirFilter();
         this.jsIncludes = DefaultConfig.getJsIncludes();
@@ -79,6 +103,118 @@ public class Config {
 
     public void setDebugMode(Boolean debugMode) {
         this.debugMode = debugMode;
+    }
+
+    public File getAssetDirectory() {
+        return assetDirectory;
+    }
+
+    public void setAssetDirectory(File assetDirectory) {
+        this.assetDirectory = assetDirectory;
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
+    }
+
+    public void setOutputDirectory(File outputDirectory) {
+        this.outputDirectory = outputDirectory;
+    }
+
+    public String getJsSubDirectoryName() {
+        return jsSubDirectoryName;
+    }
+
+    public void setJsSubDirectoryName(String jsSubDirectoryName) {
+        this.jsSubDirectoryName = jsSubDirectoryName;
+    }
+
+    public String getCssSubDirectoryName() {
+        return cssSubDirectoryName;
+    }
+
+    public void setCssSubDirectoryName(String cssSubDirectoryName) {
+        this.cssSubDirectoryName = cssSubDirectoryName;
+    }
+
+    public String getImageSubDirectoryName() {
+        return imageSubDirectoryName;
+    }
+
+    public void setImageSubDirectoryName(String imageSubDirectoryName) {
+        this.imageSubDirectoryName = imageSubDirectoryName;
+    }
+
+    public String getTemplateSubDirectoryName() {
+        return templateSubDirectoryName;
+    }
+
+    public void setTemplateSubDirectoryName(String templateSubDirectoryName) {
+        this.templateSubDirectoryName = templateSubDirectoryName;
+    }
+
+    public String getServerTemplateSubDirectoryName() {
+        return serverTemplateSubDirectoryName;
+    }
+
+    public void setServerTemplateSubDirectoryName(String serverTemplateSubDirectoryName) {
+        this.serverTemplateSubDirectoryName = serverTemplateSubDirectoryName;
+    }
+
+    public String getStaticAssetSubDirectoryName() {
+        return staticAssetSubDirectoryName;
+    }
+
+    public void setStaticAssetSubDirectoryName(String staticAssetSubDirectoryName) {
+        this.staticAssetSubDirectoryName = staticAssetSubDirectoryName;
+    }
+
+    public ArrayList<String> getJsExtensions() {
+        return jsExtensions;
+    }
+
+    public void setJsExtensions(ArrayList<String> jsExtensions) {
+        this.jsExtensions = jsExtensions;
+    }
+
+    public ArrayList<String> getCssExtensions() {
+        return cssExtensions;
+    }
+
+    public void setCssExtensions(ArrayList<String> cssExtensions) {
+        this.cssExtensions = cssExtensions;
+    }
+
+    public ArrayList<String> getImageExtensions() {
+        return imageExtensions;
+    }
+
+    public void setImageExtensions(ArrayList<String> imageExtensions) {
+        this.imageExtensions = imageExtensions;
+    }
+
+    public ArrayList<String> getTemplateExtensions() {
+        return templateExtensions;
+    }
+
+    public void setTemplateExtensions(ArrayList<String> templateExtensions) {
+        this.templateExtensions = templateExtensions;
+    }
+
+    public ArrayList<String> getServerTemplateExtensions() {
+        return serverTemplateExtensions;
+    }
+
+    public void setServerTemplateExtensions(ArrayList<String> serverTemplateExtensions) {
+        this.serverTemplateExtensions = serverTemplateExtensions;
+    }
+
+    public ArrayList<String> getStaticAssetExtensions() {
+        return staticAssetExtensions;
+    }
+
+    public void setStaticAssetExtensions(ArrayList<String> staticAssetExtensions) {
+        this.staticAssetExtensions = staticAssetExtensions;
     }
 
     public IOFileFilter getJsFileFilter() {
@@ -127,22 +263,6 @@ public class Config {
 
     public void setImageDirFilter(IOFileFilter imageDirFilter) {
         this.imageDirFilter = imageDirFilter;
-    }
-
-    public File getAssetDirectory() {
-        return assetDirectory;
-    }
-
-    public void setAssetDirectory(File assetDirectory) {
-        this.assetDirectory = assetDirectory;
-    }
-
-    public File getOutputDirectory() {
-        return outputDirectory;
-    }
-
-    public void setOutputDirectory(File outputDirectory) {
-        this.outputDirectory = outputDirectory;
     }
 
     public List<String> getJsIncludes() {

@@ -23,6 +23,72 @@ public class DefaultConfig {
         return System.getProperty("user.dir") + File.separator + "target" + File.separator + "client";
     }
 
+    public static String getJsSubDirectoryName() {
+        return "javascripts";
+    }
+
+    public static String getCssSubDirectoryName() {
+        return "stylesheets";
+    }
+
+    public static String getImageSubDirectoryName() {
+        return "images";
+    }
+
+    public static String getTemplateSubDirectoryName() {
+        return "javascripts";
+    }
+
+    public static String getServerTemplateSubDirectoryName() {
+        return "server_templates";
+    }
+
+    public static String getStaticAssetDirectoryName() {
+        return "data";
+    }
+
+    public static ArrayList<String> getJsExtensions() {
+        ArrayList<String> exts = new ArrayList<>();
+        exts.add("js");
+        exts.add("coffee");
+        return exts;
+    }
+
+    public static ArrayList<String> getCssExtensions() {
+        ArrayList<String> exts = new ArrayList<>();
+        exts.add("css");
+        exts.add("less");
+        return exts;
+    }
+
+    public static ArrayList<String> getImageExtensions() {
+        ArrayList<String> exts = new ArrayList<>();
+        exts.add("bmp");
+        exts.add("gif");
+        exts.add("jpg");
+        exts.add("jpeg");
+        exts.add("png");
+        exts.add("svg");
+        return exts;
+    }
+
+    public static ArrayList<String> getTemplateExtensions() {
+        ArrayList<String> exts = new ArrayList<>();
+        exts.add("dust");
+        return exts;
+    }
+
+    public static ArrayList<String> getServerTemplateExtensions() {
+        ArrayList<String> exts = new ArrayList<>();
+        exts.add("html");
+        exts.add("jade");
+        return exts;
+    }
+
+    public static ArrayList<String> getStaticAssetExtensions() {
+        return new ArrayList<String>();
+    }
+
     public static ArrayList<String> getJsIncludes() {
         return new ArrayList<String>();
     }
