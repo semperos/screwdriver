@@ -31,6 +31,7 @@ public class BuildStaticAsset {
                 FileUtil.copyFile(sourceFile, outputFile);
             } else {
                 logger.info("Copying file " + sourceFileName + " from the static assets directory.");
+                FileUtil.copyFile(sourceFile, outputFile);
             }
         }
     }

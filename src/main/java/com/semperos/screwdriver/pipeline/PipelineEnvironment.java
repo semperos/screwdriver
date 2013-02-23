@@ -150,9 +150,6 @@ public class PipelineEnvironment {
         File staticAssetAssetPath = new File(cfg.getAssetDirectory(), cfg.getStaticAssetSubDirectoryName());
         File staticAssetOutputPath = new File(cfg.getOutputDirectory(), cfg.getStaticAssetSubDirectoryName());
         staticAssetSpec = new StaticAssetSpec(staticAssetAssetPath, staticAssetOutputPath);
-        /**
-         * @todo get all configs for static assets in there
-         */
         if (cfg.getStaticAssetFileFilter() != null) {
             staticAssetSpec.setAssetFileFilter(cfg.getStaticAssetFileFilter());
         }
