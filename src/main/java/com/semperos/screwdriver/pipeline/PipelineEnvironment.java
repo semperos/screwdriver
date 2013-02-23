@@ -14,6 +14,7 @@ public class PipelineEnvironment {
     private ImageAssetSpec imageAssetSpec;
     private TemplateAssetSpec templateAssetSpec;
     private ServerTemplateAssetSpec serverTemplateAssetSpec;
+    private StaticAssetSpec staticAssetSpec;
 
     public JsAssetSpec getJsAssetSpec() {
         return jsAssetSpec;
@@ -55,6 +56,14 @@ public class PipelineEnvironment {
         this.serverTemplateAssetSpec = serverTemplateAssetSpec;
     }
 
+    public StaticAssetSpec getStaticAssetSpec() {
+        return staticAssetSpec;
+    }
+
+    public void setStaticAssetSpec(StaticAssetSpec staticAssetSpec) {
+        this.staticAssetSpec = staticAssetSpec;
+    }
+
     /**
      * @todo Unhardcode as needed
      */
@@ -62,9 +71,6 @@ public class PipelineEnvironment {
         File jsAssetPath = new File(cfg.getAssetDirectory(), cfg.getJsSubDirectoryName());
         File jsOutputPath = new File(cfg.getOutputDirectory(), cfg.getJsSubDirectoryName());
         jsAssetSpec = new JsAssetSpec(jsAssetPath, cfg.getJsExtensions(), jsOutputPath);
-        /**
-         * @todo The following is repeated throughout this method; refactor
-         */
         if (cfg.getJsFileFilter() != null) {
             jsAssetSpec.setAssetFileFilter(cfg.getJsFileFilter());
         }
@@ -139,6 +145,24 @@ public class PipelineEnvironment {
             serverTemplateAssetSpec.setAssetIncludes(cfg.getServerTemplateIncludes());
         } else {
             serverTemplateAssetSpec.setAssetExcludes(cfg.getServerTemplateExcludes());
+        }
+
+        File staticAssetAssetPath = new File(cfg.getAssetDirectory(), cfg.getStaticAssetSubDirectoryName());
+        File staticAssetOutputPath = new File(cfg.getOutputDirectory(), cfg.getStaticAssetSubDirectoryName());
+        staticAssetSpec = new StaticAssetSpec(staticAssetAssetPath, staticAssetOutputPath);
+        /**
+         * @todo get all configs for static assets in there
+         */
+        if (cfg.getStaticAssetFileFilter() != null) {
+            staticAssetSpec.setAssetFileFilter(cfg.getStaticAssetFileFilter());
+        }
+        if (cfg.getStaticAssetDirFilter() != null) {
+            staticAssetSpec.setAssetDirFilter(cfg.getStaticAssetDirFilter());
+        }
+        if (cfg.getStaticAssetIncludes() != null && cfg.getStaticAssetIncludes().size() > 0) {
+            staticAssetSpec.setAssetIncludes(cfg.getStaticAssetIncludes());
+        } else {
+            staticAssetSpec.setAssetExcludes(cfg.getStaticAssetExcludes());
         }
     }
 

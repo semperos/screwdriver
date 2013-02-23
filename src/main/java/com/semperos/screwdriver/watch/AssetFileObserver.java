@@ -49,4 +49,11 @@ public class AssetFileObserver {
         observer.addListener(new BuildTemplateListener(pe.getTemplateAssetSpec()));
         return observer;
     }
+
+    public FileAlterationObserver observeStaticAsset() {
+        StaticAssetSpec spec = pe.getStaticAssetSpec();
+        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
+        observer.addListener(new BuildStaticAssetListener(pe.getStaticAssetSpec()));
+        return observer;
+    }
 }

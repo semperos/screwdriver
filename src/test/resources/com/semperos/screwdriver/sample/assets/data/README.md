@@ -1,0 +1,1 @@
+This file represents a static asset that should be simply copied to the appropriate output directory when processed.

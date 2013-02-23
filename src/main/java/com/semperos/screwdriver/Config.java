@@ -48,6 +48,10 @@ public class Config {
     private IOFileFilter serverTemplateFileFilter;
     private IOFileFilter serverTemplateDirFilter;
     private Map<String,Object> serverTemplateLocals;
+    private List<String> staticAssetIncludes;
+    private List<String> staticAssetExcludes;
+    private IOFileFilter staticAssetFileFilter;
+    private IOFileFilter staticAssetDirFilter;
     private boolean optimizeJs;
     private boolean optimizeCss;
     private boolean optimizeImage;
@@ -90,7 +94,10 @@ public class Config {
         this.serverTemplateFileFilter = DefaultConfig.getServerTemplateFileFilter();
         this.serverTemplateDirFilter = DefaultConfig.getServerTemplateDirFilter();
         this.serverTemplateLocals = DefaultConfig.getServerTemplateLocals();
-
+        this.staticAssetFileFilter = DefaultConfig.getStaticAssetFileFilter();
+        this.staticAssetDirFilter = DefaultConfig.getStaticAssetDirFilter();
+        this.staticAssetIncludes = DefaultConfig.getStaticAssetIncludes();
+        this.staticAssetExcludes = DefaultConfig.getStaticAssetExcludes();
         this.optimizeJs = DefaultConfig.isOptimizeJs();
         this.optimizeCss = DefaultConfig.isOptimizeCss();
         this.optimizeImage = DefaultConfig.isOptimizeImage();
@@ -383,6 +390,38 @@ public class Config {
 
     public void setServerTemplateLocals(Map<String, Object> serverTemplateLocals) {
         this.serverTemplateLocals = serverTemplateLocals;
+    }
+
+    public List<String> getStaticAssetIncludes() {
+        return staticAssetIncludes;
+    }
+
+    public void setStaticAssetIncludes(List<String> staticAssetIncludes) {
+        this.staticAssetIncludes = staticAssetIncludes;
+    }
+
+    public List<String> getStaticAssetExcludes() {
+        return staticAssetExcludes;
+    }
+
+    public void setStaticAssetExcludes(List<String> staticAssetExcludes) {
+        this.staticAssetExcludes = staticAssetExcludes;
+    }
+
+    public IOFileFilter getStaticAssetFileFilter() {
+        return staticAssetFileFilter;
+    }
+
+    public void setStaticAssetFileFilter(IOFileFilter staticAssetFileFilter) {
+        this.staticAssetFileFilter = staticAssetFileFilter;
+    }
+
+    public IOFileFilter getStaticAssetDirFilter() {
+        return staticAssetDirFilter;
+    }
+
+    public void setStaticAssetDirFilter(IOFileFilter staticAssetDirFilter) {
+        this.staticAssetDirFilter = staticAssetDirFilter;
     }
 
     public boolean isOptimizeJs() {

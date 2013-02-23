@@ -77,5 +77,10 @@ public class FileUtil {
     public static boolean isActiveFile(File file, AssetSpec assetSpec) {
         return assetSpec.findFiles().contains(file);
     }
+
+    public static boolean needsBuilding(File sourceFile, File outputFile) {
+        return (!outputFile.exists()) ||
+                (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile));
+    }
 }
 

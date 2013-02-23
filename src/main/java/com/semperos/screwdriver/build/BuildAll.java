@@ -20,6 +20,7 @@ public class BuildAll {
         ImageAssetSpec imageAssetSpec = pe.getImageAssetSpec();
         TemplateAssetSpec templateAssetSpec = pe.getTemplateAssetSpec();
         ServerTemplateAssetSpec serverTemplateAssetSpec = pe.getServerTemplateAssetSpec();
+        StaticAssetSpec staticAssetSpec = pe.getStaticAssetSpec();
 
         BuildJs js = new BuildJs(pe, jsAssetSpec);
         js.buildAll();
@@ -35,6 +36,9 @@ public class BuildAll {
 
         BuildServerTemplate serverTemplate = new BuildServerTemplate(serverTemplateAssetSpec);
         serverTemplate.buildAll();
+
+        BuildStaticAsset staticAsset = new BuildStaticAsset(staticAssetSpec);
+        staticAsset.buildAll();
     }
 
     public static void buildAndOptimize(Config cfg) throws IOException, RhinoEvaluatorException {

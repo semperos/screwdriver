@@ -22,12 +22,14 @@ public class WatchAll {
         FileAlterationObserver imageObserver = fileObserver.observeImage();
         FileAlterationObserver templateObserver = fileObserver.observeTemplate();
         FileAlterationObserver serverTemplateObserver = fileObserver.observeServerTemplate();
+        FileAlterationObserver staticAssetObserver = fileObserver.observeStaticAsset();
         FileAlterationMonitor monitor = new FileAlterationMonitor(interval);
         monitor.addObserver(jsObserver);
         monitor.addObserver(cssObserver);
         monitor.addObserver(imageObserver);
         monitor.addObserver(templateObserver);
         monitor.addObserver(serverTemplateObserver);
+        monitor.addObserver(staticAssetObserver);
         monitor.start();
     }
 }

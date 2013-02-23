@@ -5,6 +5,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -187,5 +188,21 @@ public class DefaultConfig {
 
     public static Map<String,Object> getServerTemplateLocals() {
         return new HashMap<String,Object>();
+    }
+
+    public static List<String> getStaticAssetIncludes() {
+        return new ArrayList<String>();
+    }
+
+    public static List<String> getStaticAssetExcludes() {
+        return new ArrayList<String>();
+    }
+
+    public static IOFileFilter getStaticAssetFileFilter() {
+        return null;
+    }
+
+    public static IOFileFilter getStaticAssetDirFilter() {
+        return null;
     }
 }

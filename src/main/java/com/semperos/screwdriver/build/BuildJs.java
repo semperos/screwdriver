@@ -56,7 +56,7 @@ public class BuildJs {
                 // into the output dir as well as their *.js compiled output counterparts. These
                 // happen to coexist with regular JavaScript files as a general rule, but are compiled
                 // in a separate sweep of the file system because of differing requirements.
-                logger.debug("Ignoring JavaScript template " + sourceFileName + "as part of standard JavaScript compilation. Will be compiled in template compilation phase.");
+                logger.debug("Ignoring JavaScript template " + sourceFileName + " as part of standard JavaScript compilation. Will be compiled in template compilation phase.");
             } else {
                 logger.info("Copying file " + sourceFileName + " from the JavaScript directory.");
                 FileUtil.copyFile(sourceFile, outputFile);
