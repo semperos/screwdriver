@@ -48,11 +48,9 @@ public class BuildJs extends BuildAssetWithRhino {
             logger.info("Compiling file " + sourceFileName + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile), outputFile);
         } else if (pe != null && pe.getTemplateAssetSpec().getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
-            // JavaScript templates are ignored here so that there aren't miscellaneous *.dust files copied
-            // into the output dir as well as their *.js compiled output counterparts. These
-            // happen to coexist with regular JavaScript files as a general rule, but are compiled
-            // in a separate sweep of the file system because of differing requirements.
-            logger.debug("Ignoring JavaScript template " + sourceFileName + " as part of standard JavaScript compilation. Will be compiled in template compilation phase.");
+            // JavaScript templates are ignored here, because they are handled as part of
+            // the BuildTemplate workflow.
+            logger.trace("Ignoring JavaScript template " + sourceFileName + " as part of standard JavaScript compilation. Will be compiled in template compilation phase.");
         } else {
             logger.info("Copying file " + sourceFileName + " from the JavaScript directory.");
             FileUtil.copyFile(sourceFile, outputFile);

@@ -29,7 +29,7 @@ public class BuildAll {
         BuildImage image = new BuildImage(imageAssetSpec);
         image.buildAll();
 
-        BuildTemplate template = new BuildTemplate(templateAssetSpec);
+        BuildTemplate template = new BuildTemplate(pe, templateAssetSpec);
         template.buildAll();
 
         BuildServerTemplate serverTemplate = new BuildServerTemplate(serverTemplateAssetSpec);

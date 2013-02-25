@@ -4,6 +4,7 @@ import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.js.DustCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.AssetSpec;
+import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
@@ -15,10 +16,17 @@ import java.io.IOException;
  */
 public class BuildTemplate extends BuildAssetWithRhino {
     private static Logger logger = Logger.getLogger(BuildTemplate.class);
+    private PipelineEnvironment pe;
     private DustCompiler dustCompiler;
 
     public BuildTemplate(AssetSpec assetSpec) {
         super(assetSpec);
+        dustCompiler = new DustCompiler();
+    }
+
+    public BuildTemplate(PipelineEnvironment pe, AssetSpec assetSpec) {
+        super(assetSpec);
+        this.pe = pe;
         dustCompiler = new DustCompiler();
     }
 
@@ -37,6 +45,10 @@ public class BuildTemplate extends BuildAssetWithRhino {
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Compiling template file " + sourceFileName + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile), outputFile);
+        } else if (this.pe != null && pe.getJsAssetSpec().getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+            // Regular JavaScript files are ignored here, because they are handled as part
+            // of the BuildJs workflow.
+            logger.trace("Ignoring JavaScript file " + sourceFileName + " as part of standard template compilation. Will be compiled in JavaScript compilation phase.");
         } else {
             logger.info("Copying file " + sourceFileName + " from the templates directory.");
             FileUtil.copyFile(sourceFile, outputFile);
