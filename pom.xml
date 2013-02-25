@@ -5,6 +5,29 @@
   <groupId>com.semperos</groupId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Screwdriver</name>
+  <description>Web asset management for CI builds and local development using a lightweight Java stack.</description>
+  <packaging>jar</packaging>
+  <url>https://github.com/semperos/screwdriver</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/semperos/screwdriver.git</url>
+    <connection>scm:git:git@github.com:semperos/screwdriver.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <name>Daniel Gregoire (semperos)</name>
+    </developer>
+    <developer>
+      <name>Kirill Orlov</name>
+    </developer>
+  </developers>
   <properties>
     <client.build.directory>${project.build.directory}/client</client.build.directory>
   </properties>
