@@ -13,8 +13,6 @@ import java.io.IOException;
 public class BuildAll {
     public static void build(Config cfg) throws IOException, RhinoEvaluatorException {
         PipelineEnvironment pe = new PipelineEnvironment(cfg);
-        // Read config for what gets built
-        // Build it
         JsAssetSpec jsAssetSpec = pe.getJsAssetSpec();
         CssAssetSpec cssAssetSpec = pe.getCssAssetSpec();
         ImageAssetSpec imageAssetSpec = pe.getImageAssetSpec();

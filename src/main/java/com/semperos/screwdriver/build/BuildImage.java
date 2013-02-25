@@ -1,7 +1,7 @@
 package com.semperos.screwdriver.build;
 
 import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.pipeline.ImageAssetSpec;
+import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
@@ -15,40 +15,22 @@ import java.io.IOException;
  * for applying automatic optimizations/transformations to images, e.g., to
  * keep them at a certain size or quality level.
  */
-public class BuildImage {
+public class BuildImage extends BuildAsset {
     private static Logger logger = Logger.getLogger(BuildImage.class);
-    ImageAssetSpec assetSpec;
 
-    public BuildImage(ImageAssetSpec assetSpec) {
-        this.assetSpec = assetSpec;
+    public BuildImage(AssetSpec assetSpec) {
+        super(assetSpec);
     }
 
-    public void compile(File sourceFile) {
-        // This is a stand-in for possible future functionality, e.g., auto-optimization
-        // of images for the web
-    }
-
-    public void build(File sourceFile) throws IOException {
-        File outputFile = assetSpec.outputFile(sourceFile);
+    @Override
+    public void processFile(File sourceFile, File outputFile) throws IOException {
         String sourceFileName = sourceFile.toString();
-        if (FileUtil.needsBuilding(sourceFile, outputFile)) {
-            if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
-                logger.info("Processing image file " + sourceFileName + ".");
-                FileUtil.copyFile(sourceFile, outputFile);
-            } else {
-                logger.info("Copying file " + sourceFileName + " from the images directory.");
-                FileUtil.copyFile(sourceFile, outputFile);
-            }
+        if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
+            logger.info("Processing image file " + sourceFileName + ".");
+            FileUtil.copyFile(sourceFile, outputFile);
+        } else {
+            logger.info("Copying file " + sourceFileName + " from the images directory.");
+            FileUtil.copyFile(sourceFile, outputFile);
         }
-    }
-
-    public void buildAll() throws IOException {
-        for (File f : assetSpec.findFiles()) {
-            build(f);
-        }
-    }
-
-    public void delete(File sourceFile) {
-        assetSpec.outputFile(sourceFile).delete();
     }
 }
