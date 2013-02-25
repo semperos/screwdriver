@@ -6,6 +6,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Screwdriver</name>
   <description>Web asset management for CI builds and local development using a lightweight Java stack.</description>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
   <packaging>jar</packaging>
   <url>https://github.com/semperos/screwdriver</url>
   <licenses>
@@ -17,8 +22,9 @@
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/semperos/screwdriver.git</url>
     <connection>scm:git:git@github.com:semperos/screwdriver.git</connection>
+    <developerConnection>scm:git:git@github.com:semperos/screwdriver.git</developerConnection>
+    <url>https://github.com/semperos/screwdriver.git</url>
   </scm>
   <developers>
     <developer>
