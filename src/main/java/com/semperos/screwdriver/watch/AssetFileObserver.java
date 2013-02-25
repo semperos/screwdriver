@@ -8,52 +8,49 @@ import org.apache.log4j.Logger;
  * Filesystem watcher for client-side assets
  */
 public class AssetFileObserver {
-    private static Logger logger = Logger.getLogger(AssetFileObserver.class);
     private PipelineEnvironment pe;
 
     public AssetFileObserver(PipelineEnvironment pe) {
         this.pe = pe;
     }
 
+    public FileAlterationObserver setupObserver(AssetSpec assetSpec) {
+        return new FileAlterationObserver(assetSpec.getAssetPath(), assetSpec.activeAssetFileFilter());
+    }
+
     public FileAlterationObserver observeJs() {
-        JsAssetSpec spec = pe.getJsAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildJsListener(pe.getJsAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getJsAssetSpec());
+        observer.addListener(new BuildListener(pe.getJsAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeCss() {
-        CssAssetSpec spec = pe.getCssAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildCssListener(pe.getCssAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getCssAssetSpec());
+        observer.addListener(new BuildListener(pe.getCssAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeImage() {
-        ImageAssetSpec spec = pe.getImageAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildImageListener(pe.getImageAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getImageAssetSpec());
+        observer.addListener(new BuildListener(pe.getImageAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeServerTemplate() {
-        ServerTemplateAssetSpec spec = pe.getServerTemplateAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildServerTemplateListener(pe.getServerTemplateAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getServerTemplateAssetSpec());
+        observer.addListener(new BuildListener(pe.getServerTemplateAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeTemplate() {
-        TemplateAssetSpec spec = pe.getTemplateAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildTemplateListener(pe.getTemplateAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getTemplateAssetSpec());
+        observer.addListener(new BuildListener(pe.getTemplateAssetSpec()));
         return observer;
     }
 
     public FileAlterationObserver observeStaticAsset() {
-        StaticAssetSpec spec = pe.getStaticAssetSpec();
-        FileAlterationObserver observer = new FileAlterationObserver(spec.getAssetPath(), spec.activeAssetFileFilter());
-        observer.addListener(new BuildStaticAssetListener(pe.getStaticAssetSpec()));
+        FileAlterationObserver observer = setupObserver(pe.getStaticAssetSpec());
+        observer.addListener(new BuildListener(pe.getStaticAssetSpec()));
         return observer;
     }
 }

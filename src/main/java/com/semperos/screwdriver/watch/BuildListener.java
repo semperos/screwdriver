@@ -1,61 +1,56 @@
 package com.semperos.screwdriver.watch;
 
 import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.build.BuildCss;
-import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
-import com.semperos.screwdriver.pipeline.CssAssetSpec;
+import com.semperos.screwdriver.build.Build;
+import com.semperos.screwdriver.build.BuildAsset;
+import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
- * Watch LESS files
+ * Common features to listeners
+ *
+ * @todo Create config interface to this class that allows passing in custom strings for log messages, to say things like "by compiling to JavaScript"
+ *
  */
-public class BuildCssListener implements FileAlterationListener {
-    private static Logger logger = Logger.getLogger(BuildCssListener.class);
-    CssAssetSpec assetSpec;
-    BuildCss buildCss;
+public class BuildListener implements FileAlterationListener {
+    private static Logger logger = Logger.getLogger(BuildListener.class);
+    protected AssetSpec assetSpec;
+    protected Build build;
 
-    public BuildCssListener(CssAssetSpec cssAssetSpec) {
-        assetSpec = cssAssetSpec;
-        buildCss = new BuildCss(assetSpec);
+    public BuildListener(AssetSpec assetSpec) {
+        this.assetSpec = assetSpec;
+        build = new BuildAsset(assetSpec);
     }
 
-    public void buildFile(File file) {
+    public void build(File file) {
         try {
-            buildCss.build(file);
-        } catch (RhinoEvaluatorException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            build.build(file);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteFile(File file) {
-        buildCss.delete(file);
-    }
-
-    @Override
-    public void onDirectoryDelete(File file) {
-        // delete output directory
+    public void delete(File file) {
+        build.delete(file);
     }
 
     @Override
     public void onFileCreate(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
-            logger.debug("Responding to the creation of a new file " + file.toString() + " by compiling it to CSS.");
-            buildFile(file);
+            logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it.");
+            build(file);
         }
     }
 
     @Override
     public void onFileChange(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
-            logger.debug("Responding to change in file " + file.toString() + " by recompiling it to CSS.");
-            buildFile(file);
+            logger.debug("Responding to change in file " + file.toString() + " by processing it.");
+            build(file);
         }
     }
 
@@ -63,7 +58,7 @@ public class BuildCssListener implements FileAlterationListener {
     public void onFileDelete(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
             logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
-            deleteFile(file);
+            delete(file);
         }
     }
 
@@ -83,6 +78,11 @@ public class BuildCssListener implements FileAlterationListener {
         // perhaps with configurable amount of "safety" or consistency
         // (full consistency would probably require re-compiling the whole codebase
         // in this situation, since you don't know what the previous dir name was)
+    }
+
+    @Override
+    public void onDirectoryDelete(File file) {
+        // delete output directory
     }
 
     @Override
