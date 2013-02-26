@@ -7,8 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -19,15 +18,15 @@ import static org.junit.Assert.assertTrue;
  * Data needed across tests
  */
 public class TestUtil {
-    public static String baseDirectory() {
+    public static String baseDirectoryPath() {
         return "src/test/resources/com/semperos/screwdriver/sample/";
     }
     public static String assetDirectoryPath() {
-        return baseDirectory() + "assets";
+        return baseDirectoryPath() + "assets";
     }
 
     public static String outputDirectoryPath() {
-        return baseDirectory() + "output";
+        return baseDirectoryPath() + "output";
     }
 
     public static File assetDirectory() {
@@ -104,5 +103,15 @@ public class TestUtil {
         Var cljOutputDir= RT.var("screwdriver-config", "output-dir");
         String outputDir = (String) cljOutputDir.get();
         assertEquals(TestUtil.outputDirectory().getAbsolutePath(), outputDir);
+    }
+
+    public static ByteArrayOutputStream captureStdout() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+        return baos;
+    }
+
+    public static void restoreStdout() {
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 }
