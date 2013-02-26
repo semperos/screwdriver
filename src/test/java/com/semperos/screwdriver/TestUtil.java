@@ -14,12 +14,15 @@ import java.util.HashMap;
  * Data needed across tests
  */
 public class TestUtil {
+    public static String baseDirectory() {
+        return "src/test/resources/com/semperos/screwdriver/sample/";
+    }
     public static String assetDirectoryPath() {
-        return "src/test/resources/com/semperos/screwdriver/sample/assets";
+        return baseDirectory() + "assets";
     }
 
     public static String outputDirectoryPath() {
-        return "src/test/resources/com/semperos/screwdriver/sample/output";
+        return baseDirectory() + "output";
     }
 
     public static File assetDirectory() {
@@ -58,7 +61,9 @@ public class TestUtil {
         FileUtils.deleteDirectory(new File(outputDirectory(), "stylesheets"));
         FileUtils.deleteDirectory(new File(outputDirectory(), "images"));
         FileUtils.deleteDirectory(new File(outputDirectory(), "built"));
+        FileUtils.deleteDirectory(new File(outputDirectory(), "data"));
         (new File(outputDirectory(), "index.html")).delete();
+        (new File(outputDirectory(), "clojure-output.txt")).delete();
     }
 
     public static Collection<File> jsOutputFiles() {

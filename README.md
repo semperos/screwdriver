@@ -19,7 +19,7 @@ When the Rhino shell is run in this manner, the project's classes are automatica
 You can run a Clojure REPL with all of this project's dependencies on the classpath by running the following:
 
 ```
-mvn -PclojureScripting clojure:repl
+mvn -Pscripting clojure:repl
 ```
 
 Note the use of the `clojureScripting` profile, which makes the use of Clojure completely optional for the normal build of the project.
