@@ -69,6 +69,7 @@ public class TestUtil {
         FileUtils.deleteDirectory(new File(outputDirectory(), "data"));
         (new File(outputDirectory(), "index.html")).delete();
         (new File(outputDirectory(), "clojure-output.txt")).delete();
+        (new File(outputDirectory(), "clojure-custom-output.txt")).delete();
     }
 
     public static Collection<File> jsOutputFiles() {

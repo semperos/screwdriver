@@ -10,9 +10,11 @@ public class ClojureEval {
     public static void evalResource(String resourcePath) throws Exception {
         // Clojure expects the name of the resource, not the actual filename, so
         // chop off the extension
-        if (FilenameUtils.isExtension(resourcePath, "clj")) {
-            resourcePath = resourcePath.substring(0, resourcePath.lastIndexOf(".clj"));
+        if (FilenameUtils.getExtension(resourcePath).equals("")) {
+            resourcePath += ".clj";
+        } else if (!FilenameUtils.getExtension(resourcePath).equals("clj")) {
+            throw new RuntimeException("You must pass in a Clojure file to be evaluated with a '.clj' extension.");
         }
-        RT.var("clojure.core", "load").invoke(resourcePath);
+        RT.loadResourceScript(resourcePath);
     }
 }

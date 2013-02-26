@@ -25,7 +25,7 @@ public class MainClojureIntegrationTest {
 
     @Test
     public void testMainCustomConfigFile() throws Exception {
-        String[] args = { "screwdriver-custom-config" };
+        String[] args = { "screwdriver-custom-config.clj" };
         MainClojure.main(args);
         TestUtil.testClojureOutput("clojure-custom-output.txt");
     }
