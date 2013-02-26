@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class MainCoffeeScript {
     private static Logger logger = Logger.getLogger(MainCoffeeScript.class);
-    private static final String SD_COFFEE_CONFIG = "src/main/resources/screwdriver-config.coffee";
+    private static final String SD_COFFEE_CONFIG = "src/main/resources/screwdriver_config.coffee";
 
     public static void main(String[] args) throws RhinoEvaluatorException, ScriptException, IOException {
         String resource;
@@ -21,7 +21,7 @@ public class MainCoffeeScript {
         } else {
             resource = SD_COFFEE_CONFIG;
         }
-        logger.info(String.format("Running Screwdriver with CoffeeScript script '%s' on the classpath...", resource));
+        logger.info(String.format("Running Screwdriver with CoffeeScript script '%s'...", resource));
         CoffeeScriptEval.evalFile(new File(resource));
     }
 }

@@ -24,7 +24,7 @@ public class CoffeeScriptEvalIntegrationTest {
     @Test
     public void testEvalFile() throws Exception {
         String expected = "THIS IS COFFEESCRIPT, outputDir is " + TestUtil.baseDirectoryPath();
-        File f = new File(TestUtil.baseDirectoryPath(), "screwdriver-config.coffee");
+        File f = new File(TestUtil.baseDirectoryPath(), "screwdriver_config.coffee");
         // Capture stdout and compare
         ByteArrayOutputStream baos = TestUtil.captureStdout();
         CoffeeScriptEval.evalFile(f);
