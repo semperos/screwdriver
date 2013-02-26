@@ -1,5 +1,7 @@
 package com.semperos.screwdriver;
 
+import clojure.lang.RT;
+import clojure.lang.Var;
 import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -9,6 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Data needed across tests
@@ -85,5 +90,18 @@ public class TestUtil {
                 TestUtil.outputDirectory(),
                 new RegexFileFilter(".*\\.png"),
                 DirectoryFileFilter.DIRECTORY);
+    }
+
+    public static void testClojureOutput() {
+        testClojureOutput("clojure-output.txt");
+    }
+
+    public static void testClojureOutput(String outputFileName) {
+        File targetFile = new File(TestUtil.outputDirectory(), outputFileName);
+        assertTrue(targetFile.exists());
+        assertTrue(FileUtils.sizeOf(targetFile) > 0);
+        Var cljOutputDir= RT.var("screwdriver-config", "output-dir");
+        String outputDir = (String) cljOutputDir.get();
+        assertEquals(TestUtil.outputDirectory().getAbsolutePath(), outputDir);
     }
 }

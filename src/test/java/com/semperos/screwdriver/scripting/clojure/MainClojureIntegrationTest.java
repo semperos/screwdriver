@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ClojureEvalIntegrationTest {
+public class MainClojureIntegrationTest {
     @Before
     public void setup() throws Exception {
         TestUtil.deleteAssetDirectories();
@@ -17,9 +17,16 @@ public class ClojureEvalIntegrationTest {
     }
 
     @Test
-    public void testEvalFile() throws Exception {
-        ClojureEval.evalResource("screwdriver-config");
+    public void testMainNoArgs() throws Exception {
+        String[] args = { };
+        MainClojure.main(args);
         TestUtil.testClojureOutput();
     }
 
+    @Test
+    public void testMainCustomConfigFile() throws Exception {
+        String[] args = { "screwdriver-custom-config" };
+        MainClojure.main(args);
+        TestUtil.testClojureOutput("clojure-custom-output.txt");
+    }
 }
