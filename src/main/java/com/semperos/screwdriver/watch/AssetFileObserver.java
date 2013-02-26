@@ -1,8 +1,8 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.pipeline.*;
+import com.semperos.screwdriver.pipeline.AssetSpec;
+import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.apache.log4j.Logger;
 
 /**
  * Filesystem watcher for client-side assets
@@ -14,8 +14,21 @@ public class AssetFileObserver {
         this.pe = pe;
     }
 
+    /**
+     * Watch the appropriate asset directory. Higher up in the workflow,
+     * the asset's actual "active" files (those that aren't excluded by
+     * any other filtering) are the ones that will have any action
+     * taken on them. For example, if certain LESS files have been
+     * excluded, the config below will still trigger an event when
+     * they're changed, but the methods responsible for actually
+     * calling the LESS compiler higher up the stack check to ensure that
+     * each file is part of the active files.
+     *
+     * @param assetSpec
+     * @return
+     */
     public FileAlterationObserver setupObserver(AssetSpec assetSpec) {
-        return new FileAlterationObserver(assetSpec.getAssetPath(), assetSpec.activeAssetFileFilter());
+        return new FileAlterationObserver(assetSpec.getAssetPath());
     }
 
     public FileAlterationObserver observeJs() {
