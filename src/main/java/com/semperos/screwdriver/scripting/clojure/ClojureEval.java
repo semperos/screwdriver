@@ -21,6 +21,8 @@ public class ClojureEval {
         } else if (!FilenameUtils.getExtension(resourcePath).equals("clj")) {
             throw new RuntimeException("You must pass in a Clojure file to be evaluated with a '.clj' extension.");
         }
+        // Load thin Clojure API to make it less Java-y
+        RT.loadResourceScript("com/semperos/screwdriver/clojure/screwdriver_api.clj");
         RT.loadResourceScript(resourcePath);
     }
 }
