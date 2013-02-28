@@ -18,7 +18,7 @@ public class ClojureEvalIntegrationTest {
 
     @Test
     public void testEvalFile() throws Exception {
-        ClojureEval.evalResource("screwdriver-config");
+        ClojureEval.evalResource("screwdriver_build");
         TestUtil.testClojureOutput();
     }
 
