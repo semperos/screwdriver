@@ -2,7 +2,6 @@ package com.semperos.screwdriver.watch;
 
 import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.build.Build;
-import com.semperos.screwdriver.build.BuildAsset;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -21,9 +20,9 @@ public class BuildListener implements FileAlterationListener {
     protected AssetSpec assetSpec;
     protected Build build;
 
-    public BuildListener(AssetSpec assetSpec) {
+    public BuildListener(AssetSpec assetSpec, Build build) {
         this.assetSpec = assetSpec;
-        build = new BuildAsset(assetSpec);
+        this.build = build;
     }
 
     public void build(File file) {

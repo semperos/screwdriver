@@ -5,6 +5,7 @@ import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.io.IOException;
  * Shared build functionality for all asset types
  */
 public class BuildAssetWithRhino implements Build {
+    private static Logger logger = Logger.getLogger(BuildAssetWithRhino.class);
     protected AssetSpec assetSpec;
 
     public BuildAssetWithRhino(AssetSpec assetSpec) {

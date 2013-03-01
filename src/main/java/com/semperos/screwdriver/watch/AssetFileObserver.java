@@ -1,5 +1,6 @@
 package com.semperos.screwdriver.watch;
 
+import com.semperos.screwdriver.build.*;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import com.semperos.screwdriver.pipeline.PipelineEnvironment;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -32,38 +33,50 @@ public class AssetFileObserver {
     }
 
     public FileAlterationObserver observeJs() {
-        FileAlterationObserver observer = setupObserver(pe.getJsAssetSpec());
-        observer.addListener(new BuildListener(pe.getJsAssetSpec()));
+        AssetSpec spec = pe.getJsAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildJs buildJs = new BuildJs(spec);
+        observer.addListener(new BuildListener(spec, buildJs));
         return observer;
     }
 
     public FileAlterationObserver observeCss() {
-        FileAlterationObserver observer = setupObserver(pe.getCssAssetSpec());
-        observer.addListener(new BuildListener(pe.getCssAssetSpec()));
+        AssetSpec spec = pe.getCssAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildCss buildCss = new BuildCss(spec);
+        observer.addListener(new BuildListener(spec, buildCss));
         return observer;
     }
 
     public FileAlterationObserver observeImage() {
-        FileAlterationObserver observer = setupObserver(pe.getImageAssetSpec());
-        observer.addListener(new BuildListener(pe.getImageAssetSpec()));
+        AssetSpec spec = pe.getImageAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildImage buildImage = new BuildImage(spec);
+        observer.addListener(new BuildListener(spec, buildImage));
         return observer;
     }
 
     public FileAlterationObserver observeServerTemplate() {
-        FileAlterationObserver observer = setupObserver(pe.getServerTemplateAssetSpec());
-        observer.addListener(new BuildListener(pe.getServerTemplateAssetSpec()));
+        AssetSpec spec = pe.getServerTemplateAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildServerTemplate buildServerTemplate = new BuildServerTemplate(spec);
+        observer.addListener(new BuildListener(spec, buildServerTemplate));
         return observer;
     }
 
     public FileAlterationObserver observeTemplate() {
-        FileAlterationObserver observer = setupObserver(pe.getTemplateAssetSpec());
-        observer.addListener(new BuildListener(pe.getTemplateAssetSpec()));
+        AssetSpec spec = pe.getTemplateAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildTemplate buildTemplate = new BuildTemplate(spec);
+        observer.addListener(new BuildListener(spec, buildTemplate));
         return observer;
     }
 
     public FileAlterationObserver observeStaticAsset() {
-        FileAlterationObserver observer = setupObserver(pe.getStaticAssetSpec());
-        observer.addListener(new BuildListener(pe.getStaticAssetSpec()));
+        AssetSpec spec = pe.getStaticAssetSpec();
+        FileAlterationObserver observer = setupObserver(spec);
+        BuildStaticAsset buildStaticAsset = new BuildStaticAsset(spec);
+        observer.addListener(new BuildListener(spec, buildStaticAsset));
         return observer;
     }
 }
