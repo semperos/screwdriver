@@ -48,9 +48,9 @@
     (nn debug-mode
         (.setDebugMode c __))
     (nn asset-directory
-        (.setAssetDirectory c (File. __)))
+        (.setAssetDirectory c __))
     (nn output-directory
-        (.setOutputDirectory c (File. __)))
+        (.setOutputDirectory c __))
     (nn js-sub-directory-name
         (.setJsSubDirectoryName c __))
     (nn css-sub-directory-name
