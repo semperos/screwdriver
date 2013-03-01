@@ -29,9 +29,11 @@
   <developers>
     <developer>
       <name>Daniel Gregoire (semperos)</name>
+      <timezone>-5</timezone>
     </developer>
     <developer>
       <name>Kirill Orlov</name>
+      <timezone>-5</timezone>
     </developer>
   </developers>
   <properties>
