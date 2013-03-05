@@ -29,6 +29,7 @@ public class BuildListener implements FileAlterationListener {
         try {
             build.build(file);
         } catch (Exception e) {
+            logger.error("An error occurred while monitoring the file system.");
             e.printStackTrace();
         }
     }
@@ -37,10 +38,14 @@ public class BuildListener implements FileAlterationListener {
         build.delete(file);
     }
 
+    public String buildClass() {
+        return "[[" + build.getClass().getSimpleName() + "]]";
+    }
+
     @Override
     public void onFileCreate(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
-            logger.debug("Responding to the creation of a new file " + file.toString() + " by processing it.");
+            logger.debug(buildClass() + " Responding to the creation of a new file " + file.toString() + " by processing it.");
             build(file);
         }
     }
@@ -48,7 +53,7 @@ public class BuildListener implements FileAlterationListener {
     @Override
     public void onFileChange(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
-            logger.debug("Responding to change in file " + file.toString() + " by processing it.");
+            logger.debug(buildClass() +" Responding to change in file " + file.toString() + " by processing it.");
             build(file);
         }
     }
@@ -56,7 +61,7 @@ public class BuildListener implements FileAlterationListener {
     @Override
     public void onFileDelete(File file) {
         if (FileUtil.isActiveFile(file, assetSpec)) {
-            logger.debug("Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
+            logger.debug(buildClass() + " Responding to deletion of file " + file.toString() + " by deleting its output counterpart.");
             delete(file);
         }
     }
