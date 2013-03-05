@@ -49,7 +49,7 @@ public class DefaultConfig {
     }
 
     public static boolean isJsSourceMapsEnabled() {
-        return true;
+        return false;
     }
 
     public static ArrayList<String> getJsExtensions() {
