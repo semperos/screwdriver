@@ -1,7 +1,5 @@
 package com.semperos.screwdriver.build;
 
-import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.js.CoffeeScriptCompiler;
 import com.semperos.screwdriver.js.rhino.RhinoEvaluatorException;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.FileUtils;
@@ -13,7 +11,7 @@ import java.io.IOException;
 /**
  * Shared build functionality for all asset types
  */
-public class BuildAssetWithRhino implements Build {
+public abstract class BuildAssetWithRhino implements Build {
     private static Logger logger = Logger.getLogger(BuildAssetWithRhino.class);
     protected AssetSpec assetSpec;
 
@@ -21,20 +19,8 @@ public class BuildAssetWithRhino implements Build {
         this.assetSpec = assetSpec;
     }
 
-    /**
-     * Java...
-     *
-     * Provide a default behavior for this method that will throw the correct
-     * exceptions. This should be overriden in *every* sub-class.
-     * @param sourceFile
-     * @param outputFile
-     * @throws IOException
-     * @throws RhinoEvaluatorException
-     */
-    public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
-        CoffeeScriptCompiler csc = new CoffeeScriptCompiler();
-        FileUtil.writeFile(csc.compile(sourceFile), outputFile);
-    }
+    @Override
+    abstract public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException;
 
     public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
         File outputFile = assetSpec.outputFile(sourceFile);

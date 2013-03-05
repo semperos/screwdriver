@@ -1,6 +1,5 @@
 package com.semperos.screwdriver.build;
 
-import com.semperos.screwdriver.FileUtil;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -11,7 +10,7 @@ import java.io.IOException;
 /**
  * Build simple assets
  */
-public class BuildAsset implements Build {
+public abstract class BuildAsset implements Build {
     private static Logger logger = Logger.getLogger(BuildAsset.class);
     protected AssetSpec assetSpec;
 
@@ -20,9 +19,7 @@ public class BuildAsset implements Build {
     }
 
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException {
-        FileUtil.copyFile(sourceFile, outputFile);
-    }
+    abstract public void processFile(File sourceFile, File outputFile) throws IOException;
 
     @Override
     public void build(File sourceFile) throws IOException {
