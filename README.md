@@ -16,6 +16,14 @@ When the Rhino shell is run in this manner, the project's classes are automatica
 
 ## Performing a Release ##
 
+### SNAPSHOT Releases ###
+
+To deploy SNAPSHOT releases to Sonatype, you need to be approved for the project. After that, you need to store your credentials in your local `settings.xml` per Sonatype's instructions. With those two things in place, you can run `mvn deploy` to deploy your local SNAPSHOT version of the project to Sonatype's SNAPSHOT repository for this project.
+
+### Staging Releases ###
+
+Follow these instructions to perform a release of Screwdriver that will be uploaded to a staging repository for this project:
+
 ```bash
 # Prepare the release
 mvn clean release:clean
