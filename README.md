@@ -14,17 +14,23 @@ When the Rhino shell is run in this manner, the project's classes are automatica
 
 (Note that the experience will be greatly improved by running this with readline, ledit, or equivalent library available for your platform.)
 
-## Clojure REPL ##
+## Performing a Release ##
 
-You can run a Clojure REPL with all of this project's dependencies on the classpath by running the following:
+```bash
+# Prepare the release
+mvn clean release:clean
+mvn -Pintegration-tests release:prepare
 
+# If all went well, push changes to codebase and version tag
+git push origin master
+git push --tags
+
+# Perform release
+mvn -Dgpg.passphrase="XXXX" release:perform
+
+# Clean up afterwards too
+mvn clean release:clean
 ```
-mvn -Pscripting clojure:repl
-```
-
-Note the use of the `clojureScripting` profile, which makes the use of Clojure completely optional for the normal build of the project.
-
-(Note that the experience will be greatly improved by running this with readline, ledit, or equivalent library available for your platform.)
 
 ## Related Projects ##
 
