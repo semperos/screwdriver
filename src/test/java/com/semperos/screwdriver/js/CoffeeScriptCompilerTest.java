@@ -1,7 +1,6 @@
 package com.semperos.screwdriver.js;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import java.io.File;
 
@@ -15,7 +14,7 @@ public class CoffeeScriptCompilerTest {
         this.compiler = new CoffeeScriptCompiler();
     }
 
-    @Test
+//    @Test
     public void testCompile() throws Exception {
         String expected = "(function() {\n" +
                 "  var __hasProp = {}.hasOwnProperty,\n" +

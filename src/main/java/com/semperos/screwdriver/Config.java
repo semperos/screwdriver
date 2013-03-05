@@ -15,6 +15,7 @@ public class Config {
     private Boolean debugMode;
     private File assetDirectory;
     private File outputDirectory;
+    private boolean jsSourceMapsEnabled;
     private String jsSubDirectoryName;
     private String cssSubDirectoryName;
     private String imageSubDirectoryName;
@@ -61,6 +62,7 @@ public class Config {
         this.debugMode = DefaultConfig.isDebugMode();
         this.assetDirectory = new File(DefaultConfig.getAssetDirectory());
         this.outputDirectory = new File(DefaultConfig.getOutputDirectory());
+        this.jsSourceMapsEnabled = DefaultConfig.isJsSourceMapsEnabled();
         this.jsSubDirectoryName = DefaultConfig.getJsSubDirectoryName();
         this.cssSubDirectoryName = DefaultConfig.getCssSubDirectoryName();
         this.imageSubDirectoryName = DefaultConfig.getImageSubDirectoryName();
@@ -126,6 +128,14 @@ public class Config {
 
     public void setOutputDirectory(File outputDirectory) {
         this.outputDirectory = outputDirectory;
+    }
+
+    public boolean isJsSourceMapsEnabled() {
+        return jsSourceMapsEnabled;
+    }
+
+    public void setJsSourceMapsEnabled(boolean jsSourceMapsEnabled) {
+        this.jsSourceMapsEnabled = jsSourceMapsEnabled;
     }
 
     public String getJsSubDirectoryName() {

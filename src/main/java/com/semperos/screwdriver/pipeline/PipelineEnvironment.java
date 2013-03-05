@@ -10,6 +10,7 @@ import java.io.File;
  */
 public class PipelineEnvironment {
     private JsAssetSpec jsAssetSpec;
+    private JsSourceMapAssetSpec jsSourceMapAssetSpec;
     private CssAssetSpec cssAssetSpec;
     private ImageAssetSpec imageAssetSpec;
     private TemplateAssetSpec templateAssetSpec;
@@ -22,6 +23,14 @@ public class PipelineEnvironment {
 
     public void setJsAssetSpec(JsAssetSpec jsAssetSpec) {
         this.jsAssetSpec = jsAssetSpec;
+    }
+
+    public JsSourceMapAssetSpec getJsSourceMapAssetSpec() {
+        return jsSourceMapAssetSpec;
+    }
+
+    public void setJsSourceMapAssetSpec(JsSourceMapAssetSpec jsSourceMapAssetSpec) {
+        this.jsSourceMapAssetSpec = jsSourceMapAssetSpec;
     }
 
     public CssAssetSpec getCssAssetSpec() {
@@ -81,6 +90,9 @@ public class PipelineEnvironment {
             jsAssetSpec.setAssetIncludes(cfg.getJsIncludes());
         } else {
             jsAssetSpec.setAssetExcludes(cfg.getJsExcludes());
+        }
+        if (cfg.isJsSourceMapsEnabled()) {
+            jsSourceMapAssetSpec = new JsSourceMapAssetSpec(jsAssetPath, cfg.getJsExtensions(), jsOutputPath);
         }
 
         File cssAssetPath = new File(cfg.getAssetDirectory(), cfg.getCssSubDirectoryName());

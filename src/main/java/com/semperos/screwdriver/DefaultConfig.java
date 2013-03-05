@@ -48,6 +48,10 @@ public class DefaultConfig {
         return "data";
     }
 
+    public static boolean isJsSourceMapsEnabled() {
+        return true;
+    }
+
     public static ArrayList<String> getJsExtensions() {
         ArrayList<String> exts = new ArrayList<>();
         exts.add("js");
