@@ -43,6 +43,7 @@
            server-template-excludes static-asset-excludes
            server-template-locals
            optimize-js? optimize-css? optimize-image?
+           js-source-maps?
            rjs-modules ]}]
   (let [c (Config.)]
     (nn debug-mode
@@ -131,6 +132,8 @@
         (.setOptimizeCss c __))
     (nn optimize-image?
         (.setOptimizeImage c __))
+    (nn js-source-maps?
+      (.setJsSourceMapsEnabled c __))
     (nn rjs-modules
         (.setRjsModules c (java-list __)))
     c))
