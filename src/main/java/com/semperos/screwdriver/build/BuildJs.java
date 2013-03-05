@@ -19,11 +19,6 @@ public class BuildJs extends BuildAssetWithRhino {
     private PipelineEnvironment pe;
     private CoffeeScriptCompiler coffeeScriptCompiler;
 
-    public BuildJs(AssetSpec assetSpec) {
-        super(assetSpec);
-        this.coffeeScriptCompiler = new CoffeeScriptCompiler();
-    }
-
     public BuildJs(PipelineEnvironment pe, AssetSpec assetSpec) {
         super(assetSpec);
         this.pe = pe;

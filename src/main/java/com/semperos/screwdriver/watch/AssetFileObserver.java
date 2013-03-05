@@ -35,7 +35,7 @@ public class AssetFileObserver {
     public FileAlterationObserver observeJs() {
         AssetSpec spec = pe.getJsAssetSpec();
         FileAlterationObserver observer = setupObserver(spec);
-        BuildJs buildJs = new BuildJs(spec);
+        BuildJs buildJs = new BuildJs(pe, spec);
         observer.addListener(new BuildListener(spec, buildJs));
         return observer;
     }
@@ -67,7 +67,7 @@ public class AssetFileObserver {
     public FileAlterationObserver observeTemplate() {
         AssetSpec spec = pe.getTemplateAssetSpec();
         FileAlterationObserver observer = setupObserver(spec);
-        BuildTemplate buildTemplate = new BuildTemplate(spec);
+        BuildTemplate buildTemplate = new BuildTemplate(pe, spec);
         observer.addListener(new BuildListener(spec, buildTemplate));
         return observer;
     }

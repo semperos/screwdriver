@@ -19,11 +19,6 @@ public class BuildTemplate extends BuildAssetWithRhino {
     private PipelineEnvironment pe;
     private DustCompiler dustCompiler;
 
-    public BuildTemplate(AssetSpec assetSpec) {
-        super(assetSpec);
-        dustCompiler = new DustCompiler();
-    }
-
     public BuildTemplate(PipelineEnvironment pe, AssetSpec assetSpec) {
         super(assetSpec);
         this.pe = pe;
