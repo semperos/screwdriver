@@ -17,7 +17,7 @@ public class CoffeeScriptCompiler extends AbstractCompiler implements JsCompilat
     public CoffeeScriptCompiler() {
         rhinoCompiler = new RhinoCompiler();
         HashMap<String,String> deps = new HashMap<String,String>();
-        deps.put("coffee-script.js", "com/semperos/screwdriver/js/vendor/coffee-script-1.6.1.js");
+        deps.put("coffee-script.js", "com/semperos/screwdriver/js/vendor/coffee-script-1.5.0.js");
         rhinoCompiler.addDependencies(deps);
     }
 
