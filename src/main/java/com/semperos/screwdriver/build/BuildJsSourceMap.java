@@ -41,11 +41,13 @@ public class BuildJsSourceMap extends BuildAssetWithRhino {
         }
     }
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
         String sourceFileName = sourceFile.toString();
+        boolean processed = false;
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Compiling file " + sourceFileName + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile), outputFile);
+            processed = true;
         } else if (pe != null && pe.getTemplateAssetSpec().getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             // JavaScript templates are ignored here, because they are handled as part of
             // the BuildTemplate workflow.
@@ -53,6 +55,8 @@ public class BuildJsSourceMap extends BuildAssetWithRhino {
         } else {
             logger.info("Copying file " + sourceFileName + " from the JavaScript directory.");
             FileUtil.copyFile(sourceFile, outputFile);
+            processed = true;
         }
+        return processed;
     }
 }

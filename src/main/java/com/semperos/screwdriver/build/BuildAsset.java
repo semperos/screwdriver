@@ -19,15 +19,17 @@ public abstract class BuildAsset implements Build {
     }
 
     @Override
-    abstract public void processFile(File sourceFile, File outputFile) throws IOException;
+    abstract public boolean processFile(File sourceFile, File outputFile) throws IOException;
 
     @Override
-    public void build(File sourceFile) throws IOException {
+    public boolean build(File sourceFile) throws IOException {
         File outputFile = assetSpec.outputFile(sourceFile);
+        boolean processed = false;
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            processFile(sourceFile, outputFile);
+            processed = processFile(sourceFile, outputFile);
         }
+        return processed;
     }
 
     @Override

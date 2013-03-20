@@ -21,7 +21,7 @@ public class BuildStaticAsset extends BuildAsset {
     // Could have compile/processing function for things like gzipping if appropriate,
     // but not useful now.
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException {
         String sourceFileName = sourceFile.toString();
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Processing static file " + sourceFileName + ".");
@@ -30,6 +30,7 @@ public class BuildStaticAsset extends BuildAsset {
             logger.info("Copying file " + sourceFileName + " from the static assets directory.");
             FileUtil.copyFile(sourceFile, outputFile);
         }
+        return true;
     }
 
 }

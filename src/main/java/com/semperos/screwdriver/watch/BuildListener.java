@@ -1,6 +1,7 @@
 package com.semperos.screwdriver.watch;
 
 import com.semperos.screwdriver.FileUtil;
+import com.semperos.screwdriver.GuiNotification;
 import com.semperos.screwdriver.build.Build;
 import com.semperos.screwdriver.pipeline.AssetSpec;
 import org.apache.commons.io.monitor.FileAlterationListener;
@@ -26,11 +27,22 @@ public class BuildListener implements FileAlterationListener {
     }
 
     public void build(File file) {
+        boolean fileProcessed = false;
+        boolean errorOccurred = false;
+        String errorMessage = null;
         try {
-            build.build(file);
+            fileProcessed = build.build(file);
         } catch (Exception e) {
             logger.error("An error occurred while monitoring the file system.");
+            errorOccurred = true;
+            errorMessage = e.getMessage();
             e.printStackTrace();
+        } finally {
+            if (fileProcessed) {
+                GuiNotification.success("File " + file.getName() + " processed successfully.");
+            } else if (errorOccurred) {
+                GuiNotification.failure("File " + file.getName() + " <b>failed</b> to be processed.<br><em>" + errorMessage + "</em>");
+            }
         }
     }
 

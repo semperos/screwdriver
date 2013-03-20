@@ -33,7 +33,7 @@ public class BuildCss extends BuildAssetWithRhino {
     }
 
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
         String sourceFileName = sourceFile.toString();
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Compiling file " + sourceFileName + " to CSS.");
@@ -41,6 +41,7 @@ public class BuildCss extends BuildAssetWithRhino {
         } else {
             FileUtil.copyFile(sourceFile, outputFile);
         }
+        return true;
     }
 
 }

@@ -37,11 +37,13 @@ public class BuildJs extends BuildAssetWithRhino {
     }
 
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
         String sourceFileName = sourceFile.toString();
+        boolean processed = false;
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Compiling file " + sourceFileName + " to JavaScript.");
             FileUtil.writeFile(compile(sourceFile), outputFile);
+            processed = true;
             // Now go off and make source maps if that's been enabled
             if (pe.getJsSourceMapAssetSpec() != null) {
                 BuildJsSourceMap build = new BuildJsSourceMap(pe, pe.getJsSourceMapAssetSpec());
@@ -54,7 +56,9 @@ public class BuildJs extends BuildAssetWithRhino {
         } else {
             logger.info("Copying file " + sourceFileName + " from the JavaScript directory.");
             FileUtil.copyFile(sourceFile, outputFile);
+            processed = true;
         }
+        return processed;
     }
 
 }

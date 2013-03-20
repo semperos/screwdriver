@@ -20,14 +20,16 @@ public abstract class BuildAssetWithRhino implements Build {
     }
 
     @Override
-    abstract public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException;
+    abstract public boolean processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException;
 
-    public void build(File sourceFile) throws IOException, RhinoEvaluatorException {
+    public boolean build(File sourceFile) throws IOException, RhinoEvaluatorException {
         File outputFile = assetSpec.outputFile(sourceFile);
+        boolean processed = false;
         if ((!outputFile.exists()) ||
                 (outputFile.exists() && FileUtils.isFileNewer(sourceFile, outputFile))) {
-            processFile(sourceFile, outputFile);
+            processed = processFile(sourceFile, outputFile);
         }
+        return processed;
     }
 
     public void buildAll() throws IOException, RhinoEvaluatorException {

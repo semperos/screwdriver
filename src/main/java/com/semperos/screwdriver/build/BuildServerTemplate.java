@@ -35,7 +35,7 @@ public class BuildServerTemplate extends BuildAssetWithRhino {
     }
 
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException, RhinoEvaluatorException {
         String sourceFileName = sourceFile.toString();
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Compiling template file " + sourceFileName + " to HTML.");
@@ -44,6 +44,7 @@ public class BuildServerTemplate extends BuildAssetWithRhino {
             logger.info("Copying file " + sourceFileName + " from the server templates directory.");
             FileUtil.copyFile(sourceFile, outputFile);
         }
+        return true;
     }
 
 }

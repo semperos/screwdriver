@@ -23,7 +23,7 @@ public class BuildImage extends BuildAsset {
     }
 
     @Override
-    public void processFile(File sourceFile, File outputFile) throws IOException {
+    public boolean processFile(File sourceFile, File outputFile) throws IOException {
         String sourceFileName = sourceFile.toString();
         if (assetSpec.getAssetExtensions().contains(FilenameUtils.getExtension(sourceFileName))) {
             logger.info("Processing image file " + sourceFileName + ".");
@@ -32,5 +32,6 @@ public class BuildImage extends BuildAsset {
             logger.info("Copying file " + sourceFileName + " from the images directory.");
             FileUtil.copyFile(sourceFile, outputFile);
         }
+        return true;
     }
 }
