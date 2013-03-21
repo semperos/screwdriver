@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class GuiNotification {
     private static void showDialog(final String title, final String message) {
-        showDialog(title, message, 2000);
+        showDialog(title, message, 1200);
     }
 
     private static void showDialog(final String title, final String message, final int duration) {
