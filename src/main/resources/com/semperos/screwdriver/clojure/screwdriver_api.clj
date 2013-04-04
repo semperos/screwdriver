@@ -44,7 +44,7 @@
            server-template-locals
            optimize-js? optimize-css? optimize-image?
            js-source-maps?
-           rjs-modules ]}]
+           rjs-modules rjs-main-config-file rjs-base-url rjs-out-format]}]
   (let [c (Config.)]
     (nn debug-mode
         (.setDebugMode c __))
@@ -136,4 +136,10 @@
       (.setJsSourceMapsEnabled c __))
     (nn rjs-modules
         (.setRjsModules c (java-list __)))
+    (nn rjs-main-config-file
+        (.setRjsMainConfigFile c __))
+    (nn rjs-base-url
+        (.setRjsBaseUrl c __))
+    (nn rjs-out-format
+        (.setRjsOutFormat c __))
     c))

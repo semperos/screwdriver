@@ -57,6 +57,9 @@ public class Config {
     private boolean optimizeCss;
     private boolean optimizeImage;
     private List<String> rjsModules;
+    private String rjsMainConfigFile;
+    private String rjsBaseUrl;
+    private String rjsOutFormat;
 
     public Config() {
         this.debugMode = DefaultConfig.isDebugMode();
@@ -464,5 +467,29 @@ public class Config {
 
     public void setRjsModules(ArrayList<String> rjsModules) {
         this.rjsModules = rjsModules;
+    }
+
+    public String getRjsMainConfigFile() {
+        return rjsMainConfigFile;
+    }
+
+    public void setRjsMainConfigFile(String rjsMainConfigFile) {
+        this.rjsMainConfigFile = rjsMainConfigFile;
+    }
+
+    public String getRjsBaseUrl() {
+        return rjsBaseUrl;
+    }
+
+    public void setRjsBaseUrl(String rjsBaseUrl) {
+        this.rjsBaseUrl = rjsBaseUrl;
+    }
+
+    public String getRjsOutFormat() {
+        return rjsOutFormat;
+    }
+
+    public void setRjsOutFormat(String rjsOutFormat) {
+        this.rjsOutFormat = rjsOutFormat;
     }
 }
