@@ -25,9 +25,11 @@ public class ScrewdriverServer
     private final Map<String, Servlet> localServletsByRoute = new LinkedHashMap<>();
     private final Map<String, Servlet> proxyServletsByRoute = new LinkedHashMap<>();
 
-    private String staticResourceBasePath = ".";
     private String localResourcesBasePath = ".";
+    private String staticResourceBasePath = ".";
     private boolean enableDirectoryListing = false;
+    
+    private String localContextPath = null;
     
 
     public ScrewdriverServer(int port)
@@ -43,6 +45,11 @@ public class ScrewdriverServer
     public void setLocalResourcesBasePath(String path)
     {
         this.localResourcesBasePath = path;
+    }
+    
+    public void setLocalContextPath(String path)
+    {
+        this.localContextPath = path;
     }
     
     public void addLocalServlet(String resourcePath, String route)
@@ -79,6 +86,7 @@ public class ScrewdriverServer
         staticResourceHandler.setResourceBase(staticResourceBasePath);
         
         WebAppContext localServletHandler = new WebAppContext();
+        if (localContextPath != null) localServletHandler.setContextPath(localContextPath);
         localServletHandler.setWar(localResourcesBasePath);
         registerServlets(localServletsByRoute, localServletHandler);
         
@@ -94,7 +102,7 @@ public class ScrewdriverServer
         {
             String route = servletSpec.getKey();
             Servlet servlet = servletSpec.getValue();
-	        localServletHandler.addServlet(new ServletHolder(servlet), route);
+            localServletHandler.addServlet(new ServletHolder(servlet), route);
         }
 
         // proxied routes, then local routes, then static resource handler 
