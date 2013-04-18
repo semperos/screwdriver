@@ -1,7 +1,5 @@
 package com.semperos.screwdriver.server.example;
 
-import org.eclipse.jetty.servlet.ServletContextHandler;
-
 import com.semperos.screwdriver.server.ScrewdriverServer;
 
 public class ExampleServer
@@ -15,13 +13,13 @@ public class ExampleServer
         server.setEnabledDirectoryListing(false);
         
         // --- local servlet ---
-        server.setLocalResourcesBasePath("./WEB-INF/jsp/");
-        server.addLocalServlet("/testpage.jsp", "/local/*");
+        server.setEnabledDirectoryListing(false);
+        server.setLocalResourcesBasePath("./WEB-INF/jsp");
+        server.setLocalContextPath("/local");
+        server.addLocalServlet("testpage.jsp", "/servlet");
         
         // --- proxy servlet ---
         server.addProxyServlet("http://localhost:8100/redirect", "/redirect/*");
-        ServletContextHandler proxiedServlets = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        proxiedServlets.setContextPath("/");
 
         server.start();
     }
