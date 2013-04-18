@@ -17,6 +17,10 @@ import notify.UnableToNotifyException;
  * Java Implementation
  * 
  * @author francois wauquier
+ * Modified 18 APR 2013 by Kirill Orlov:
+ * <ul>
+ *  <li>changed readImage() method to use getClass() directly for resource loading</li>
+ * </ul>
  * 
  */
 public class Jre6Notifier implements Notifier {
@@ -57,7 +61,7 @@ public class Jre6Notifier implements Notifier {
     }
 
     private byte[] readImage(String imageName) throws IOException {
-	InputStream imageStream = getClass().getClassLoader().getResourceAsStream(imageName);
+	InputStream imageStream = getClass().getResourceAsStream(imageName);
 	if (imageStream == null) {
 	    throw new FileNotFoundException(imageName);
 	}
