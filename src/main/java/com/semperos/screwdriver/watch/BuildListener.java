@@ -1,14 +1,15 @@
 package com.semperos.screwdriver.watch;
 
-import com.semperos.screwdriver.FileUtil;
-import com.semperos.screwdriver.GuiNotification;
-import com.semperos.screwdriver.build.Build;
-import com.semperos.screwdriver.pipeline.AssetSpec;
+import java.io.File;
+
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.log4j.Logger;
 
-import java.io.File;
+import com.semperos.screwdriver.FileUtil;
+import com.semperos.screwdriver.build.Build;
+import com.semperos.screwdriver.notification.TaskTrayNotification;
+import com.semperos.screwdriver.pipeline.AssetSpec;
 
 /**
  * Common features to listeners
@@ -39,9 +40,9 @@ public class BuildListener implements FileAlterationListener {
             e.printStackTrace();
         } finally {
             if (fileProcessed) {
-                GuiNotification.success("File " + file.getName() + " processed successfully.");
+                TaskTrayNotification.info("Success", "File " + file.getName() + " processed successfully.");
             } else if (errorOccurred) {
-                GuiNotification.failure("File " + file.getName() + " <b>failed</b> to be processed.<br><em>" + errorMessage + "</em>");
+                TaskTrayNotification.error("Failure", "File " + file.getName() + " failed to be processed.\n\n" + errorMessage);
             }
         }
     }
