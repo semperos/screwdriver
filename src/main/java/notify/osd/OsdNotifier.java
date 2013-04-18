@@ -18,6 +18,10 @@ import notify.UnableToNotifyException;
  * 
  * 
  * @author francois wauquier
+ * Modified 18 APR 2013 by Kirill Orlov:
+ * <ul>
+ *  <li>added durationTime_MILLIS argument to notify()</li>
+ * </ul>
  * 
  */
 public class OsdNotifier implements Notifier {
@@ -32,9 +36,11 @@ public class OsdNotifier implements Notifier {
     }
 
     @Override
-    public void notify(MessageType messageType, String title, String message) {
+    public void notify(MessageType messageType, String title, String message, long duration_MILLIS) {
     List<String> command = new ArrayList<String>();
     command.add("notify-send");
+    command.add("-t");
+    command.add(Long.toString(duration_MILLIS));
     switch (messageType) {
     case NONE:
         break;

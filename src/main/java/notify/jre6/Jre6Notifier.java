@@ -20,6 +20,7 @@ import notify.UnableToNotifyException;
  * Modified 18 APR 2013 by Kirill Orlov:
  * <ul>
  *  <li>changed readImage() method to use getClass() directly for resource loading</li>
+ *  <li>added durationTime_MILLIS argument to notify()</li>
  * </ul>
  * 
  */
@@ -36,7 +37,7 @@ public class Jre6Notifier implements Notifier {
     }
 
     @Override
-    public void notify(MessageType messageType, String title, String message) {
+    public void notify(MessageType messageType, String title, String message, final long duration_MILLIS) {
 	try {
 	    final SystemTray systemTray = SystemTray.getSystemTray();
 	    String imageName = messageType.name().toLowerCase() + ".png";
@@ -48,7 +49,7 @@ public class Jre6Notifier implements Notifier {
 		@Override
 		public void run() {
 		    try {
-			Thread.sleep(5000);
+			Thread.sleep(duration_MILLIS);
 		    } catch (InterruptedException e) {
 			// ignore
 		    }

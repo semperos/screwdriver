@@ -51,7 +51,7 @@ public class TaskTrayNotification
     {
         if (instance.notifier == null) return;
         String titleString = "Screwdriver: " + title;
-        notifier.notify(messageType, titleString, message);
+        notifier.notify(messageType, titleString, message, duration_MILLIS);
     }
 
     private static TaskTrayNotification instance = new TaskTrayNotification();
