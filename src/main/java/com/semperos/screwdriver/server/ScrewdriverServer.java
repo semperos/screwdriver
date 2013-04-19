@@ -52,7 +52,7 @@ public class ScrewdriverServer
         this.enableDirectoryListing = enabled;
     }
      
-    public void setEnableStaticResourceFallthrough(boolean enabled)
+    public void setEnabledStaticResourceFallthrough(boolean enabled)
     {
         this.enableStaticResourceFallthrough = enabled;
     }

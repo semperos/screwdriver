@@ -11,7 +11,7 @@ public class ExampleServer
         
         // --- static files --- 
         server.setStaticResourceBasePath(".");
-        server.setEnabledDirectoryListing(false);
+        server.setEnabledStaticResourceFallthrough(true);
         
         // --- local servlet ---
         LocalServlet servlet = new LocalServlet("testpage.jsp");
