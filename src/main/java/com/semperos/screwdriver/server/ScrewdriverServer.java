@@ -2,34 +2,34 @@ package com.semperos.screwdriver.server;
 
 import static com.semperos.screwdriver.server.utils.ServerUtils.proxyServletFromUrl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
 
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import com.semperos.screwdriver.server.utils.LocalServlet;
-
 public class ScrewdriverServer
 {
     private final int port;
     
-    private final Map<String, Servlet> localServletsByRoute = new LinkedHashMap<>();
+    private final List<ContextHandler> localServletHandlers = new ArrayList<>();
     private final Map<String, Servlet> proxyServletsByRoute = new LinkedHashMap<>();
 
-    private String localResourcesBasePath = ".";
     private String staticResourceBasePath = ".";
+    private String localResourcesBasePath = ".";
     private boolean enableDirectoryListing = false;
     
-    private String localContextPath = null;
+    private boolean enableStaticResourceFallthrough = true;
     
 
     public ScrewdriverServer(int port)
@@ -37,29 +37,45 @@ public class ScrewdriverServer
         this.port = port;
     }
     
-    public void setResourceBasePath(String path)
+    public void setStaticResourceBasePath(String path)
     {
         this.staticResourceBasePath = path;
     }
-    
+   
     public void setLocalResourcesBasePath(String path)
     {
         this.localResourcesBasePath = path;
     }
-    
-    public void setLocalContextPath(String path)
+     
+    public void setEnabledDirectoryListing(boolean enabled)
     {
-        this.localContextPath = path;
+        this.enableDirectoryListing = enabled;
+    }
+     
+    public void setEnableStaticResourceFallthrough(boolean enabled)
+    {
+        this.enableStaticResourceFallthrough = enabled;
     }
     
-    public void addLocalServlet(String resourcePath, String route)
+    public void addLocalServlet(Servlet servlet, String contextPath, String routePath)
     {
-        addLocalServlet(new LocalServlet(resourcePath), route);
+        WebAppContext handler = new WebAppContext();
+        if (contextPath != null) handler.setContextPath(contextPath);
+        handler.addServlet(new ServletHolder(servlet), routePath);
+        localServletHandlers.add(handler);
     }
-    
-    public void addLocalServlet(Servlet servlet, String route)
+     
+    public void addLocalServlet(String fileResourceName, String contextPath, String routePath)
     {
-        localServletsByRoute.put(route, servlet);
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirectoriesListed(false);
+        
+        resourceHandler.setWelcomeFiles(new String[]{fileResourceName});
+        ContextHandler handler = new ContextHandler();
+        if (contextPath != null) handler.setContextPath(contextPath);
+        handler.setHandler(resourceHandler);
+        
+        localServletHandlers.add(handler);
     }
     
     public void addProxyServlet(String redirectionUrl, String route)
@@ -71,43 +87,40 @@ public class ScrewdriverServer
     {
         proxyServletsByRoute.put(route, servlet);
     }
-    
-    public void setEnabledDirectoryListing(boolean enabled)
-    {
-        this.enableDirectoryListing = enabled;
-    }
-    
+   
     public void start()
     {
         Server server = new Server(port);
         
-        ResourceHandler staticResourceHandler = new ResourceHandler();
-        staticResourceHandler.setDirectoriesListed(enableDirectoryListing);
-        staticResourceHandler.setResourceBase(staticResourceBasePath);
-        
-        WebAppContext localServletHandler = new WebAppContext();
-        if (localContextPath != null) localServletHandler.setContextPath(localContextPath);
-        localServletHandler.setWar(localResourcesBasePath);
-        registerServlets(localServletsByRoute, localServletHandler);
-        
-        localServletHandler.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", 
-                                             Boolean.toString(enableDirectoryListing));
-
+       
+        // --- local servlets ---
+        String dirAllowed = Boolean.toString(enableDirectoryListing);
+        for (ContextHandler handler: localServletHandlers)
+        {
+            handler.setResourceBase(localResourcesBasePath);
+            handler.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", dirAllowed);
+        }
+                    
         // --- context for remote redirection ---
         ServletContextHandler proxyServletsHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         proxyServletsHandler.setContextPath("/");
         registerServlets(proxyServletsByRoute, proxyServletsHandler);
          
-        for (Entry<String, Servlet> servletSpec : localServletsByRoute.entrySet())
+        // proxied routes, then local routes, then static assets
+        HandlerList handlerList = new HandlerList();
+        handlerList.addHandler(proxyServletsHandler);
+        for (ContextHandler handler : localServletHandlers) handlerList.addHandler(handler);
+        
+        // --- static resources ---
+        if (enableStaticResourceFallthrough)
         {
-            String route = servletSpec.getKey();
-            Servlet servlet = servletSpec.getValue();
-            localServletHandler.addServlet(new ServletHolder(servlet), route);
+            ResourceHandler staticResourceHandler = new ResourceHandler();
+            staticResourceHandler.setDirectoriesListed(enableDirectoryListing);
+            staticResourceHandler.setResourceBase(staticResourceBasePath);
+            handlerList.addHandler(staticResourceHandler);
         }
-
-        // proxied routes, then local routes, then static resource handler 
-        HandlerCollection handlerList = new HandlerCollection();
-        handlerList.setHandlers(new Handler[] {proxyServletsHandler, localServletHandler, staticResourceHandler});
+        
+        
         server.setHandler(handlerList);
 
         try

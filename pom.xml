@@ -130,6 +130,11 @@
 			</exclusion>
 		</exclusions>
 	</dependency>
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-rewrite</artifactId>
+		<version>9.0.0.RC0</version>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
