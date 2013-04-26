@@ -42,6 +42,12 @@ mvn clean release:clean
 
 At this point, you need to head over to [the Sonatype docs](https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8a.ReleaseIt), following the instructions for closing and releasing the appropriate staging repository so that it can be synced with Maven Central.
 
+**Note:** Before clicking "Release" for the closed staging repository in the Nexus UI, please heed the Sonatype instructions and test the JAR locally. To do so, download the JAR and the pom.xml file for the to-be release, install them locally and test manually. You can install them locally with the following Maven incantation (example uses version `0.2.0`):
+
+```
+mvn install:install-file -DpomFile=screwdriver-0.2.0.pom -DgroupId=com.semperos -DartifactId=screwdriver -Dversion=0.2.0 -Dfile=screwdriver-0.2.0.jar -Dpackaging=jar
+```
+
 ## Related Projects ##
 
  * https://github.com/yeungda/jcoffeescript
